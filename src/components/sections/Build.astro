@@ -17,25 +17,31 @@ import { site } from '@/data/site';
   aria-labelledby="build-title"
   class="relative grid bg-accent text-ink lg:h-[50rem] lg:grid-cols-[60rem_1fr] lg:grid-rows-[50rem]"
 >
-  <figure
-    data-parallax-frame
-    class="relative aspect-[960/800] overflow-hidden lg:aspect-auto lg:h-full"
-  >
-    <Image
-      src={photo}
-      alt="Michał Caba prezentuje Mapę Marki Auraflux na laptopie"
-      widths={[640, 960, 1280, 1920]}
-      sizes="(min-width: 1024px) 67vw, 100vw"
-      quality={72}
-      data-parallax-media
-      class="photo-mono absolute inset-0 size-full object-cover"
-    />
+  <!--
+    Mobile: the label gets its own accent row above the photo (overlaid, it covered the head).
+    Desktop (lg): label box overlays the photo's top-left corner, as in Figma.
+  -->
+  <figure class="relative flex flex-col lg:block lg:h-full">
     <div
       data-reveal
       data-wipe
-      class="gutter-x absolute top-0 left-0 flex h-label w-1/2 items-center bg-accent lg:w-rail"
+      class="gutter-x flex h-label items-center bg-accent lg:absolute lg:top-0 lg:left-0 lg:z-10 lg:w-rail"
     >
       <SectionLabel>Buduję</SectionLabel>
+    </div>
+    <div
+      data-parallax-frame
+      class="relative aspect-[960/800] overflow-hidden lg:absolute lg:inset-0 lg:aspect-auto"
+    >
+      <Image
+        src={photo}
+        alt="Michał Caba prezentuje Mapę Marki Auraflux na laptopie"
+        widths={[640, 960, 1280, 1920]}
+        sizes="(min-width: 1024px) 67vw, 100vw"
+        quality={72}
+        data-parallax-media
+        class="photo-mono absolute inset-0 size-full object-cover"
+      />
     </div>
   </figure>
 

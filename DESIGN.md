@@ -82,7 +82,7 @@ Mirrored in GSAP as custom eases `expo` / `inOutQuart` (`src/scripts/lib/gsap.ts
 
 | Figma (y)          | Component                     | Notes                                                    |
 | ------------------ | ----------------------------- | -------------------------------------------------------- |
-| 0–800              | `sections/Hero.astro`         | Absolute positions 1:1; gradient rule links H1 → quote    |
+| 0–800              | `sections/Hero.astro`         | Height `min(800px, 100svh)`; H1/rule/quote keep exact relative offsets, group at Figma's proportional depth (311px @ 800). Last word rotates (`heroWords` in data) |
 | 800–1600           | `sections/About.astro`        | Exact Figma fill crop on portrait; paper panel starts in hero rail |
 | 1600–2816          | `sections/Roles.astro`        | Red digits vanish into the red rail (layering, no mask)   |
 | 2816–3616 (+76)    | `sections/Build.astro`        | Card overlaps “Filozofia” by 76px, as designed           |
@@ -105,7 +105,7 @@ All motion is declared in markup and implemented in `src/scripts/animations/*` (
 | `data-reveal="custom"`            | Owned by a section module (hero, #1METR, What’s next)           |
 | `data-parallax-frame/media`       | Curtain reveal + scrubbed parallax                              |
 
-Signature moments: hero intro timeline · role numerals sliding out of the rail · **`DALEJ` scrubbed
+Signature moments: hero intro timeline · rotating headline word (ludziach → firmach → pomysłach) · role numerals sliding out of the rail · **`DALEJ` scrubbed
 “one metre further”** · notes hairlines drawing · INDEX overlay curtain.
 Lenis drives smooth scroll on GSAP’s ticker. `html.is-animated` (set inline before paint) hides
 reveal targets only when motion will actually run; a 3s failsafe unhides everything.

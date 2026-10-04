@@ -2,6 +2,9 @@
  * Page copy & repeatable content. Kept out of components so sections stay presentational.
  */
 
+/** Hero headline, 3rd line: "W …" — words rotate (first one is the static / no-JS fallback). */
+export const heroWords = ['ludziach', 'firmach', 'pomysłach'] as const;
+
 export interface Role {
   number: string;
   title: string;

@@ -1,46 +1,73 @@
 ---
 /**
  * Hero — Figma 899:516 (0–800px).
- * Desktop positions are absolute rem values taken 1:1 from the 1440 frame (1rem = 16px).
+ * Desktop: section height = min(800px, viewport) so the whole hero (incl. bottom rail) fits
+ * laptop screens. The headline/rule/quote keep their exact Figma offsets *relative to each other*
+ * and the group is placed at the same proportional depth as in Figma (exactly 311px @ 800px).
  */
 import ArrowDown from '@/assets/icons/arrow-down.svg';
+import { heroWords } from '@/data/content';
 ---
 
 <section
   id="start"
   aria-labelledby="hero-title"
-  class="relative flex min-h-svh flex-col bg-ink pt-header lg:block lg:h-[50rem] lg:min-h-0 lg:pt-0"
+  class="relative flex min-h-svh flex-col bg-ink pt-header lg:block lg:h-[min(50rem,100svh)] lg:min-h-[36rem] lg:pt-0"
 >
-  <div class="gutter-x flex flex-1 flex-col justify-center gap-10 py-16 lg:static lg:block lg:p-0">
+  <!--
+    Composition group (lg): 264px tall (= H1). Top = header + free space × 0.6126,
+    where 0.6126 = 234 / 382 reproduces Figma's y=311 inside an 800px hero.
+  -->
+  <div class="gutter-x flex flex-1 flex-col justify-center gap-10 py-16 lg:absolute lg:inset-x-0 lg:top-[calc(var(--spacing-header)+(100%-2*var(--spacing-header)-16.5rem)*0.6126)] lg:block lg:h-[16.5rem] lg:p-0">
     <h1
       id="hero-title"
       data-hero-title
       data-reveal="custom"
-      class="font-display text-h1-sm font-bold text-paper uppercase lg:absolute lg:top-[19.4375rem] lg:left-inset lg:text-h1"
+      class="font-display text-h1-sm font-bold text-paper uppercase lg:absolute lg:top-0 lg:left-inset lg:text-h1"
     >
-      <span class="block" data-hero-line>
-        Widzę
+      <!-- Each line sits in a mask (padding-bottom keeps the Ę ogonek inside the clip) -->
+      <span class="block overflow-hidden pb-[0.15em] -mb-[0.15em]">
+        <span class="block" data-hero-line>
+          Widzę
+        </span>
       </span>
-      <span class="block text-accent" data-hero-line>
-        Potencjał
+      <span class="block overflow-hidden pb-[0.15em] -mb-[0.15em]">
+        <span class="block text-accent" data-hero-line>
+          Potencjał
+        </span>
       </span>
-      <span class="block" data-hero-line>
-        W ludziach
+      <span class="block overflow-hidden pb-[0.15em] -mb-[0.15em]">
+        <span class="block whitespace-nowrap" data-hero-line>
+          W
+          <span
+            data-hero-rotator
+            class="inline-grid overflow-hidden pb-[0.15em] -mb-[0.15em] align-bottom"
+          >
+            {heroWords.map((word, index) => (
+              <span
+                data-hero-word
+                class:list={['col-start-1 row-start-1', index > 0 && 'invisible']}
+              >
+                {word}
+              </span>
+            ))}
+          </span>
+        </span>
       </span>
     </h1>
 
-    <!-- Connector rule: accent → paper gradient, 387×2 @ (564, 471) -->
+    <!-- Connector rule: accent → paper gradient, 387×2 @ (564, 471) → +160px below the H1 top -->
     <span
       aria-hidden="true"
       data-hero-rule
       data-reveal="custom"
-      class="hidden h-0.5 origin-left bg-linear-to-r from-accent to-paper lg:absolute lg:top-[29.4375rem] lg:left-[35.25rem] lg:block lg:w-[24.1875rem]"
+      class="hidden h-0.5 origin-left bg-linear-to-r from-accent to-paper lg:absolute lg:top-[10rem] lg:left-[35.25rem] lg:block lg:w-[24.1875rem]"
     ></span>
 
     <p
       data-hero-quote
       data-reveal="custom"
-      class="max-w-[18rem] font-body text-lead-sm font-medium text-paper lg:absolute lg:top-[27.875rem] lg:left-[59.1875rem] lg:max-w-none lg:text-lead lg:whitespace-nowrap"
+      class="max-w-[18rem] font-body text-lead-sm font-medium text-paper lg:absolute lg:top-[8.4375rem] lg:left-[59.1875rem] lg:max-w-none lg:text-lead lg:whitespace-nowrap"
     >
       <!-- Desktop line breaks via lg:block spans (hidden <br>s confuse SplitText on mobile) -->
       <span class="lg:block">Lubię sprawdzać co się</span>
