@@ -41,7 +41,7 @@ import SplitLines from '@/components/ui/SplitLines.astro';
                 class="absolute -bottom-px left-0 h-px w-full origin-left bg-ink"
               />
               <Row
-                {...(note.href ? { href: note.href } : {})}
+                {...(note.href ? { href: note.href, target: '_blank', rel: 'noopener' } : {})}
                 data-note-row
                 class="group grid grid-cols-[3.5rem_1fr] gap-y-2 pt-[2.0625rem] pb-8 lg:grid-cols-[8.1875rem_33.75rem_1fr] lg:pt-[2.5625rem] lg:pb-10"
               >
@@ -54,6 +54,7 @@ import SplitLines from '@/components/ui/SplitLines.astro';
                 <span class="col-start-2 font-display text-label-sm text-accent uppercase lg:col-start-3 lg:pt-[0.3125rem] lg:text-right lg:text-label">
                   <span class="sr-only">Czas czytania: </span>
                   {note.readingTime}
+                  {note.href && <span class="sr-only"> (otwiera się w nowej karcie)</span>}
                 </span>
               </Row>
             </li>

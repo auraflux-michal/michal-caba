@@ -30,25 +30,39 @@ export const roles: Role[] = [
   },
 ];
 
+/** Notes link to the Substack posts. UTM tags attribute traffic from this site. */
+const substack = (slug: string) =>
+  `https://michalcaba.substack.com/p/${slug}?utm_source=michalcaba&utm_medium=referral&utm_campaign=notes`;
+
 export interface Note {
   number: string;
   title: string;
+  /** Shown as e.g. "4 min" (~200 words per minute) */
   readingTime: string;
-  /** Optional article URL: rows render as links only when provided. */
+  /** Article URL: rows render as links (new tab) only when provided. */
   href?: string;
 }
 
 export const notes: Note[] = [
-  { number: '_001', title: 'Zakochany w potencjałach', readingTime: '4 min' },
+  {
+    number: '_001',
+    title: 'W najlepszym towarzystwie na świecie',
+    // TODO: verify reading time against the post (Substack is unreachable from the build env)
+    readingTime: '4 min',
+    href: substack('w-najlepszym-towarzystwie-na-swiecie'),
+  },
   {
     number: '_002',
-    title: 'To, co najbardziej chcemy zmienić u innych, potrafi powiedzieć zaskakująco dużo o nas',
+    title: 'Spalić analizę',
+    // TODO: verify reading time against the post
     readingTime: '4 min',
+    href: substack('spalic-analize'),
   },
   {
     number: '_003',
-    title:
-      'Czasami nie potrzebujesz planu na pięć lat. Potrzebujesz wiedzieć, jaki jest następny ruch.',
+    title: '108 CV, 108 mantr i jeden krok w przepaść',
+    // TODO: verify reading time against the post
     readingTime: '4 min',
+    href: substack('108-cv-108-mantr-i-jeden-krok-w-przepasc'),
   },
 ];

@@ -33,7 +33,7 @@ Nie musisz zmieniać całego świata. Wystarczy, że przesuniesz coś o jeden me
 
 ## Notes
 
-${notes.map((note) => `- ${note.title} (${note.readingTime} czytania)`).join('\n')}
+${notes.map((note) => `- ${note.href ? `[${note.title}](${note.href.split('?')[0]})` : note.title} (${note.readingTime} czytania)`).join('\n')}
 
 ## Kontakt i profile
 
