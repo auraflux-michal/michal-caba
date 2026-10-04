@@ -34,10 +34,14 @@ export const roles: Role[] = [
 const substack = (slug: string) =>
   `https://michalcaba.substack.com/p/${slug}?utm_source=michalcaba&utm_medium=referral&utm_campaign=notes`;
 
+/** Reading speed for Polish prose; rounded up, minimum 1 minute */
+const WORDS_PER_MINUTE = 200;
+const readingTime = (words: number) => `${Math.max(1, Math.ceil(words / WORDS_PER_MINUTE))} min`;
+
 export interface Note {
   number: string;
   title: string;
-  /** Shown as e.g. "4 min" (~200 words per minute) */
+  /** Derived from the post's word count, e.g. "3 min" */
   readingTime: string;
   /** Article URL: rows render as links (new tab) only when provided. */
   href?: string;
@@ -47,22 +51,19 @@ export const notes: Note[] = [
   {
     number: '_001',
     title: 'W najlepszym towarzystwie na świecie',
-    // TODO: verify reading time against the post (Substack is unreachable from the build env)
-    readingTime: '4 min',
+    readingTime: readingTime(564), // 564 words
     href: substack('w-najlepszym-towarzystwie-na-swiecie'),
   },
   {
     number: '_002',
     title: 'Spalić analizę',
-    // TODO: verify reading time against the post
-    readingTime: '4 min',
+    readingTime: readingTime(95), // 95 words
     href: substack('spalic-analize'),
   },
   {
     number: '_003',
     title: '108 CV, 108 mantr i jeden krok w przepaść',
-    // TODO: verify reading time against the post
-    readingTime: '4 min',
+    readingTime: readingTime(238), // 238 words
     href: substack('108-cv-108-mantr-i-jeden-krok-w-przepasc'),
   },
 ];
