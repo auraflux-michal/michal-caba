@@ -57,7 +57,7 @@ export function initMenu(reducedMotion: boolean) {
 
   links.forEach((link) =>
     link.addEventListener('click', (event) => {
-      if (link.target === '_blank' || !link.hash) return; // external (e.g. booking) — native
+      if (link.target === '_blank' || !link.hash) return; // external (e.g. booking): native
       const target = document.getElementById(link.hash.slice(1));
       if (!target) return;
       event.preventDefault();

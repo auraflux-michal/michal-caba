@@ -1,6 +1,6 @@
 ---
 /**
- * "Buduję" — Figma 899:522 (photo 960×800), 899:521 (paper card 480×876), 903:660 (label box).
+ * "Buduję": Figma 899:522 (photo 960×800), 899:521 (paper card 480×876), 903:660 (label box).
  * The card is 76px taller than the section and intentionally overlaps "Filozofia" (as in Figma).
  */
 import { Image } from 'astro:assets';
@@ -17,10 +17,10 @@ import { site } from '@/data/site';
   aria-labelledby="build-title"
   class="relative grid bg-accent text-ink lg:h-[50rem] lg:grid-cols-[60rem_1fr] lg:grid-rows-[50rem]"
 >
-  <!--
+  {/*
     Mobile: the label gets its own accent row above the photo (overlaid, it covered the head).
     Desktop (lg): label box overlays the photo's top-left corner, as in Figma.
-  -->
+  */}
   <figure class="relative flex flex-col lg:block lg:h-full">
     <div
       data-reveal

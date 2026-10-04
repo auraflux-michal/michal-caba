@@ -1,5 +1,5 @@
 /**
- * "What's next?" — oversized letters rise through masks with a slight rotation.
+ * "What's next?": oversized letters rise through masks with a slight rotation.
  */
 import { gsap, SplitText, motion, unveil } from '@/scripts/lib/gsap';
 

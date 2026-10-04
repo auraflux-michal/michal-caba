@@ -1,4 +1,4 @@
-# DESIGN.md — Michał Caba / personal brand
+# DESIGN.md: Michał Caba / personal brand
 
 Source of truth: Figma **auraflux → Brandbook → `personal-brand`** (node `899:511`, frame 1440 × 7085).
 Implementation: Astro 7 · Tailwind CSS 4 (CSS-first `@theme`) · GSAP 3 (ScrollTrigger, SplitText) · Lenis.
@@ -31,12 +31,12 @@ Implementation: Astro 7 · Tailwind CSS 4 (CSS-first `@theme`) · GSAP 3 (Scroll
 | `silver`       | `#C0C0C0` | Portrait backdrop                               |
 | `white`        | `#FFFFFF` | Header navigation                               |
 
-Photography is graded monochrome (`photo-mono`) — Figma uses `mix-blend-luminosity` over
+Photography is graded monochrome (`photo-mono`): Figma uses `mix-blend-luminosity` over
 neutral/zero-saturation backdrops, which is mathematically a greyscale filter.
 
 ### Typography
 
-Families: **Space Grotesk** (display, variable 300–700) and **Manrope** (body, variable 200–800),
+Families: **Space Grotesk** (display, variable 300-700) and **Manrope** (body, variable 200-800),
 self-hosted via the Astro Fonts API from `@fontsource-variable/*` (latin + latin-ext for Polish),
 preloaded, with metric-matched fallbacks (no CLS).
 
@@ -82,14 +82,14 @@ Mirrored in GSAP as custom eases `expo` / `inOutQuart` (`src/scripts/lib/gsap.ts
 
 | Figma (y)          | Component                     | Notes                                                    |
 | ------------------ | ----------------------------- | -------------------------------------------------------- |
-| 0–800              | `sections/Hero.astro`         | Height `min(800px, 100svh)`; H1/rule/quote keep exact relative offsets, group at Figma's proportional depth (311px @ 800). Last line rotates (`heroPhrases` in data) |
-| 800–1600           | `sections/About.astro`        | Exact Figma fill crop on portrait; paper panel starts in hero rail |
-| 1600–2816          | `sections/Roles.astro`        | Red digits vanish into the red rail (layering, no mask)   |
-| 2816–3616 (+76)    | `sections/Build.astro`        | Card overlaps “Filozofia” by 76px, as designed           |
-| 3616–4879          | `sections/Philosophy.astro`   | `DALEJ` offset in `em` (0.745em / −0.155em)              |
-| 4879–5823          | `sections/Notes.astro`        | Rows render as links once `href` is set in data          |
-| 5823–6832          | `sections/Next.astro`         | Portrait bottom-aligned to footer rule                   |
-| 6832–7085          | `layout/Footer.astro`         | Middle column at 50% − 43px                              |
+| 0-800              | `sections/Hero.astro`         | Height `min(800px, 100svh)`; H1/rule/quote keep exact relative offsets, group at Figma's proportional depth (311px @ 800). Last line rotates (`heroPhrases` in data) |
+| 800-1600           | `sections/About.astro`        | Exact Figma fill crop on portrait; paper panel starts in hero rail |
+| 1600-2816          | `sections/Roles.astro`        | Red digits vanish into the red rail (layering, no mask)   |
+| 2816-3616 (+76)    | `sections/Build.astro`        | Card overlaps “Filozofia” by 76px, as designed           |
+| 3616-4879          | `sections/Philosophy.astro`   | `DALEJ` offset in `em` (0.745em / −0.155em)              |
+| 4879-5823          | `sections/Notes.astro`        | Rows render as links once `href` is set in data          |
+| 5823-6832          | `sections/Next.astro`         | Portrait bottom-aligned to footer rule                   |
+| 6832-7085          | `layout/Footer.astro`         | Middle column at 50% − 43px                              |
 
 UI primitives: `ui/SectionLabel`, `ui/Tag`, `ui/SplitLines`. Layout: `layout/Header`, `layout/IndexMenu`.
 

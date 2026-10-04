@@ -1,5 +1,5 @@
 /**
- * Roles: the accent rail grows down with scroll, and each numeral slides out of it —
+ * Roles: the accent rail grows down with scroll, and each numeral slides out of it -
  * red digits are invisible on the red rail, so they appear to emerge from the wall.
  */
 import { gsap } from '@/scripts/lib/gsap';

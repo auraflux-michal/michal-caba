@@ -1,8 +1,8 @@
 ---
 /**
- * "Role" — Figma 899:519/550/520 (1600–2817px).
+ * "Role": Figma 899:519/550/520 (1600-2817px).
  * The accent rail (360px) sits behind the numerals: red digits dissolve into the rail,
- * the ink underscore stays visible on it — the effect is pure layering, no masking.
+ * the ink underscore stays visible on it: the effect is pure layering, no masking.
  *
  * Desktop grid columns (1440): 214 | 369 | 415 | 362 (+80 inset) → rem below.
  * Row pitch follows Figma: 320 → 360 → 286 (last row = numeral + description height).
@@ -35,7 +35,7 @@ import SplitLines from '@/components/ui/SplitLines.astro';
           aria-hidden="true"
           class="flex font-display text-numeral-sm font-bold whitespace-nowrap lg:col-start-2 lg:text-numeral"
         >
-          {/* flex: no inter-span whitespace — "_01" is a single word in Figma */}
+          {/* flex: no inter-span whitespace: "_01" is a single word in Figma */}
           <span class="text-line lg:text-ink">_</span>
           <span data-role-digits class="inline-block text-accent">
             {role.number}

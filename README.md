@@ -1,6 +1,6 @@
-# Michał Caba — personal brand
+# Michał Caba: personal brand
 
-Landing page built from the Figma file *auraflux / personal-brand* — **Astro 7 + Tailwind CSS 4 + GSAP 3 + Lenis**.
+Landing page built from the Figma file *auraflux / personal-brand*: **Astro 7 + Tailwind CSS 4 + GSAP 3 + Lenis**.
 Design system & conventions: see [`DESIGN.md`](./DESIGN.md).
 
 ## Getting started
@@ -35,7 +35,17 @@ src/
 ## Editing content
 
 - Links (consultation, socials, Auraflux): `src/data/site.ts`
-- Roles & notes: `src/data/content.ts` — add `href` to a note to make its row a link.
+- Roles & notes: `src/data/content.ts`: add `href` to a note to make its row a link.
+
+## SEO & GEO
+
+- `<head>`: title/description, canonical, robots, Open Graph (`profile`), Twitter card, icons.
+- Structured data (`src/lib/seo.ts`): one schema.org `@graph`: WebSite → ProfilePage → Person
+  (jobTitle, knowsAbout, hasOccupation, sameAs) ↔ Organization (Auraflux, founder).
+- Generated endpoints: `/robots.txt` (AI crawlers explicitly allowed), `/sitemap.xml`,
+  `/llms.txt` (plain-language summary for AI answer engines).
+- All of it is built from `src/data/site.ts` + `src/data/content.ts`: edit facts there.
+- **Domain:** absolute URLs use `site` (`https://michalcaba.pl`) or the `SITE_URL` env var.
 
 ## Indexing (pre-launch)
 

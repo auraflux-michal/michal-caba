@@ -1,5 +1,5 @@
 /*
- * Design tokens — single source of truth (see DESIGN.md).
+ * Design tokens: single source of truth (see DESIGN.md).
  * Values come 1:1 from the Figma file "auraflux / personal-brand" (frame 899:511, 1440px).
  * All sizes are in rem: at ≥1024px the root font-size scales with the viewport so that
  * 1rem === 16px exactly at the 1440px design width (pixel-perfect), see base.css.
@@ -45,7 +45,7 @@
   --text-label: 1.125rem; /* 18 / 28 */
   --text-label--line-height: 1.75rem;
 
-  /* Mobile / tablet scale (< lg) — fluid, derived from the desktop ratios */
+  /* Mobile / tablet scale (< lg): fluid, derived from the desktop ratios */
   --text-display-sm: clamp(4.5rem, 21vw, 10rem);
   --text-display-sm--line-height: 1;
   --text-display-tight-sm: clamp(4.5rem, 21vw, 10rem);
@@ -68,11 +68,11 @@
   --text-label-sm--line-height: 1.5rem;
 
   /* ---------- Layout ---------- */
-  --spacing-header: 4.8125rem; /* 77px — site header & hero rail (76 + 1px rule) */
-  --spacing-label: 4.75rem; /* 76px — section label row / label boxes */
-  --spacing-gutter: 2.5rem; /* 40px — outer page gutter */
-  --spacing-inset: 5rem; /* 80px — content inset */
-  --spacing-rail: 22.5rem; /* 360px — red rail / label column */
+  --spacing-header: 4.8125rem; /* 77px: site header & hero rail (76 + 1px rule) */
+  --spacing-label: 4.75rem; /* 76px: section label row / label boxes */
+  --spacing-gutter: 2.5rem; /* 40px: outer page gutter */
+  --spacing-inset: 5rem; /* 80px: content inset */
+  --spacing-rail: 22.5rem; /* 360px: red rail / label column */
 
   /* ---------- Motion ---------- */
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);

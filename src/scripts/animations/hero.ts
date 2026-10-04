@@ -1,13 +1,13 @@
 /**
- * Hero intro — plays once on load: header drops in, headline rises line by line through
+ * Hero intro: plays once on load: header drops in, headline rises line by line through
  * masks, the accent rule draws towards the quote, meta rail fades up.
  * Then the last line rotates ("W ludziach" → "W firmach" → "W pomysłach" → …).
  */
 import { gsap, ScrollTrigger, SplitText, motion, unveil } from '@/scripts/lib/gsap';
 
-const ROTATE_EVERY = 2.6; // s — time each phrase stays on screen
+const ROTATE_EVERY = 2.6; // s: time each phrase stays on screen
 const SWAP_DURATION = 0.8;
-const INTRO_END = 2.2; // s — when the intro timeline has settled
+const INTRO_END = 2.2; // s: when the intro timeline has settled
 
 export function initHero() {
   const title = document.querySelector<HTMLElement>('[data-hero-title]');
@@ -53,7 +53,7 @@ export function initHero() {
     });
   }
 
-  // Fixed start time instead of tl.onComplete — robust against anything extending the timeline
+  // Fixed start time instead of tl.onComplete: robust against anything extending the timeline
   gsap.delayedCall(INTRO_END, () => initPhraseRotator(title));
 
   return tl;

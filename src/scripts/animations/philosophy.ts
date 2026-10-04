@@ -1,6 +1,6 @@
 /**
  * "#1METR DALEJ": letters rise in, then "DALEJ" is scrubbed one step to the right
- * as the visitor scrolls — the manifesto, literally moved "a metre further".
+ * as the visitor scrolls: the manifesto, literally moved "a metre further".
  */
 import { gsap, SplitText, motion, unveil } from '@/scripts/lib/gsap';
 

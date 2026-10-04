@@ -1,6 +1,6 @@
 ---
 /**
- * "Człowiek" — Figma 899:518 (portrait) + 899:517 (paper panel), 800–1600px.
+ * "Człowiek": Figma 899:518 (portrait) + 899:517 (paper panel), 800-1600px.
  * Portrait crop reproduces the Figma fill transform exactly (percentages of the 720×800 frame).
  */
 import { Image } from 'astro:assets';
@@ -20,7 +20,7 @@ import SplitLines from '@/components/ui/SplitLines.astro';
   >
     <Image
       src={portrait}
-      alt="Michał Caba — portret"
+      alt="Michał Caba: portret"
       widths={[720, 1080, 1440, 2048]}
       sizes="(min-width: 1024px) 96vw, 192vw"
       data-parallax-media
@@ -34,7 +34,7 @@ import SplitLines from '@/components/ui/SplitLines.astro';
   <div class="gutter-x flex flex-col border-ink py-16 lg:border-l lg:pt-[13.8125rem] lg:pr-inset lg:pb-10 lg:pl-inset">
     <h2 id="about-title" class="font-display text-h2-sm font-bold lg:text-h2">
       <SplitLines as="span" class="block">
-        Projektuje marki.
+        Projektuję marki.
         <br />
         Buduję firmy.
       </SplitLines>

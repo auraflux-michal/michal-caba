@@ -47,7 +47,7 @@ async function boot() {
   window.__motionReady = true;
   ScrollTrigger.refresh();
 
-  // Deep links (e.g. /#notes) — jump after layout & triggers are settled
+  // Deep links (e.g. /#notes): jump after layout & triggers are settled
   const hashTarget = location.hash && document.getElementById(location.hash.slice(1));
   if (hashTarget) requestAnimationFrame(() => scrollToTarget(hashTarget, true));
 }

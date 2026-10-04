@@ -1,4 +1,0 @@
-# Crawling stays allowed on purpose: crawlers must fetch pages to see the noindex
-# (meta robots + X-Robots-Tag). Blocking here would hide it. See src/data/site.ts.
-User-agent: *
-Allow: /
