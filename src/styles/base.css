@@ -42,6 +42,11 @@
     outline-offset: 4px;
   }
 
+  /* Accent surfaces (open INDEX menu + header): keep the focus ring visible */
+  html[data-menu-open] :is([data-header], [data-menu]) :focus-visible {
+    outline-color: var(--color-ink);
+  }
+
   img,
   svg {
     display: block;
