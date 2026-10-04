@@ -105,7 +105,7 @@ All motion is declared in markup and implemented in `src/scripts/animations/*` (
 | `data-reveal="custom"`            | Owned by a section module (hero, #1METR, What’s next)           |
 | `data-parallax-frame/media`       | Curtain reveal + scrubbed parallax                              |
 
-Signature moments: hero intro timeline · rotating headline line (W ludziach → W firmach → W pomysłach) · role numerals sliding out of the rail · **`DALEJ` scrubbed
+Signature moments: hero intro timeline · rotating headline line (W ludziach → W firmach → W pomysłach) · "current" pulse running along the hero rule into #1metrDalej · role numerals sliding out of the rail · **`DALEJ` scrubbed
 “one metre further”** · notes hairlines drawing · INDEX overlay curtain.
 Lenis drives smooth scroll on GSAP’s ticker. `html.is-animated` (set inline before paint) hides
 reveal targets only when motion will actually run; a 3s failsafe unhides everything.

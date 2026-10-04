@@ -1,13 +1,15 @@
 /**
  * Hero intro: plays once on load: header drops in, headline rises line by line through
  * masks, the accent rule draws towards the quote, meta rail fades up.
- * Then the last line rotates ("W ludziach" → "W firmach" → "W pomysłach" → …).
+ * Then the last line rotates ("W ludziach" → "W firmach" → "W pomysłach" → …) and a
+ * "current" pulse travels the rule from Potencjał to the quote, lighting up #1metrDalej.
  */
 import { gsap, ScrollTrigger, SplitText, motion, unveil } from '@/scripts/lib/gsap';
 
 const ROTATE_EVERY = 2.6; // s: time each phrase stays on screen
 const SWAP_DURATION = 0.8;
 const INTRO_END = 2.2; // s: when the intro timeline has settled
+const CURRENT_EVERY = 3.2; // s: pause between two current pulses
 
 export function initHero() {
   const title = document.querySelector<HTMLElement>('[data-hero-title]');
@@ -54,7 +56,10 @@ export function initHero() {
   }
 
   // Fixed start time instead of tl.onComplete: robust against anything extending the timeline
-  gsap.delayedCall(INTRO_END, () => initPhraseRotator(title));
+  gsap.delayedCall(INTRO_END, () => {
+    initPhraseRotator(title);
+    initCurrent(rule, quote?.querySelector<HTMLElement>('[data-hero-tag]') ?? null);
+  });
 
   return tl;
 }
@@ -71,7 +76,6 @@ function initPhraseRotator(title: HTMLElement) {
   title.dataset.rotating = 'true';
 
   let current = 0;
-  let inView = true;
 
   gsap.set(phrases, { autoAlpha: 0, yPercent: 110 });
   gsap.set(phrases[current], { autoAlpha: 1, yPercent: 0 });
@@ -98,14 +102,73 @@ function initPhraseRotator(title: HTMLElement) {
     timer.restart(true);
   });
 
+  whileVisible(title, {
+    resume: () => timer.restart(true), // full interval after resuming
+    pause: () => timer.pause(),
+  });
+}
+
+/**
+ * "Current": a glowing pulse travels the connector rule from Potencjał to the quote, accelerating
+ * like a discharge; on arrival #1metrDalej flares. Desktop only (the rule is hidden below lg).
+ */
+function initCurrent(rule: Element | null, tag: HTMLElement | null) {
+  const spark = rule?.querySelector<HTMLElement>('[data-hero-spark]');
+  if (!rule || !spark || (rule as HTMLElement).dataset.current) return;
+  (rule as HTMLElement).dataset.current = 'true';
+
+  const pulse = gsap.timeline({ repeat: -1, repeatDelay: CURRENT_EVERY, paused: true });
+  pulse
+    // `left` in % of the rule: no pixel maths, stays correct on resize
+    .fromTo(spark, { left: '-30%' }, { left: '100%', duration: 1.1, ease: 'power2.in' }, 0)
+    .fromTo(spark, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: 'none' }, 0)
+    .to(spark, { opacity: 0, duration: 0.12, ease: 'none' }, 1.02);
+
+  if (tag) {
+    pulse
+      .fromTo(
+        tag,
+        { textShadow: '0 0 0px rgba(219, 57, 45, 0)', filter: 'brightness(1)' },
+        {
+          textShadow: '0 0 18px rgba(219, 57, 45, 0.85)',
+          filter: 'brightness(1.35)',
+          duration: 0.18,
+          ease: 'power2.out',
+        },
+        1.0,
+      )
+      .to(
+        tag,
+        { textShadow: '0 0 0px rgba(219, 57, 45, 0)', filter: 'brightness(1)', duration: 0.9 },
+        '>',
+      );
+  }
+
+  // Only runs when the rule is actually rendered (lg+) and on screen
+  const isShown = () => (rule as HTMLElement).offsetWidth > 0;
+  whileVisible(rule, {
+    resume: () => isShown() && pulse.play(),
+    pause: () => pulse.pause(),
+  });
+}
+
+/** Calls `resume` / `pause` as the element enters/leaves the viewport or the tab is hidden. */
+function whileVisible(
+  trigger: Element,
+  { resume, pause }: { resume: () => void; pause: () => void },
+) {
+  let inView = true;
+  let running = false;
+
   const sync = () => {
     const shouldRun = inView && !document.hidden;
-    if (shouldRun && timer.paused()) timer.restart(true); // full interval after resuming
-    if (!shouldRun) timer.pause();
+    if (shouldRun && !running) resume();
+    if (!shouldRun && running) pause();
+    running = shouldRun;
   };
 
   ScrollTrigger.create({
-    trigger: title,
+    trigger,
     start: 'top bottom',
     end: 'bottom top',
     onToggle: (self) => {
@@ -114,4 +177,5 @@ function initPhraseRotator(title: HTMLElement) {
     },
   });
   document.addEventListener('visibilitychange', sync);
+  sync();
 }
