@@ -37,6 +37,12 @@ src/
 - Links (consultation, socials, Auraflux): `src/data/site.ts`
 - Roles & notes: `src/data/content.ts` — add `href` to a note to make its row a link.
 
+## Indexing (pre-launch)
+
+The site is currently **noindex**: `<meta name="robots">` and the `X-Robots-Tag` header
+(`vercel.json`). `robots.txt` deliberately allows crawling so search engines can see the noindex.
+To launch: set `indexable: true` in `src/data/site.ts` and remove the `X-Robots-Tag` header.
+
 ## Deploy
 
 Static output, zero-config on Vercel (`vercel.json` adds immutable caching for `/_astro/*`).

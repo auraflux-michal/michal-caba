@@ -10,6 +10,11 @@ export const site = {
   locale: 'pl_PL',
   lang: 'pl',
   themeColor: '#0b0b0b',
+  /**
+   * Search-engine indexing. Keep `false` until launch — when flipping to `true`, also remove
+   * the X-Robots-Tag header in vercel.json.
+   */
+  indexable: false,
   author: 'Michał Caba',
   /** Destination of the "Konsultacja" CTA */
   consultationUrl: '#poczatek',
