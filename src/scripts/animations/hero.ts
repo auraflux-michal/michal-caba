@@ -1,7 +1,7 @@
 /**
  * Hero intro — plays once on load: header drops in, headline rises line by line through
  * masks, the accent rule draws towards the quote, meta rail fades up.
- * Then the last word of the headline rotates ("ludziach" → "firmach" → "pomysłach"),
+ * Then the last line rotates ("W ludziach" → "W firmach" → "W pomysłach" → …),
  * paused whenever the hero is off-screen.
  */
 import { gsap, ScrollTrigger, SplitText, motion, unveil } from '@/scripts/lib/gsap';

@@ -4,9 +4,10 @@
  * Desktop: section height = min(800px, viewport) so the whole hero (incl. bottom rail) fits
  * laptop screens. The headline/rule/quote keep their exact Figma offsets *relative to each other*
  * and the group is placed at the same proportional depth as in Figma (exactly 311px @ 800px).
+ * The 3rd line rotates through `heroPhrases` (src/data/content.ts).
  */
 import ArrowDown from '@/assets/icons/arrow-down.svg';
-import { heroWords } from '@/data/content';
+import { heroPhrases } from '@/data/content';
 ---
 
 <section
@@ -37,21 +38,13 @@ import { heroWords } from '@/data/content';
         </span>
       </span>
       <span class="block overflow-hidden pb-[0.15em] -mb-[0.15em]">
-        <span class="block whitespace-nowrap" data-hero-line>
-          W
-          <span
-            data-hero-rotator
-            class="inline-grid overflow-hidden pb-[0.15em] -mb-[0.15em] align-bottom"
-          >
-            {heroWords.map((word, index) => (
-              <span
-                data-hero-word
-                class:list={['col-start-1 row-start-1', index > 0 && 'invisible']}
-              >
-                {word}
-              </span>
-            ))}
-          </span>
+        <!-- Rotating phrase: all phrases share one grid cell (baseline-aligned, width = widest) -->
+        <span class="grid whitespace-nowrap" data-hero-line>
+          {heroPhrases.map((phrase, index) => (
+            <span data-hero-word class:list={['col-start-1 row-start-1', index > 0 && 'invisible']}>
+              {phrase}
+            </span>
+          ))}
         </span>
       </span>
     </h1>
