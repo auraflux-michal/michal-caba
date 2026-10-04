@@ -39,8 +39,8 @@ import SplitLines from '@/components/ui/SplitLines.astro';
         Buduję firmy.
       </SplitLines>
       <SplitLines as="span" class="block text-accent" delay={0.15}>
-        Upraszczam <br class="hidden lg:inline" />
-        trudne pytania.
+        <span class="lg:block">Upraszczam</span>
+        <span class="lg:block">trudne pytania.</span>
       </SplitLines>
     </h2>
 
@@ -48,10 +48,9 @@ import SplitLines from '@/components/ui/SplitLines.astro';
       class="mt-10 max-w-[35rem] font-body text-body-sm font-medium lg:text-body"
       delay={0.3}
     >
-      Tworzę rzeczy na styku <br class="hidden lg:inline" />
-      ludzkiej intuicji i technicznej
-      <br class="hidden lg:inline" />
-      precyzji
+      <span class="lg:block">Tworzę rzeczy na styku</span>
+      <span class="lg:block">ludzkiej intuicji i technicznej</span>
+      <span class="lg:block">precyzji</span>
     </SplitLines>
 
     <p

@@ -9,6 +9,8 @@
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     scrollbar-gutter: stable;
+    /* Safety net: no stray element may widen the mobile layout viewport */
+    overflow-x: clip;
   }
 
   /* --sbw = classic scrollbar width (set inline in <head>), so 1rem tracks the *content* width */

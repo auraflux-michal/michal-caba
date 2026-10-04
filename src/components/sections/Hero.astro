@@ -42,26 +42,26 @@ import ArrowDown from '@/assets/icons/arrow-down.svg';
       data-reveal="custom"
       class="max-w-[18rem] font-body text-lead-sm font-medium text-paper lg:absolute lg:top-[27.875rem] lg:left-[59.1875rem] lg:max-w-none lg:text-lead lg:whitespace-nowrap"
     >
-      Lubię sprawdzać co się <br class="hidden lg:inline" />
-      stanie kiedy przesuniemy
-      <br class="hidden lg:inline" />
-      go o <span class="text-accent">#1metrDalej</span>
+      <!-- Desktop line breaks via lg:block spans (hidden <br>s confuse SplitText on mobile) -->
+      <span class="lg:block">Lubię sprawdzać co się</span>
+      <span class="lg:block">stanie kiedy przesuniemy</span>
+      <span class="lg:block">
+        go o <span class="text-accent">#1metrDalej</span>
+      </span>
     </p>
   </div>
 
   <!-- Bottom rail (Figma 899:538) — right half is the top of the "Człowiek" paper panel -->
-  <div class="grid h-header grid-cols-[1fr_auto] border-t border-line lg:absolute lg:inset-x-0 lg:bottom-0 lg:grid-cols-2">
+  <div class="grid h-header grid-cols-[minmax(0,1fr)_auto] border-t border-line lg:absolute lg:inset-x-0 lg:bottom-0 lg:grid-cols-2">
     <p
       data-hero-meta
       data-reveal="custom"
-      class="gutter-x flex items-center font-display text-label-sm whitespace-pre text-muted uppercase lg:text-label"
+      class="gutter-x hidden min-w-0 items-center font-display text-label-sm whitespace-pre text-muted uppercase sm:flex lg:text-label"
     >
-      <span class="hidden sm:inline">
-        {'Founder\u00A0\u00A0/\u00A0\u00A0Strateg\u00A0\u00A0/\u00A0\u00A0Projektant'}
-      </span>
-      <span class="sm:hidden">Founder / Strateg</span>
+      {'Founder\u00A0\u00A0/\u00A0\u00A0Strateg\u00A0\u00A0/\u00A0\u00A0Projektant'}
     </p>
-    <div class="gutter-x flex items-center justify-end border-ink lg:border-t lg:border-l lg:bg-paper">
+    <!-- Mobile: the CTA alone (both labels side by side need ~390px and would force h-scroll) -->
+    <div class="gutter-x col-span-2 flex items-center justify-end border-ink sm:col-span-1 lg:border-t lg:border-l lg:bg-paper">
       <a
         href="#czlowiek"
         data-hero-meta

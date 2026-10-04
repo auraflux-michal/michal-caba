@@ -19,6 +19,7 @@ export function initMenu(reducedMotion: boolean) {
     if (next === open) return;
     open = next;
     toggle.setAttribute('aria-expanded', String(open));
+    document.documentElement.toggleAttribute('data-menu-open', open);
     if (label) label.textContent = open ? 'Zamknij' : 'Index';
     tl?.kill();
 
