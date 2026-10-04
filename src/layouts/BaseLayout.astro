@@ -3,12 +3,11 @@
  * Document shell: SEO/meta, self-hosted fonts (Astro Fonts API, preloaded + metric fallbacks),
  * motion bootstrap and the global client script.
  */
-import { Font } from 'astro:assets';
-import { getImage } from 'astro:assets';
+import { Font, getImage } from 'astro:assets';
+import portraitSource from '@/assets/images/michal-portrait.png';
 import '@/styles/global.css';
 import { site } from '@/data/site';
 import { absoluteUrl, assetPath, buildJsonLd, robotsDirective } from '@/lib/seo';
-import ogSource from '@/assets/images/michal-portrait.png';
 
 interface Props {
   title?: string;
@@ -18,16 +17,12 @@ interface Props {
 const { title = site.title, description = site.description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const homepage = absoluteUrl('/', Astro.site);
-const ogImage = await getImage({
-  src: ogSource,
-  width: 1200,
-  height: 630,
-  fit: 'cover',
-  format: 'jpg',
-});
-const ogImageUrl = new URL(ogImage.src, Astro.site).href;
-const ogImageAlt = `Portret: ${site.name}`;
-const jsonLd = buildJsonLd({ canonical, homepage, imageUrl: ogImageUrl });
+// Branded 1200×630 card rendered at build time (src/pages/og.png.ts)
+const ogImageUrl = absoluteUrl('/og.png', Astro.site);
+const ogImageAlt = `${site.name}: Widzę potencjał w ludziach. Portret i hasło #1metrDalej.`;
+const portrait = await getImage({ src: portraitSource, width: 800, format: 'jpg' });
+const portraitUrl = new URL(portrait.src, Astro.site).href;
+const jsonLd = buildJsonLd({ canonical, homepage, imageUrl: ogImageUrl, portraitUrl });
 ---
 
 <!doctype html>
@@ -55,7 +50,8 @@ const jsonLd = buildJsonLd({ canonical, homepage, imageUrl: ogImageUrl });
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:secure_url" content={ogImageUrl} />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={ogImageAlt} />

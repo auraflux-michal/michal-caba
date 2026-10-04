@@ -40,12 +40,15 @@ src/
 ## SEO & GEO
 
 - `<head>`: title/description, canonical, robots, Open Graph (`profile`), Twitter card, icons.
+- Social card: `/og.png` (1200×630) rendered at build time from `src/pages/og.png.ts`
+  (Satori + Resvg, brand fonts/colours). Edit the composition there.
 - Structured data (`src/lib/seo.ts`): one schema.org `@graph`: WebSite → ProfilePage → Person
   (jobTitle, knowsAbout, hasOccupation, sameAs) ↔ Organization (Auraflux, founder).
 - Generated endpoints: `/robots.txt` (AI crawlers explicitly allowed), `/sitemap.xml`,
   `/llms.txt` (plain-language summary for AI answer engines).
 - All of it is built from `src/data/site.ts` + `src/data/content.ts`: edit facts there.
-- **Domain:** absolute URLs use `site` (`https://michalcaba.pl`) or the `SITE_URL` env var.
+- **Domain:** absolute URLs use `SITE_URL` if set, otherwise Vercel's production domain
+  (`VERCEL_PROJECT_PRODUCTION_URL`: the vercel.app URL now, the custom domain once assigned).
 
 ## Indexing (pre-launch)
 

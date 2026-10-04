@@ -27,11 +27,14 @@ export function robotsDirective(): string {
 interface GraphInput {
   canonical: string;
   homepage: string;
+  /** Social card (og.png) */
   imageUrl: string;
+  /** Real portrait photo for the Person entity */
+  portraitUrl: string;
 }
 
 /** One connected @graph: WebSite → ProfilePage → Person ↔ Organization (Auraflux) */
-export function buildJsonLd({ canonical, homepage, imageUrl }: GraphInput) {
+export function buildJsonLd({ canonical, homepage, imageUrl, portraitUrl }: GraphInput) {
   const ids = {
     website: `${homepage}#website`,
     page: `${canonical}#webpage`,
@@ -71,7 +74,7 @@ export function buildJsonLd({ canonical, homepage, imageUrl }: GraphInput) {
         contentUrl: imageUrl,
         width: 1200,
         height: 630,
-        caption: `Portret: ${site.name}`,
+        caption: `${site.name}: Widzę potencjał w ludziach`,
       },
       {
         '@type': 'Person',
@@ -80,7 +83,11 @@ export function buildJsonLd({ canonical, homepage, imageUrl }: GraphInput) {
         givenName: site.person.givenName,
         familyName: site.person.familyName,
         url: homepage,
-        image: { '@id': ids.image },
+        image: {
+          '@type': 'ImageObject',
+          url: portraitUrl,
+          caption: `Portret: ${site.name}`,
+        },
         jobTitle: [...site.person.jobTitles],
         description: site.person.summary,
         knowsAbout: [...site.person.knowsAbout],

@@ -32,8 +32,14 @@ const fontsourceVariants = (slug, weight) => {
 
 // https://docs.astro.build/en/reference/configuration-reference/
 export default defineConfig({
-  // Overridable for preview hosts (GitHub Pages serves the project under /michal-caba/)
-  site: process.env.SITE_URL ?? 'https://michalcaba.pl',
+  // Absolute URLs (canonical, Open Graph, sitemap). Priority: SITE_URL env > Vercel's production
+  // domain (the *.vercel.app URL today, the custom domain automatically once it is assigned)
+  // > fallback. `base` is overridable for the GitHub Pages preview (/michal-caba/).
+  site:
+    process.env.SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : 'https://michalcaba.pl'),
   base: process.env.BASE_PATH ?? '/',
   compressHTML: true,
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
