@@ -32,7 +32,9 @@ const fontsourceVariants = (slug, weight) => {
 
 // https://docs.astro.build/en/reference/configuration-reference/
 export default defineConfig({
-  site: 'https://michalcaba.pl',
+  // Overridable for preview hosts (GitHub Pages serves the project under /michal-caba/)
+  site: process.env.SITE_URL ?? 'https://michalcaba.pl',
+  base: process.env.BASE_PATH ?? '/',
   compressHTML: true,
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   image: {

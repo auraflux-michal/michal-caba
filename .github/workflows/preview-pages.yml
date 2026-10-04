@@ -1,0 +1,46 @@
+# Builds the site with the GitHub Pages base path and publishes it to the `gh-pages` branch.
+# Preview URL: https://auraflux-michal.github.io/michal-caba/
+name: Preview (GitHub Pages)
+
+on:
+  push:
+    branches: ['claude/**', 'main']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-preview
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          SITE_URL: https://auraflux-michal.github.io
+          BASE_PATH: /michal-caba
+          PUBLIC_PREVIEW: 'true'
+
+      - name: Publish to gh-pages
+        run: |
+          touch dist/.nojekyll
+          cd dist
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Preview build ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
