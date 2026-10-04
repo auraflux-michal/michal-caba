@@ -1,0 +1,106 @@
+---
+/**
+ * "Buduję" — Figma 899:522 (photo 960×800), 899:521 (paper card 480×876), 903:660 (label box).
+ * The card is 76px taller than the section and intentionally overlaps "Filozofia" (as in Figma).
+ */
+import { Image } from 'astro:assets';
+import photo from '@/assets/images/michal-auraflux.jpg';
+import LogoAuraflux from '@/assets/icons/logo-auraflux.svg';
+import ArrowUpRight from '@/assets/icons/arrow-up-right.svg';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import SplitLines from '@/components/ui/SplitLines.astro';
+import { site } from '@/data/site';
+---
+
+<section
+  id="buduje"
+  aria-labelledby="build-title"
+  class="relative grid bg-accent text-ink lg:h-[50rem] lg:grid-cols-[60rem_1fr] lg:grid-rows-[50rem]"
+>
+  <figure
+    data-parallax-frame
+    class="relative aspect-[960/800] overflow-hidden lg:aspect-auto lg:h-full"
+  >
+    <Image
+      src={photo}
+      alt="Michał Caba prezentuje Mapę Marki Auraflux na laptopie"
+      widths={[640, 960, 1280, 1920]}
+      sizes="(min-width: 1024px) 67vw, 100vw"
+      quality={72}
+      data-parallax-media
+      class="photo-mono absolute inset-0 size-full object-cover"
+    />
+    <div
+      data-reveal
+      data-wipe
+      class="gutter-x absolute top-0 left-0 flex h-label w-1/2 items-center bg-accent lg:w-rail"
+    >
+      <SectionLabel>Buduję</SectionLabel>
+    </div>
+  </figure>
+
+  <div
+    data-build-card
+    class="relative z-10 flex flex-col self-start border border-ink bg-paper px-5 pt-12 pb-6 lg:h-[54.75rem] lg:px-10 lg:pt-20"
+  >
+    <LogoAuraflux
+      role="img"
+      aria-label="auraflux™"
+      width={152}
+      height={32}
+      class="h-8 w-[9.5rem]"
+    />
+
+    <h2
+      id="build-title"
+      class="mt-12 font-display text-h2-sm font-bold lg:mt-[4.625rem] lg:text-h2"
+    >
+      <SplitLines as="span" class="block">
+        Strategia
+        <br />
+        Branding
+        <br />
+        Tech
+      </SplitLines>
+    </h2>
+
+    <div class="mt-10 space-y-4 font-body text-body-sm font-medium lg:text-body">
+      <SplitLines delay={0.1}>
+        Pomagamy firmom odkryć, co naprawdę jest w nich wartościowe, a później nadajemy temu
+        strategię, język, formę i doświadczenie.
+      </SplitLines>
+      <SplitLines delay={0.2}>
+        Nie interesuje nas robienie marek głośniejszych. Interesuje nas sprawianie, żeby było
+        wiadomo, dlaczego warto ich słuchać.
+      </SplitLines>
+    </div>
+
+    <a
+      href={site.auraflux.url}
+      target="_blank"
+      rel="noopener"
+      data-cta
+      class="group relative mt-16 flex items-start justify-between border-t border-ink py-6 font-display text-label-sm font-bold uppercase lg:mt-auto lg:text-label"
+    >
+      <span
+        aria-hidden="true"
+        class="absolute -top-px left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-700 ease-out-expo group-hover:scale-x-100"
+      ></span>
+      <span>
+        Odwiedź Auraflux<span class="sr-only"> (otwiera się w nowej karcie)</span>
+      </span>
+      <span class="relative size-6 overflow-hidden" aria-hidden="true">
+        <ArrowUpRight
+          width={24}
+          height={24}
+          class="size-6 transition-transform duration-500 ease-out-expo group-hover:translate-x-6 group-hover:-translate-y-6"
+        />
+        <ArrowUpRight
+          width={24}
+          height={24}
+          class="absolute inset-0 size-6 -translate-x-6 translate-y-6 transition-transform duration-500 ease-out-expo group-hover:translate-0"
+        />
+      </span>
+    </a>
+  </div>
+</section>

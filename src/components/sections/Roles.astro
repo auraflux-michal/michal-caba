@@ -1,0 +1,58 @@
+---
+/**
+ * "Role" — Figma 899:519/550/520 (1600–2817px).
+ * The accent rail (360px) sits behind the numerals: red digits dissolve into the rail,
+ * the ink underscore stays visible on it — the effect is pure layering, no masking.
+ *
+ * Desktop grid columns (1440): 214 | 369 | 415 | 362 (+80 inset) → rem below.
+ * Row pitch follows Figma: 320 → 360 → 286 (last row = numeral + description height).
+ */
+import { roles } from '@/data/content';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import SplitLines from '@/components/ui/SplitLines.astro';
+---
+
+<section id="role" aria-labelledby="roles-title" class="relative overflow-hidden bg-ink">
+  <div
+    data-rail
+    aria-hidden="true"
+    class="absolute top-label bottom-0 left-0 hidden w-rail origin-top bg-accent lg:block"
+  ></div>
+
+  <div class="gutter-x relative flex h-label items-center">
+    <SectionLabel as="h2" tone="paper" id="roles-title">
+      Role
+    </SectionLabel>
+  </div>
+
+  <ol class="gutter-x relative flex flex-col gap-16 pt-6 pb-20 lg:gap-0 lg:px-0 lg:pt-[2.75rem] lg:pb-[8.125rem]">
+    {roles.map((role) => (
+      <li
+        data-role
+        class="grid grid-cols-1 lg:h-[20rem] lg:even:h-[22.5rem] lg:last:h-[17.875rem] lg:grid-cols-[13.375rem_23.0625rem_25.9375rem_22.625rem]"
+      >
+        <p
+          aria-hidden="true"
+          class="flex font-display text-numeral-sm font-bold whitespace-nowrap lg:col-start-2 lg:text-numeral"
+        >
+          {/* flex: no inter-span whitespace — "_01" is a single word in Figma */}
+          <span class="text-line lg:text-ink">_</span>
+          <span data-role-digits class="inline-block text-accent">
+            {role.number}
+          </span>
+        </p>
+        <h3
+          data-reveal
+          data-role-title
+          class="mt-2 font-display text-h2-sm font-bold text-paper lg:mt-8 lg:text-h2"
+        >
+          <span class="sr-only">{role.number}. </span>
+          {role.title}
+        </h3>
+        <SplitLines class="mt-6 max-w-[22.625rem] font-body text-body-sm font-medium text-paper lg:mt-[9.875rem] lg:text-body">
+          {role.description}
+        </SplitLines>
+      </li>
+    ))}
+  </ol>
+</section>

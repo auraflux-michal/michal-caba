@@ -1,0 +1,65 @@
+---
+/**
+ * "Notes" — Figma 899:524 (4879–5823px, paper).
+ * List: 791px wide @ x569, 1px ink rules, rows padded 41/40 (rule included), columns 131 | 540 | auto.
+ */
+import { notes } from '@/data/content';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import SplitLines from '@/components/ui/SplitLines.astro';
+---
+
+<section id="notes" aria-labelledby="notes-title" class="bg-paper text-ink lg:h-[59rem]">
+  <div class="gutter-x flex h-label items-center">
+    <SectionLabel>Notes</SectionLabel>
+  </div>
+
+  <div class="gutter-x grid gap-12 pt-12 pb-24 lg:grid-cols-[1fr_49.4375rem] lg:gap-0 lg:pt-[6.5rem] lg:pr-inset lg:pb-0 lg:pl-inset">
+    <h2 id="notes-title" class="font-display text-h2-sm font-bold uppercase lg:text-h2">
+      <SplitLines as="span" class="block">
+        Dobre wieści
+        <br />Z mojego
+      </SplitLines>
+      <SplitLines as="span" class="block text-accent" delay={0.15}>
+        umysłu
+      </SplitLines>
+    </h2>
+
+    <div class="relative" data-notes>
+      <span
+        aria-hidden="true"
+        data-note-rule
+        class="absolute top-0 left-0 h-px w-full origin-left bg-ink"
+      ></span>
+      <ol>
+        {notes.map((note) => {
+          const Row = note.href ? 'a' : 'article';
+          return (
+            <li class="relative" data-note>
+              <span
+                aria-hidden="true"
+                data-note-rule
+                class="absolute -bottom-px left-0 h-px w-full origin-left bg-ink"
+              />
+              <Row
+                {...(note.href ? { href: note.href } : {})}
+                data-note-row
+                class="group grid grid-cols-[3.5rem_1fr] gap-y-2 pt-[2.0625rem] pb-8 lg:grid-cols-[8.1875rem_33.75rem_1fr] lg:pt-[2.5625rem] lg:pb-10"
+              >
+                <span class="pt-1 font-display text-label-sm uppercase lg:pt-[0.3125rem] lg:text-label">
+                  {note.number}
+                </span>
+                <h3 class="font-display text-h4-sm font-bold transition-transform duration-700 ease-out-expo group-hover:translate-x-3 lg:text-h4">
+                  {note.title}
+                </h3>
+                <span class="col-start-2 font-display text-label-sm text-accent uppercase lg:col-start-3 lg:pt-[0.3125rem] lg:text-right lg:text-label">
+                  <span class="sr-only">Czas czytania: </span>
+                  {note.readingTime}
+                </span>
+              </Row>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  </div>
+</section>

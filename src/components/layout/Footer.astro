@@ -1,0 +1,39 @@
+---
+/**
+ * Footer — Figma 901:644 (253px, 1px #272727 top rule). Middle column is anchored at 50% − 43px.
+ */
+import { site } from '@/data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="gutter-x relative grid gap-10 border-t border-line bg-ink pt-10 pb-16 font-display text-label-sm text-paper uppercase lg:block lg:h-[15.8125rem] lg:pb-0 lg:text-label">
+  <p>
+    {year} © {site.name}
+  </p>
+
+  <ul class="flex flex-col gap-4 lg:absolute lg:top-10 lg:left-[calc(50%-2.6875rem)]">
+    {site.socials.map((social) => (
+      <li>
+        <a href={social.href} target="_blank" rel="noopener" class="link-underline">
+          {social.label}
+          <span class="sr-only"> (otwiera się w nowej karcie)</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <p class="lg:absolute lg:top-10 lg:right-gutter lg:text-right">
+    Stworzone z miłością
+    <br />
+    przez
+    <a
+      href={site.auraflux.footerUrl}
+      target="_blank"
+      rel="noopener"
+      class="underline decoration-from-font underline-offset-auto transition-colors duration-300 hover:text-accent"
+    >
+      Auraflux.pl
+    </a>
+  </p>
+</footer>

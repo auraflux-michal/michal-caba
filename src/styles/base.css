@@ -1,0 +1,89 @@
+@layer base {
+  /*
+   * Fluid root: below lg the root stays at the browser default (respects user settings).
+   * From lg up, 1rem = 100vw / 90  →  exactly 16px @ 1440px, so every rem-based token
+   * maps 1:1 to the Figma frame and scales proportionally. Capped at 1920px.
+   */
+  html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+  }
+
+  /* --sbw = classic scrollbar width (set inline in <head>), so 1rem tracks the *content* width */
+  @media (min-width: 64rem) {
+    html {
+      font-size: calc((100vw - var(--sbw, 0px)) / 90);
+    }
+  }
+
+  @media (min-width: 120rem) {
+    html {
+      font-size: calc(1920px / 90);
+    }
+  }
+
+  body {
+    @apply bg-ink font-body text-paper antialiased;
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'kern' 1;
+  }
+
+  ::selection {
+    @apply bg-accent text-ink;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  img,
+  svg {
+    display: block;
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+/* ---------- Lenis (smooth scroll) ---------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* ---------- Motion bootstrapping ----------
+ * `html.is-animated` is set inline in <head> only when JS runs and the user allows motion,
+ * so content is never hidden for no-JS / reduced-motion visitors (progressive enhancement).
+ */
+html.is-animated [data-reveal] {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

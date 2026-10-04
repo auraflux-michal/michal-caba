@@ -1,0 +1,26 @@
+---
+/**
+ * Small uppercase rail label that opens every section (ROLE, BUDUJĘ, FILOZOFIA…).
+ * Figma: Space Grotesk Regular 18/28, positioned 40px / 24px from the section corner.
+ */
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'p'> {
+  tone?: 'ink' | 'paper';
+  /** Render as a heading when the label is the section's only title */
+  as?: 'p' | 'h2';
+}
+
+const { tone = 'ink', as: Tag = 'p', class: className, ...rest } = Astro.props;
+---
+
+<Tag
+  class:list={[
+    'font-display text-label-sm font-normal uppercase lg:text-label',
+    tone === 'ink' ? 'text-ink' : 'text-paper',
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</Tag>

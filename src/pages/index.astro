@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/layout/Header.astro';
+import IndexMenu from '@/components/layout/IndexMenu.astro';
+import Footer from '@/components/layout/Footer.astro';
+import Hero from '@/components/sections/Hero.astro';
+import About from '@/components/sections/About.astro';
+import Roles from '@/components/sections/Roles.astro';
+import Build from '@/components/sections/Build.astro';
+import Philosophy from '@/components/sections/Philosophy.astro';
+import Notes from '@/components/sections/Notes.astro';
+import Next from '@/components/sections/Next.astro';
+---
+
+<BaseLayout>
+  <Fragment slot="header">
+    <Header />
+    <IndexMenu />
+  </Fragment>
+
+  <Hero />
+  <About />
+  <Roles />
+  <Build />
+  <Philosophy />
+  <Notes />
+  <Next />
+
+  <Footer slot="footer" />
+</BaseLayout>

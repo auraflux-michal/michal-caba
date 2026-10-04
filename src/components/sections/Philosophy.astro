@@ -1,0 +1,54 @@
+---
+/**
+ * "Filozofia" — Figma 899:523 (3616–4880px, accent).
+ * "DALEJ" is offset 149px right / 31px up from "#1METR" — expressed in `em` so the
+ * composition holds at every font size. On scroll it literally moves "one metre further".
+ */
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import SplitLines from '@/components/ui/SplitLines.astro';
+---
+
+<section
+  id="filozofia"
+  aria-labelledby="philosophy-title"
+  class="relative overflow-hidden bg-accent text-ink lg:h-[78.9375rem]"
+>
+  <div class="gutter-x flex h-label items-center">
+    <SectionLabel>Filozofia</SectionLabel>
+  </div>
+
+  <div class="gutter-x pt-16 pb-24 lg:px-inset lg:pt-[11.25rem] lg:pb-0">
+    <h2
+      id="philosophy-title"
+      data-metr
+      data-reveal="custom"
+      class="font-display text-display-sm font-bold whitespace-nowrap lg:text-display"
+    >
+      <span class="block" data-metr-line>
+        #1METR
+      </span>
+      <span class="-mt-[0.155em] ml-[0.745em] block" data-metr-line data-metr-shift>
+        DALEJ
+      </span>
+    </h2>
+
+    <div class="mt-16 lg:mt-[6.6875rem] lg:pl-[38.75rem]">
+      <SplitLines as="p" class="max-w-[41.25rem] font-display text-h3-sm font-bold lg:text-h3">
+        Nie musisz zmieniać całego świata. Wystarczy, że przesuniesz coś o jeden metr.
+      </SplitLines>
+
+      <div class="mt-10 space-y-4 font-body text-body-sm font-medium lg:text-body">
+        <SplitLines delay={0.1}>
+          Siebie. Pomysł. Firmę. Relacje.
+          <br />
+          Nie chodzi o wielką rewolucję, tylko o ruch.
+        </SplitLines>
+        <SplitLines delay={0.2}>
+          A jutro?
+          <br />
+          Jeszcze metr.
+        </SplitLines>
+      </div>
+    </div>
+  </div>
+</section>

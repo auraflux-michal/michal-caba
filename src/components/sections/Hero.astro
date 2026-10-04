@@ -1,0 +1,81 @@
+---
+/**
+ * Hero — Figma 899:516 (0–800px).
+ * Desktop positions are absolute rem values taken 1:1 from the 1440 frame (1rem = 16px).
+ */
+import ArrowDown from '@/assets/icons/arrow-down.svg';
+---
+
+<section
+  id="start"
+  aria-labelledby="hero-title"
+  class="relative flex min-h-svh flex-col bg-ink pt-header lg:block lg:h-[50rem] lg:min-h-0 lg:pt-0"
+>
+  <div class="gutter-x flex flex-1 flex-col justify-center gap-10 py-16 lg:static lg:block lg:p-0">
+    <h1
+      id="hero-title"
+      data-hero-title
+      data-reveal="custom"
+      class="font-display text-h1-sm font-bold text-paper uppercase lg:absolute lg:top-[19.4375rem] lg:left-inset lg:text-h1"
+    >
+      <span class="block" data-hero-line>
+        Widzę
+      </span>
+      <span class="block text-accent" data-hero-line>
+        Potencjał
+      </span>
+      <span class="block" data-hero-line>
+        W ludziach
+      </span>
+    </h1>
+
+    <!-- Connector rule: accent → paper gradient, 387×2 @ (564, 471) -->
+    <span
+      aria-hidden="true"
+      data-hero-rule
+      data-reveal="custom"
+      class="hidden h-0.5 origin-left bg-linear-to-r from-accent to-paper lg:absolute lg:top-[29.4375rem] lg:left-[35.25rem] lg:block lg:w-[24.1875rem]"
+    ></span>
+
+    <p
+      data-hero-quote
+      data-reveal="custom"
+      class="max-w-[18rem] font-body text-lead-sm font-medium text-paper lg:absolute lg:top-[27.875rem] lg:left-[59.1875rem] lg:max-w-none lg:text-lead lg:whitespace-nowrap"
+    >
+      Lubię sprawdzać co się <br class="hidden lg:inline" />
+      stanie kiedy przesuniemy
+      <br class="hidden lg:inline" />
+      go o <span class="text-accent">#1metrDalej</span>
+    </p>
+  </div>
+
+  <!-- Bottom rail (Figma 899:538) — right half is the top of the "Człowiek" paper panel -->
+  <div class="grid h-header grid-cols-[1fr_auto] border-t border-line lg:absolute lg:inset-x-0 lg:bottom-0 lg:grid-cols-2">
+    <p
+      data-hero-meta
+      data-reveal="custom"
+      class="gutter-x flex items-center font-display text-label-sm whitespace-pre text-muted uppercase lg:text-label"
+    >
+      <span class="hidden sm:inline">
+        {'Founder\u00A0\u00A0/\u00A0\u00A0Strateg\u00A0\u00A0/\u00A0\u00A0Projektant'}
+      </span>
+      <span class="sm:hidden">Founder / Strateg</span>
+    </p>
+    <div class="gutter-x flex items-center justify-end border-ink lg:border-t lg:border-l lg:bg-paper">
+      <a
+        href="#czlowiek"
+        data-hero-meta
+        data-reveal="custom"
+        class="group inline-flex items-center gap-2 font-display text-label-sm whitespace-nowrap text-muted uppercase lg:text-label"
+      >
+        Wyrusz w podróż
+        <ArrowDown
+          aria-hidden="true"
+          width={24}
+          height={24}
+          class="size-6 -scale-y-100 transition-transform duration-500 ease-out-expo group-hover:translate-y-1"
+        />
+      </a>
+    </div>
+  </div>
+</section>

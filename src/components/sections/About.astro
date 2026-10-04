@@ -1,0 +1,65 @@
+---
+/**
+ * "Człowiek" — Figma 899:518 (portrait) + 899:517 (paper panel), 800–1600px.
+ * Portrait crop reproduces the Figma fill transform exactly (percentages of the 720×800 frame).
+ */
+import { Image } from 'astro:assets';
+import portrait from '@/assets/images/michal-portrait.png';
+import Tag from '@/components/ui/Tag.astro';
+import SplitLines from '@/components/ui/SplitLines.astro';
+---
+
+<section
+  id="czlowiek"
+  aria-labelledby="about-title"
+  class="grid bg-paper text-ink lg:h-[50rem] lg:grid-cols-2"
+>
+  <figure
+    data-parallax-frame
+    class="relative aspect-[720/800] overflow-hidden bg-silver lg:aspect-auto lg:h-full"
+  >
+    <Image
+      src={portrait}
+      alt="Michał Caba — portret"
+      widths={[720, 1080, 1440, 2048]}
+      sizes="(min-width: 1024px) 96vw, 192vw"
+      data-parallax-media
+      class="photo-mono absolute top-[12.76%] left-[-45.87%] h-[97.11%] w-[191.8%] max-w-none"
+    />
+    <Tag data-reveal data-pop class="absolute top-0 right-0">
+      Człowiek
+    </Tag>
+  </figure>
+
+  <div class="gutter-x flex flex-col border-ink py-16 lg:border-l lg:pt-[13.8125rem] lg:pr-inset lg:pb-10 lg:pl-inset">
+    <h2 id="about-title" class="font-display text-h2-sm font-bold lg:text-h2">
+      <SplitLines as="span" class="block">
+        Projektuje marki.
+        <br />
+        Buduję firmy.
+      </SplitLines>
+      <SplitLines as="span" class="block text-accent" delay={0.15}>
+        Upraszczam <br class="hidden lg:inline" />
+        trudne pytania.
+      </SplitLines>
+    </h2>
+
+    <SplitLines
+      class="mt-10 max-w-[35rem] font-body text-body-sm font-medium lg:text-body"
+      delay={0.3}
+    >
+      Tworzę rzeczy na styku <br class="hidden lg:inline" />
+      ludzkiej intuicji i technicznej
+      <br class="hidden lg:inline" />
+      precyzji
+    </SplitLines>
+
+    <p
+      data-reveal
+      data-fade
+      class="mt-16 font-display text-label-sm text-muted uppercase lg:mt-auto lg:text-label"
+    >
+      Nie robić więcej. Robić lepiej.
+    </p>
+  </div>
+</section>

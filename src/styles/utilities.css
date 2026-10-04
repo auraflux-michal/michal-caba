@@ -1,0 +1,46 @@
+/* Project-specific utilities (Tailwind v4 @utility → usable with variants, e.g. lg:gutter-x) */
+
+/* Outer page gutter: 20px mobile → 40px desktop (Figma) */
+@utility gutter-x {
+  padding-inline: 1.25rem;
+
+  @media (min-width: 64rem) {
+    padding-inline: var(--spacing-gutter);
+  }
+}
+
+/* Animated underline for text links (draws from left, retracts to right) */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: 0% 1px;
+  transition: background-size var(--duration-base) var(--ease-out-quart);
+
+  @media (hover: hover) {
+    &:hover {
+      background-position: 0% 100%;
+      background-size: 100% 1px;
+    }
+  }
+}
+
+/* Photography is graded to monochrome (Figma: mix-blend-luminosity over a neutral backdrop) */
+@utility photo-mono {
+  filter: grayscale(1);
+}
+
+/* Visually hidden but available to assistive tech */
+@utility sr-only-focusable {
+  &:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}

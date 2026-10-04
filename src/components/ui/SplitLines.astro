@@ -1,0 +1,18 @@
+---
+/**
+ * Semantic text wrapper flagged for the line-mask reveal (SplitText, see scripts/animations/reveal.ts).
+ * Renders any tag; content stays plain text in the HTML for SEO / no-JS.
+ */
+import type { HTMLTag, Polymorphic } from 'astro/types';
+
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
+  /** Delay (s) before the reveal starts once in view */
+  delay?: number;
+};
+
+const { as: Tag = 'p', delay, ...rest } = Astro.props;
+---
+
+<Tag data-reveal data-split-lines data-delay={delay} {...rest}>
+  <slot />
+</Tag>

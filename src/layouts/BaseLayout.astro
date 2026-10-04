@@ -1,0 +1,110 @@
+---
+/**
+ * Document shell: SEO/meta, self-hosted fonts (Astro Fonts API, preloaded + metric fallbacks),
+ * motion bootstrap and the global client script.
+ */
+import { Font } from 'astro:assets';
+import { getImage } from 'astro:assets';
+import '@/styles/global.css';
+import { site } from '@/data/site';
+import ogSource from '@/assets/images/michal-portrait.png';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = site.title, description = site.description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = await getImage({
+  src: ogSource,
+  width: 1200,
+  height: 630,
+  fit: 'cover',
+  format: 'jpg',
+});
+const ogImageUrl = new URL(ogImage.src, Astro.site);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: 'Founder / Strateg / Projektant',
+  url: canonical.href,
+  worksFor: { '@type': 'Organization', name: site.auraflux.name, url: 'https://auraflux.pl' },
+  sameAs: site.socials.map((social) => social.href),
+};
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={site.author} />
+    <meta name="theme-color" content={site.themeColor} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <Font cssVariable="--font-space-grotesk" preload />
+    <Font cssVariable="--font-manrope" preload />
+
+    <!--
+      Layout + motion bootstrap (render-blocking on purpose, tiny): measure the scrollbar for the
+      fluid rem scale, and flag the document before first paint so [data-reveal] elements start
+      hidden only when animations will actually run.
+      Failsafe: reveal everything if the animation bundle has not booted within 3s.
+    -->
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        // Width reserved by the scrollbar gutter (0 with overlay scrollbars). The gutter is set
+        // here too because this runs before the stylesheet has been applied.
+        root.style.scrollbarGutter = 'stable';
+        const setGutter = () =>
+          root.style.setProperty(
+            '--sbw',
+            `${Math.max(0, window.innerWidth - root.getBoundingClientRect().width)}px`,
+          );
+        setGutter();
+        window.addEventListener('resize', setGutter, { passive: true });
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        root.classList.add('is-animated');
+        setTimeout(() => {
+          if (!window.__motionReady) root.classList.remove('is-animated');
+        }, 3000);
+      })();
+    </script>
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only-focusable fixed top-2 left-2 z-[100] bg-accent px-4 py-2 font-display text-ink"
+    >
+      Przejdź do treści
+    </a>
+    <slot name="header" />
+    <main id="main">
+      <slot />
+    </main>
+    <slot name="footer" />
+
+    <script>
+      import '@/scripts/main';
+    </script>
+  </body>
+</html>

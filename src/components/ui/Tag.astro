@@ -1,0 +1,20 @@
+---
+/**
+ * Boxed accent tag (Figma 899:541 "CZŁOWIEK"): accent fill, 1px ink border, 24/8 padding.
+ */
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'span'>;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<span
+  class:list={[
+    'inline-flex items-center justify-center border border-ink bg-accent px-6 py-2 font-display text-label-sm text-ink uppercase lg:text-label',
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</span>
