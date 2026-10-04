@@ -16,18 +16,18 @@ export const site = {
    */
   indexable: false,
   author: 'Michał Caba',
-  /** Destination of the "Konsultacja" CTA */
-  consultationUrl: '#poczatek',
+  /** Destination of the "Konsultacja" CTA (external booking — opens in a new tab) */
+  consultationUrl: 'https://cal.com/michalcaba',
   auraflux: {
     name: 'Auraflux',
     url: 'https://auraflux.pl/?utm_source=michalcaba&utm_medium=referral&utm_campaign=build_section',
     footerUrl:
-      'https://auraflux.pl/?utm_source=badzblizej&utm_medium=referral&utm_campaign=footer_link',
+      'https://auraflux.pl/?utm_source=michalcaba&utm_medium=referral&utm_campaign=footer_link',
   },
   socials: [
-    { label: 'Linkedin', href: 'https://www.linkedin.com/in/michalcaba/' },
-    { label: 'Instagram', href: 'https://www.instagram.com/michalcaba/' },
-    { label: 'Facebook', href: 'https://www.facebook.com/michalcaba/' },
+    { label: 'Linkedin', href: 'https://www.linkedin.com/in/michal-caba/' },
+    { label: 'Instagram', href: 'https://www.instagram.com/cabamichal' },
+    { label: 'Facebook', href: 'https://www.facebook.com/michalcabaPL/' },
   ],
 } as const;
 

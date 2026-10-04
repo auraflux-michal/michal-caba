@@ -17,8 +17,13 @@ import { site } from '@/data/site';
   </a>
 
   <nav aria-label="Główna nawigacja" class="flex items-center gap-6 lg:gap-10">
-    <a href={site.consultationUrl} class="link-underline hidden sm:inline">
-      Konsultacja
+    <a
+      href={site.consultationUrl}
+      target="_blank"
+      rel="noopener"
+      class="link-underline hidden sm:inline"
+    >
+      Konsultacja<span class="sr-only"> (otwiera się w nowej karcie)</span>
     </a>
     <button
       type="button"

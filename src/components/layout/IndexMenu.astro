@@ -43,10 +43,12 @@ import { sections, site } from '@/data/site';
     <!-- Mobile: the header hides "Konsultacja" below sm, so it lives here -->
     <a
       href={site.consultationUrl}
+      target="_blank"
+      rel="noopener"
       data-menu-link
       class="link-underline font-bold focus-visible:outline-ink lg:hidden"
     >
-      Konsultacja
+      Konsultacja<span class="sr-only"> (otwiera się w nowej karcie)</span>
     </a>
     <ul class="flex gap-6 lg:gap-10">
       {site.socials.map((social) => (
