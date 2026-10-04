@@ -17,9 +17,9 @@ interface Props {
 const { title = site.title, description = site.description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const homepage = absoluteUrl('/', Astro.site);
-// Branded 1200×630 card rendered at build time (src/pages/og.png.ts)
+// Social card designed by Michał (public/og.png, 1200×630)
 const ogImageUrl = absoluteUrl('/og.png', Astro.site);
-const ogImageAlt = `${site.name}: Widzę potencjał w ludziach. Portret i hasło #1metrDalej.`;
+const ogImageAlt = `${site.name}: portret i hasło „Projektuję marki. Buduję firmy. Dostrzegam to, czego jeszcze nie ma.”`;
 const portrait = await getImage({ src: portraitSource, width: 800, format: 'jpg' });
 const portraitUrl = new URL(portrait.src, Astro.site).href;
 const jsonLd = buildJsonLd({ canonical, homepage, imageUrl: ogImageUrl, portraitUrl });

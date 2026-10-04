@@ -40,8 +40,8 @@ src/
 ## SEO & GEO
 
 - `<head>`: title/description, canonical, robots, Open Graph (`profile`), Twitter card, icons.
-- Social card: `/og.png` (1200×630) rendered at build time from `src/pages/og.png.ts`
-  (Satori + Resvg, brand fonts/colours). Edit the composition there.
+- Social card: `public/og.png` (1200×630, designed asset). Replace the file to update it;
+  social platforms cache previews, so re-scrape after changing it.
 - Structured data (`src/lib/seo.ts`): one schema.org `@graph`: WebSite → ProfilePage → Person
   (jobTitle, knowsAbout, hasOccupation, sameAs) ↔ Organization (Auraflux, founder).
 - Generated endpoints: `/robots.txt` (AI crawlers explicitly allowed), `/sitemap.xml`,
