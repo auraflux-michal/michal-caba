@@ -88,10 +88,10 @@ Mirrored in GSAP as custom eases `expo` / `inOutQuart` (`src/scripts/lib/gsap.ts
 | 2816-3616 (+76)    | `sections/Build.astro`        | Card overlaps “Filozofia” by 76px, as designed           |
 | 3616-4879          | `sections/Philosophy.astro`   | `DALEJ` offset in `em` (0.745em / −0.155em)              |
 | 4879-5823          | `sections/Notes.astro`        | Rows render as links once `href` is set in data          |
-| 5823-6832          | `sections/Next.astro`         | Portrait bottom-aligned to footer rule                   |
-| 6832-7085          | `layout/Footer.astro`         | Middle column at 50% − 43px                              |
+| 5823-6931          | `sections/Next.astro`         | Figma 910:704: content column x=700 (shared with footer), portrait + `ui/CtaRow` "Porozmawiajmy" (booking) |
+| 6931-7184          | `layout/Footer.astro`         | Middle column at 50% - 20px (x=700)                      |
 
-UI primitives: `ui/SectionLabel`, `ui/Tag`, `ui/SplitLines`. Layout: `layout/Header`, `layout/IndexMenu`.
+UI primitives: `ui/SectionLabel`, `ui/Tag`, `ui/SplitLines`, `ui/CtaRow`. Layout: `layout/Header`, `layout/IndexMenu`.
 
 ## 4. Motion system
 

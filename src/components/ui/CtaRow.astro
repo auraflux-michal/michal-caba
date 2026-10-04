@@ -1,0 +1,52 @@
+---
+/**
+ * Full-width CTA row (Figma 899:572 "Odwiedź Auraflux", 910:698 "Porozmawiaj"):
+ * 1px top rule, 24px vertical padding, bold 18/28 uppercase label, 24px arrow.
+ * Hover: accent rule draws across, arrow exits top-right while a twin enters bottom-left.
+ * Always opens in a new tab (external destinations only).
+ */
+import ArrowInk from '@/assets/icons/arrow-up-right.svg';
+import ArrowPaper from '@/assets/icons/arrow-up-right-light.svg';
+
+interface Props {
+  href: string;
+  tone?: 'ink' | 'paper';
+  class?: string;
+}
+
+const { href, tone = 'ink', class: className } = Astro.props;
+const Arrow = tone === 'ink' ? ArrowInk : ArrowPaper;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener"
+  data-cta
+  class:list={[
+    'group relative flex items-start justify-between border-t py-6 font-display text-label-sm font-bold uppercase lg:text-label',
+    tone === 'ink' ? 'border-ink text-ink' : 'border-paper text-paper',
+    className,
+  ]}
+>
+  <span
+    aria-hidden="true"
+    class="absolute -top-px left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-700 ease-out-expo group-hover:scale-x-100"
+  ></span>
+  <span>
+    <slot />
+    <span class="sr-only"> (otwiera się w nowej karcie)</span>
+  </span>
+  <span class="relative size-6 overflow-hidden" aria-hidden="true">
+    <Arrow
+      width={24}
+      height={24}
+      class="size-6 transition-transform duration-500 ease-out-expo group-hover:translate-x-6 group-hover:-translate-y-6"
+    />
+    <Arrow
+      width={24}
+      height={24}
+      class="absolute inset-0 size-6 -translate-x-6 translate-y-6 transition-transform duration-500 ease-out-expo group-hover:translate-0"
+    />
+  </span>
+</a>

@@ -6,9 +6,9 @@
 import { Image } from 'astro:assets';
 import photo from '@/assets/images/michal-auraflux.jpg';
 import LogoAuraflux from '@/assets/icons/logo-auraflux.svg';
-import ArrowUpRight from '@/assets/icons/arrow-up-right.svg';
 import SectionLabel from '@/components/ui/SectionLabel.astro';
 import SplitLines from '@/components/ui/SplitLines.astro';
+import CtaRow from '@/components/ui/CtaRow.astro';
 import { site } from '@/data/site';
 ---
 
@@ -81,32 +81,8 @@ import { site } from '@/data/site';
       </SplitLines>
     </div>
 
-    <a
-      href={site.auraflux.url}
-      target="_blank"
-      rel="noopener"
-      data-cta
-      class="group relative mt-16 flex items-start justify-between border-t border-ink py-6 font-display text-label-sm font-bold uppercase lg:mt-auto lg:text-label"
-    >
-      <span
-        aria-hidden="true"
-        class="absolute -top-px left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-700 ease-out-expo group-hover:scale-x-100"
-      ></span>
-      <span>
-        Odwiedź Auraflux<span class="sr-only"> (otwiera się w nowej karcie)</span>
-      </span>
-      <span class="relative size-6 overflow-hidden" aria-hidden="true">
-        <ArrowUpRight
-          width={24}
-          height={24}
-          class="size-6 transition-transform duration-500 ease-out-expo group-hover:translate-x-6 group-hover:-translate-y-6"
-        />
-        <ArrowUpRight
-          width={24}
-          height={24}
-          class="absolute inset-0 size-6 -translate-x-6 translate-y-6 transition-transform duration-500 ease-out-expo group-hover:translate-0"
-        />
-      </span>
-    </a>
+    <CtaRow href={site.auraflux.url} class="mt-16 lg:mt-auto">
+      Odwiedź Auraflux
+    </CtaRow>
   </div>
 </section>

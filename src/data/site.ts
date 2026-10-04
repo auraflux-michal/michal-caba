@@ -24,7 +24,7 @@ export const site = {
     familyName: 'Caba',
     jobTitles: ['Strateg marki', 'Projektant', 'Founder Auraflux'],
     summary:
-      'Michał Caba jest strategiem marki, projektantem i założycielem studia Auraflux (strategia, branding, technologia). Tworzy rzeczy na styku ludzkiej intuicji i technicznej precyzji. Jego filozofia #1metrDalej zakłada, że nie trzeba zmieniać całego świata: wystarczy przesunąć coś o jeden metr.',
+      'Michał Caba jest strategiem marki, projektantem i założycielem studia Auraflux (strategia, branding, technologia). Od ponad 15 lat porusza się między strategią, designem, technologią i biznesem. Projektuje marki i pomaga ludziom zamieniać pomysły w rzeczy, które naprawdę istnieją. Jego filozofia #1metrDalej zakłada, że nie trzeba zmieniać całego świata: wystarczy przesunąć coś o jeden metr.',
     knowsAbout: [
       'Strategia marki',
       'Branding',

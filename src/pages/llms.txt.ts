@@ -13,7 +13,7 @@ export const GET: APIRoute = ({ site: siteUrl }) => {
 
 > ${site.person.summary}
 
-${site.name}: ${site.person.jobTitles.join(', ')}. Motto: "Widzę potencjał ${heroPhrases.map((phrase) => phrase.toLowerCase()).join(', ')}". Projektuje marki, buduje firmy i upraszcza trudne pytania.
+${site.name}: ${site.person.jobTitles.join(', ')}. Motto: "Widzę potencjał ${heroPhrases.map((phrase) => phrase.toLowerCase()).join(', ')}". Projektuje marki, buduje firmy i dostrzega to, czego jeszcze nie ma.
 
 ## Role
 

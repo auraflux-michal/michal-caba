@@ -2,6 +2,8 @@
 /**
  * "Człowiek": Figma 899:518 (portrait) + 899:517 (paper panel), 800-1600px.
  * Portrait crop reproduces the Figma fill transform exactly (percentages of the 720×800 frame).
+ * Copy updated after Figma (longer headline + bio): top padding 160px (Figma 221) keeps the
+ * tagline clear of the bio.
  */
 import { Image } from 'astro:assets';
 import portrait from '@/assets/images/michal-portrait.png';
@@ -31,7 +33,7 @@ import SplitLines from '@/components/ui/SplitLines.astro';
     </Tag>
   </figure>
 
-  <div class="gutter-x flex flex-col border-ink py-16 lg:border-l lg:pt-[13.8125rem] lg:pr-inset lg:pb-10 lg:pl-inset">
+  <div class="gutter-x flex flex-col border-ink py-16 lg:border-l lg:pt-[10rem] lg:pr-inset lg:pb-10 lg:pl-inset">
     <h2 id="about-title" class="font-display text-h2-sm font-bold lg:text-h2">
       <SplitLines as="span" class="block">
         Projektuję marki.
@@ -39,8 +41,7 @@ import SplitLines from '@/components/ui/SplitLines.astro';
         Buduję firmy.
       </SplitLines>
       <SplitLines as="span" class="block text-accent" delay={0.15}>
-        <span class="lg:block">Upraszczam</span>
-        <span class="lg:block">trudne pytania.</span>
+        Dostrzegam to, czego jeszcze nie ma.
       </SplitLines>
     </h2>
 
@@ -48,9 +49,9 @@ import SplitLines from '@/components/ui/SplitLines.astro';
       class="mt-10 max-w-[35rem] font-body text-body-sm font-medium lg:text-body"
       delay={0.3}
     >
-      <span class="lg:block">Tworzę rzeczy na styku</span>
-      <span class="lg:block">ludzkiej intuicji i technicznej</span>
-      <span class="lg:block">precyzji</span>
+      Jestem Michał. Od ponad 15 lat poruszam się między strategią, designem, technologią i
+      biznesem. Projektuję marki i pomagam ludziom zamieniać pomysły w rzeczy, które naprawdę
+      istnieją.
     </SplitLines>
 
     <p

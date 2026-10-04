@@ -1,18 +1,22 @@
 ---
 /**
- * "Początek": Figma 899:525 (5823-6832px, ink): "What’s next?" + closing portrait.
+ * "Początek": Figma 910:704 (5823-6931px, ink): "What’s next?", closing line, invitation,
+ * portrait and the "Porozmawiajmy" CTA (booking).
+ * Desktop content column starts at x=700 (shared with the footer's middle column), 700px wide.
  * Portrait crop reproduces the Figma fill transform of 901:639 (198.67×245.34 frame).
  */
 import { Image } from 'astro:assets';
 import portrait from '@/assets/images/michal-footer.png';
 import SectionLabel from '@/components/ui/SectionLabel.astro';
 import SplitLines from '@/components/ui/SplitLines.astro';
+import CtaRow from '@/components/ui/CtaRow.astro';
+import { site } from '@/data/site';
 ---
 
 <section
   id="poczatek"
   aria-labelledby="next-title"
-  class="relative overflow-hidden bg-ink text-paper lg:h-[63.0625rem]"
+  class="relative overflow-hidden bg-ink text-paper lg:h-[69.25rem]"
 >
   <div class="gutter-x flex h-label items-center">
     <SectionLabel tone="paper">Początek</SectionLabel>
@@ -34,28 +38,44 @@ import SplitLines from '@/components/ui/SplitLines.astro';
     </h2>
   </div>
 
-  <div class="gutter-x mt-12 flex flex-col gap-12 lg:absolute lg:top-[32.25rem] lg:bottom-0 lg:left-[60rem] lg:mt-0 lg:w-[25rem] lg:justify-between lg:gap-0 lg:px-0">
-    <p class="font-display text-h3-sm font-bold lg:text-h3">
-      <SplitLines as="span" class="block">
-        Już nie wiem...
-      </SplitLines>
-      <SplitLines as="span" class="block text-accent" delay={0.15}>
-        dlatego jest ciekawie
-      </SplitLines>
-    </p>
+  {/* Content column: x 700→1400, top 623 (text + portrait), CTA at 911 */}
+  <div class="gutter-x mt-12 pb-20 lg:absolute lg:top-[38.9375rem] lg:left-[43.75rem] lg:mt-0 lg:w-[43.75rem] lg:p-0">
+    <div class="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
+      <div class="lg:w-[28.5625rem]">
+        <p class="font-display text-h3-sm font-bold lg:text-h3">
+          <SplitLines as="span" class="block">
+            Już nie wiem...
+          </SplitLines>
+          <SplitLines as="span" class="block text-accent" delay={0.15}>
+            dlatego jest ciekawie
+          </SplitLines>
+        </p>
+        <SplitLines
+          class="mt-6 max-w-[23.9375rem] font-body lg:max-w-none lg:whitespace-nowrap text-body-sm font-medium lg:mt-10 lg:text-body"
+          delay={0.25}
+        >
+          <span class="lg:block">Masz coś, w czym widzisz potencjał,</span>
+          <span class="lg:block">ale nie wiesz, jaki zrobić następny ruch?</span>
+        </SplitLines>
+      </div>
 
-    <figure
-      data-reveal
-      data-clip-up
-      class="relative h-[15.3338rem] w-[12.4167rem] overflow-hidden bg-silver"
-    >
-      <Image
-        src={portrait}
-        alt="Michał Caba"
-        widths={[240, 480, 720]}
-        sizes="(min-width: 1024px) 17vw, 240px"
-        class="photo-mono absolute top-[-0.79%] left-[-7.46%] h-[121.1%] w-[119.68%] max-w-none"
-      />
-    </figure>
+      <figure
+        data-reveal
+        data-clip-up
+        class="relative h-[15.3338rem] w-[12.4167rem] shrink-0 overflow-hidden bg-silver"
+      >
+        <Image
+          src={portrait}
+          alt="Michał Caba"
+          widths={[240, 480, 720]}
+          sizes="(min-width: 1024px) 17vw, 240px"
+          class="photo-mono absolute top-[-0.79%] left-[-7.46%] h-[121.1%] w-[119.68%] max-w-none"
+        />
+      </figure>
+    </div>
+
+    <CtaRow href={site.consultationUrl} tone="paper" class="mt-10 lg:mt-[2.6875rem]">
+      Porozmawiajmy
+    </CtaRow>
   </div>
 </section>

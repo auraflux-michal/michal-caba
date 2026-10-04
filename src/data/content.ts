@@ -15,20 +15,18 @@ export const roles: Role[] = [
   {
     number: '01',
     title: 'Strateg',
-    description:
-      'Patrzę z dystansu i szukam tego, co naprawdę ma znaczenie. Zadaję pytania, które trzeba zadać, zanim zaczniemy szukać rozwiązania.',
+    description: 'Patrzę z dystansu, łączę kropki i szukam tego, co naprawdę ma znaczenie.',
   },
   {
     number: '02',
     title: 'Projektant',
-    description:
-      'Patrzę z dystansu i szukam tego, co naprawdę ma znaczenie. Zadaję pytania, które trzeba zadać, zanim zaczniemy szukać rozwiązania.',
+    description: 'Upraszczam złożone rzeczy i nadaję pomysłom formę, która wydaje się oczywista.',
   },
   {
     number: '03',
     title: 'Founder',
     description:
-      'Patrzę z dystansu i szukam tego, co naprawdę ma znaczenie. Zadaję pytania, które trzeba zadać, zanim zaczniemy szukać rozwiązania.',
+      'Buduję, żeby sprawdzić, co się stanie, kiedy dobry pomysł spotka się z rzeczywistością.',
   },
 ];
 
