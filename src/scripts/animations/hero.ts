@@ -11,14 +11,28 @@ const SWAP_DURATION = 0.8;
 const INTRO_END = 2.2; // s: when the intro timeline has settled
 const CURRENT_EVERY = 3.2; // s: pause between two current pulses
 
-export function initHero() {
+/**
+ * @param intro play the load choreography. `false` (content already revealed by the failsafe on
+ * slow connections) starts only the ambient effects, never hiding what is on screen.
+ */
+export function initHero({ intro = true }: { intro?: boolean } = {}) {
   const title = document.querySelector<HTMLElement>('[data-hero-title]');
   if (!title) return;
 
-  const header = document.querySelector('[data-header]');
-  const lines = title.querySelectorAll('[data-hero-line]');
   const rule = document.querySelector('[data-hero-rule]');
   const quote = document.querySelector<HTMLElement>('[data-hero-quote]');
+  const startAmbient = () => {
+    initPhraseRotator(title);
+    initCurrent(rule, quote?.querySelector<HTMLElement>('[data-hero-tag]') ?? null);
+  };
+
+  if (!intro) {
+    startAmbient();
+    return;
+  }
+
+  const header = document.querySelector('[data-header]');
+  const lines = title.querySelectorAll('[data-hero-line]');
   const meta = document.querySelectorAll('[data-hero-meta]');
 
   unveil([header, title, rule, quote, ...meta].filter(Boolean));
@@ -56,10 +70,7 @@ export function initHero() {
   }
 
   // Fixed start time instead of tl.onComplete: robust against anything extending the timeline
-  gsap.delayedCall(INTRO_END, () => {
-    initPhraseRotator(title);
-    initCurrent(rule, quote?.querySelector<HTMLElement>('[data-hero-tag]') ?? null);
-  });
+  gsap.delayedCall(INTRO_END, startAmbient);
 
   return tl;
 }
@@ -101,9 +112,12 @@ function initPhraseRotator(title: HTMLElement) {
     swap();
     timer.restart(true);
   });
+  timer.pause(); // the visibility gate below starts it only when the hero is actually on screen
 
   whileVisible(title, {
-    resume: () => timer.restart(true), // full interval after resuming
+    resume: () => {
+      timer.restart(true); // full interval after resuming
+    },
     pause: () => timer.pause(),
   });
 }
@@ -144,38 +158,52 @@ function initCurrent(rule: Element | null, tag: HTMLElement | null) {
       );
   }
 
-  // Only runs when the rule is actually rendered (lg+) and on screen
-  const isShown = () => (rule as HTMLElement).offsetWidth > 0;
+  // Runs only while the rule is rendered (it is display:none below lg, per its own CSS) and on
+  // screen. Breakpoint changes are picked up on ScrollTrigger's resize refresh: no duplicated
+  // media query here.
   whileVisible(rule, {
-    resume: () => isShown() && pulse.play(),
+    when: () => (rule as HTMLElement).offsetWidth > 0,
+    resume: () => pulse.play(),
     pause: () => pulse.pause(),
   });
 }
 
-/** Calls `resume` / `pause` as the element enters/leaves the viewport or the tab is hidden. */
+/**
+ * Calls `resume` / `pause` as the element enters/leaves the viewport, the tab is hidden, or the
+ * optional `when` predicate changes (re-evaluated on every ScrollTrigger refresh, e.g. resize).
+ */
 function whileVisible(
   trigger: Element,
-  { resume, pause }: { resume: () => void; pause: () => void },
+  {
+    resume,
+    pause,
+    when = () => true,
+  }: { resume: () => void; pause: () => void; when?: () => boolean },
 ) {
-  let inView = true;
   let running = false;
+  let active = false;
 
   const sync = () => {
-    const shouldRun = inView && !document.hidden;
-    if (shouldRun && !running) resume();
-    if (!shouldRun && running) pause();
+    const shouldRun = active && !document.hidden && when();
+    if (shouldRun === running) return;
     running = shouldRun;
+    if (shouldRun) resume();
+    else pause();
   };
 
+  // State comes from the callback's own `self` (ScrollTrigger may fire these synchronously
+  // during create(), before its return value is assigned anywhere).
+  const track = (self: ScrollTrigger) => {
+    active = self.isActive;
+    sync();
+  };
   ScrollTrigger.create({
     trigger,
     start: 'top bottom',
     end: 'bottom top',
-    onToggle: (self) => {
-      inView = self.isActive;
-      sync();
-    },
+    onToggle: track,
+    onRefresh: track,
   });
+
   document.addEventListener('visibilitychange', sync);
-  sync();
 }

@@ -24,8 +24,8 @@ declare global {
 async function boot() {
   const reducedMotion = prefersReducedMotion();
 
-  initAnchorLinks();
   const menu = initMenu(reducedMotion);
+  initAnchorLinks(menu);
 
   if (reducedMotion) {
     window.__motionReady = true;
@@ -34,15 +34,21 @@ async function boot() {
 
   await document.fonts.ready;
 
+  // Slow connection: the 3s failsafe in <head> already revealed the content. Never hide and
+  // replay what the visitor is reading: skip the reveal choreography, keep everything else.
+  const choreography = document.documentElement.classList.contains('is-animated');
+
   initSmoothScroll();
   initHeader(menu.isOpen);
-  initHero();
-  initReveals();
-  initParallax();
-  initRoles();
-  initPhilosophy();
-  initNotes();
-  initNext();
+  initHero({ intro: choreography });
+  if (choreography) {
+    initReveals();
+    initParallax();
+    initRoles();
+    initPhilosophy();
+    initNotes();
+    initNext();
+  }
 
   window.__motionReady = true;
   ScrollTrigger.refresh();

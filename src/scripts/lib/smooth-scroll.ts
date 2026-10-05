@@ -39,17 +39,25 @@ export function scrollToTarget(target: HTMLElement, immediate = false) {
   history.replaceState(null, '', `#${target.id}`);
 }
 
-export function initAnchorLinks() {
+import type { initMenu } from '@/scripts/animations/menu';
+
+/** Single in-page navigation path for every `a[href^="#"]`, including the INDEX menu links. */
+export function initAnchorLinks(menu?: ReturnType<typeof initMenu>) {
   document.addEventListener('click', (event) => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey) return;
     const link = (event.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
-    if (!link || link.hasAttribute('data-menu-link')) return;
+    if (!link) return;
 
     const id = link.getAttribute('href')!.slice(1);
     const target = id ? document.getElementById(id) : null;
     if (!target) return;
 
     event.preventDefault();
+    // Scrolling is locked while the INDEX menu is open or closing: close it, then jump
+    if (menu?.isBusy()) {
+      menu.close(() => scrollToTarget(target, true));
+      return;
+    }
     scrollToTarget(target);
   });
 }
