@@ -14,11 +14,11 @@ import Mirror from '@/components/lustro/Mirror.astro';
 import LustroIntro from '@/components/lustro/LustroIntro.astro';
 import LustroStep from '@/components/lustro/LustroStep.astro';
 import LustroResult from '@/components/lustro/LustroResult.astro';
+import LustroNav from '@/components/lustro/LustroNav.astro';
 import { lustroCopy, lustroSections, lustroStages } from '@/data/lustro';
 import { absoluteUrl, assetPath } from '@/lib/seo';
 
 const shareUrl = absoluteUrl('/lustro', Astro.site);
-const label = 'font-display text-label-sm uppercase lg:text-label';
 ---
 
 <BaseLayout
@@ -41,58 +41,62 @@ const label = 'font-display text-label-sm uppercase lg:text-label';
     class="bg-paper text-ink lg:grid lg:grid-cols-2"
   >
     <aside
-      aria-label="Odbicie Twojej marki"
+      aria-label="Twoje odbicie"
       class="relative overflow-hidden bg-ink pt-header text-paper lg:sticky lg:top-0 lg:flex lg:h-svh lg:flex-col"
     >
-      <div class="gutter-x flex h-label items-center">
-        <SectionLabel tone="paper">Lustro</SectionLabel>
+      <div class="gutter-x flex h-label items-center lg:px-inset">
+        <SectionLabel tone="paper">Twoje odbicie</SectionLabel>
       </div>
 
+      {/* Mirror + live read-out: the score is the hero of this panel */}
       <div
         data-reveal="custom"
-        class="gutter-x flex items-center gap-6 pb-8 lg:flex-1 lg:justify-center lg:pb-0"
+        class="gutter-x flex items-center gap-5 pb-8 lg:flex-1 lg:gap-12 lg:px-inset lg:pb-0"
       >
-        <Mirror class="max-w-24 shrink-0 lg:max-w-[min(20rem,calc((100svh-var(--spacing-header)*2-var(--spacing-label))*0.7))]" />
-        {/* Mobile caption (desktop: bottom rail) */}
-        <div class="lg:hidden" aria-hidden="true">
-          <p class:list={[label, 'text-muted']}>
-            Odbicie: <span data-mirror-percent>0%</span>
+        <Mirror class="w-24 shrink-0 lg:w-[min(16rem,calc((100svh-var(--spacing-header)-var(--spacing-label)-9rem)*0.74))]" />
+        <div aria-live="polite">
+          <p class="flex font-display text-[3.5rem] leading-none font-bold whitespace-nowrap lg:text-[7rem]">
+            <span data-mirror-percent>0</span>
+            <span class="text-accent">%</span>
           </p>
-          <p data-mirror-stage class="mt-1 font-display text-h4-sm font-bold">
+          <p data-mirror-stage class="mt-2 font-display text-h4-sm font-bold lg:mt-4 lg:text-h4">
             {lustroStages[0].name}
+          </p>
+          <p class="mt-3 hidden max-w-[16rem] font-body text-body-sm font-medium text-paper/60 lg:block">
+            Każde zaznaczenie rozjaśnia lustro.
           </p>
         </div>
       </div>
 
-      {/* Bottom rail, as in the hero: label left, live stage right */}
-      <div
-        class="hidden h-header grid-cols-[auto_1fr] items-center gap-6 border-t border-line lg:grid"
-        aria-live="polite"
+      {/* Stage ladder: where you are on the 5-step scale */}
+      <ol
+        class="hidden grid-cols-5 gap-3 border-t border-line px-inset py-6 lg:grid"
+        aria-label="Etapy"
       >
-        <p class:list={[label, 'gutter-x text-muted']}>
-          Odbicie:{' '}
-          <span data-mirror-percent class="text-paper">
-            0%
-          </span>
-        </p>
-        <p
-          data-mirror-stage
-          class:list={[label, 'gutter-x truncate text-right font-bold text-paper']}
-        >
-          {lustroStages[0].name}
-        </p>
-      </div>
+        {lustroStages.map((stage, index) => (
+          <li data-ladder-step data-state={index === 0 ? 'here' : 'future'} class="group/step">
+            <span class="block h-0.5 bg-paper/15 transition-colors duration-700 group-data-[state=here]/step:bg-accent group-data-[state=past]/step:bg-paper" />
+            <span class="mt-3 block font-display text-label-sm text-muted uppercase group-data-[state=here]/step:text-accent">
+              _0{index + 1}
+            </span>
+            <span class="mt-1 block font-display text-[0.8125rem] leading-tight text-muted uppercase transition-colors group-data-[state=here]/step:font-bold group-data-[state=here]/step:text-paper group-data-[state=past]/step:text-paper/70">
+              {stage.name}
+            </span>
+          </li>
+        ))}
+      </ol>
     </aside>
 
     <div
       data-lustro-panel
       data-reveal="custom"
-      class="gutter-x scroll-mt-header pt-12 pb-24 lg:px-inset lg:pt-[calc(var(--spacing-header)+6.5rem)] lg:pb-32"
+      class="gutter-x pt-10 lg:px-inset lg:pt-[calc(var(--spacing-header)+4rem)] lg:pb-0"
     >
       <LustroIntro />
       {lustroSections.map((section, index) => (
         <LustroStep section={section} index={index} total={lustroSections.length} />
       ))}
+      <LustroNav />
       <LustroResult shareUrl={shareUrl} />
     </div>
   </section>

@@ -91,23 +91,30 @@ Mirrored in GSAP as custom eases `expo` / `inOutQuart` (`src/scripts/lib/gsap.ts
 | 5823-6931          | `sections/Next.astro`         | Figma 910:704: content column x=700 (shared with footer), portrait + `ui/CtaRow` "Porozmawiajmy" (booking) |
 | 6931-7184          | `layout/Footer.astro`         | Middle column at 50% - 20px (x=700)                      |
 
-UI primitives: `ui/SectionLabel`, `ui/Tag`, `ui/SplitLines`, `ui/CtaRow` (link, or `<button>` without `href`), `ui/EmailLink`. Layout: `layout/Header`, `layout/IndexMenu` (section links become `/#id` on subpages via `sectionHref`).
+UI primitives: `ui/SectionLabel`, `ui/Tag`, `ui/SplitLines`, `ui/CtaRow` (link, or `<button>` without `href`), `ui/Button` (solid/ghost action), `ui/EmailLink`. Layout: `layout/Header`, `layout/IndexMenu` (section links become `/#id` on subpages via `sectionHref`).
 
 ### Subpage `/lustro` (no Figma frame: built from the system above)
 
-- **Split:** left half = sticky ink panel (`h-svh`) with the mirror and a hero-style bottom rail
-  (`ODBICIE: n%` / stage); right half = paper quiz panel, `inset` padding, top `header + 6.5rem`
-  (same as Notes). Mobile: compact mirror strip (96px) above the quiz.
-- **Mirror** (`lustro/Mirror.astro`): silver → muted frame; reflection in brand colours (paper sky
-  warming to accent, accent sun, silver/muted hills, ink silhouette). `--fog` 1→0 drives blur + paper mist.
-- **Type:** H1 uppercase `h1` with accent second line; step titles `h2` (sentence case, like About);
-  meta in `label` (`_01  KROK 1 Z 7`, accent numeral); item titles `lead` bold display, hints `body-sm` ink/65.
-- **Checklist rows:** 1px ink rules (Notes rhythm), square checkbox → accent fill, accent rule draws
-  under a ticked row. No rounded corners anywhere (prototype pills/cards removed).
-- **Actions:** `CtaRow` for Dalej / Pokaż wynik / Wyślij / Umów; Wstecz + share/restart as `link-underline` labels.
-- **Result:** stage in `h1`, 5-step scale of 2px rules (past ink, current accent, future ink/20);
-  potential rows like Notes; sign-up in an ink block (underline inputs, accent focus); confetti in token colours, squares only.
-- **Light only:** the site has no dark theme, so neither does `/lustro` (prototype's dark mode dropped on purpose).
+UX rules (v2, after review "mało intuicyjne"): start button above the fold, navigation always in
+reach, the score is the hero, one obvious primary action per screen.
+
+- **Split:** left half = sticky ink panel (`h-svh`): mirror + live score (`n%`, 7rem, `%` in accent)
+  + stage name, and a 5-step stage ladder at the bottom (past paper, current accent).
+  Right half = paper quiz panel. Mobile: compact mirror + score strip above the quiz.
+- **Mirror** (`lustro/Mirror.astro`): silver → muted frame; reflection in brand colours. `--fog`
+  follows `1 - sqrt(score)` so the very first ticks visibly clear the glass.
+- **Intro:** label, H1 (accent second line), lead, solid **Spójrz w lustro →** above the fold;
+  saved runs show "Kontynuuj" + "Zacznij od nowa"; then 3-step "how it works" and Michał's note.
+- **Step:** "Krok n z 7" + 7-segment progress (done ink, current accent), H2, why, "Zaznacz to, co już
+  masz", rows with 1px rules; ticked row = accent box + accent rule + faint accent wash.
+- **Nav** (`lustro/LustroNav.astro`): sticky to the bottom of the quiz panel on every breakpoint
+  (stops before the footer): ghost **← Wstecz**, "n z m zaznaczone" (+ mirror % on mobile), solid **Dalej →** /
+  **Pokaż wynik →**.
+- **Buttons:** `ui/Button` (new, Tag's box language: accent fill, 1px ink border, hover → ink) for
+  in-page actions; `ui/CtaRow` stays for outbound links (booking).
+- **Result:** stage in H1, description, solid **Odbierz plan działania ↓** (jumps to the sign-up),
+  potential rows like Notes, ink sign-up block, booking CTA, share / restart.
+- **Light only:** the site has no dark theme, so neither does `/lustro`.
 
 ## 4. Motion system
 
@@ -123,9 +130,9 @@ All motion is declared in markup and implemented in `src/scripts/animations/*` (
 
 Signature moments: hero intro timeline · rotating headline line (W ludziach → W firmach → W pomysłach) · "current" pulse running along the hero rule into #1metrDalej · role numerals sliding out of the rail · **`DALEJ` scrubbed
 “one metre further”** · notes hairlines drawing · INDEX overlay curtain.
-`/lustro` (`scripts/lustro`): screens leave (fade-up, 0.35s) and enter (staggered fade-up, `expo`),
-progress rule grows step to step, mirror fog + % counter tween on every tick, checkbox pops (`back.out`),
-stage name swaps with a short lift. Reduced motion: instant swaps, no confetti.
+`/lustro` (`scripts/lustro`): new screen appears instantly at the top and its rows cascade in
+(fade-up 0.8s, 0.05s stagger); mirror fog + % counter tween on every tick, checkbox pops (`back.out`),
+a new stage swaps its name with a short lift and pulses the mirror. Reduced motion: instant swaps, no confetti.
 Lenis drives smooth scroll on GSAP’s ticker. `html.is-animated` (set inline before paint) hides
 reveal targets only when motion will actually run; a 3s failsafe unhides everything.
 

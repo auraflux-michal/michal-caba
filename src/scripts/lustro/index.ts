@@ -58,7 +58,6 @@ export function initLustro() {
 
   let state = load();
   let current: HTMLElement | null = null;
-  let busy = false;
 
   const save = () => {
     try {
@@ -72,6 +71,9 @@ export function initLustro() {
     [...panel.querySelectorAll<HTMLElement>('[data-screen]')].map((el) => [el.dataset.screen!, el]),
   );
   const inputs = [...panel.querySelectorAll<HTMLInputElement>('input[data-item]')];
+  const nav = panel.querySelector<HTMLElement>('[data-lustro-nav]');
+  const navCount = nav?.querySelector('[data-nav-count]');
+  const navNext = nav?.querySelector('[data-nav-next-label]');
   const percent = () => lustroScore(state.yes);
 
   /* ---------- Rendering ---------- */
@@ -81,18 +83,25 @@ export function initLustro() {
     updateMirror(p, lustroStageFor(p).name, animate);
   };
 
-  const refreshCounters = () => {
-    lustroSections.forEach((section, s) => {
-      const counter = screens.get(String(s))?.querySelector('[data-step-counter]');
-      if (!counter) return;
-      const done = section.items.filter((_, i) => state.yes.includes(`${s}-${i}`)).length;
-      counter.textContent = `Masz ${done} z ${section.items.length}`;
-    });
+  /** Sticky nav: visible on steps only, "N z M zaznaczone", last step says "Pokaż wynik" */
+  const refreshNav = () => {
+    const section = lustroSections[state.step];
+    if (nav) nav.hidden = !section;
+    if (!section) return;
+    const done = section.items.filter((_, i) => state.yes.includes(`${state.step}-${i}`)).length;
+    if (navCount) navCount.textContent = `${done} z ${section.items.length}`;
+    if (navNext) navNext.textContent = state.step === STEPS - 1 ? 'Pokaż wynik' : 'Dalej';
   };
 
-  const refreshStartLabel = () => {
+  /** Intro: resume a saved run or start over */
+  const refreshIntro = () => {
     const label = panel.querySelector('[data-lustro-start-label]');
-    if (label) label.textContent = state.yes.length ? 'Kontynuuj' : 'Spójrz w lustro';
+    const resume = panel.querySelector<HTMLElement>('[data-lustro-resume]');
+    const text = panel.querySelector('[data-lustro-resume-text]');
+    const saved = state.yes.length;
+    if (label) label.textContent = saved ? 'Kontynuuj' : 'Spójrz w lustro';
+    if (resume) resume.hidden = !saved;
+    if (text) text.textContent = `Masz już zaznaczone: ${saved}.`;
   };
 
   const renderResult = () => {
@@ -134,9 +143,10 @@ export function initLustro() {
       panel.getBoundingClientRect().top + window.scrollY - (header?.offsetHeight ?? 0),
     );
     if (window.scrollY <= top) return;
+    // Instant: the new screen animates in at the top, no long scroll to watch
     const lenis = getLenis();
-    if (lenis) lenis.scrollTo(top, { duration: reducedMotion ? 0 : 0.9, force: true });
-    else window.scrollTo({ top, behavior: reducedMotion ? 'auto' : 'smooth' });
+    if (lenis) lenis.scrollTo(top, { immediate: true, force: true });
+    else window.scrollTo({ top, behavior: 'auto' });
   };
 
   /**
@@ -145,33 +155,22 @@ export function initLustro() {
    */
   const enter = (screen: HTMLElement, delay = 0) => {
     if (reducedMotion) return;
+    // Step screens: animate the rows individually so the list cascades in
+    const parts = [...screen.children].flatMap((child) =>
+      child.tagName === 'UL' ? [...child.children] : [child],
+    );
     gsap.fromTo(
-      screen.children,
-      { opacity: 0, y: 40 },
+      parts,
+      { opacity: 0, y: 24 },
       {
         opacity: 1,
         y: 0,
-        duration: motion.duration.reveal,
-        stagger: motion.stagger.tight * 1.5,
+        duration: 0.8,
+        stagger: 0.05,
         delay,
         clearProps: 'transform,opacity',
       },
     );
-    // Progress rule grows from where the previous step left it
-    const bar = screen.querySelector<HTMLElement>('[data-lustro-progress]');
-    if (bar) {
-      const to = Number(bar.dataset.value ?? 0);
-      gsap.fromTo(
-        bar,
-        { scaleX: Math.max(0, to - 1 / STEPS) },
-        {
-          scaleX: to,
-          duration: motion.duration.reveal,
-          delay: delay + 0.2,
-          ease: motion.easeInOut,
-        },
-      );
-    }
   };
 
   const focusHeading = (screen: HTMLElement) => {
@@ -189,31 +188,13 @@ export function initLustro() {
     if (!next || next === current) return;
     if (screenKey(step) === 'result') renderResult();
 
-    const swap = () => {
-      screens.forEach((screen) => (screen.hidden = screen !== next));
-      current = next;
-      if (focus) focusHeading(next);
-      enter(next);
-      busy = false;
-    };
-
+    screens.forEach((screen) => (screen.hidden = screen !== next));
+    current = next;
+    refreshNav();
+    if (step < 0) refreshIntro();
     scrollToPanel();
-    if (!current || reducedMotion) {
-      swap();
-      return;
-    }
-    busy = true;
-    gsap.to(current.children, {
-      opacity: 0,
-      y: -16,
-      duration: 0.35,
-      stagger: 0.02,
-      ease: 'power2.in',
-      onComplete: () => {
-        gsap.set(current!.children, { clearProps: 'all' });
-        swap();
-      },
-    });
+    if (focus) focusHeading(next);
+    enter(next);
   };
 
   /* ---------- Events ---------- */
@@ -227,7 +208,7 @@ export function initLustro() {
         : state.yes.filter((x) => x !== id);
       save();
       refreshMirror();
-      refreshCounters();
+      refreshNav();
       if (input.checked && !reducedMotion) {
         const box = input.parentElement?.querySelector('[data-item-box]');
         if (box)
@@ -240,7 +221,7 @@ export function initLustro() {
     const target = (event.target as Element).closest<HTMLElement>(
       '[data-lustro-start], [data-lustro-next], [data-lustro-back], [data-lustro-restart]',
     );
-    if (!target || busy) return;
+    if (!target) return;
 
     if (target.hasAttribute('data-lustro-start')) {
       track('lustro_start', { resumed: state.yes.length > 0 });
@@ -259,8 +240,7 @@ export function initLustro() {
       state = fresh();
       inputs.forEach((input) => (input.checked = false));
       refreshMirror();
-      refreshCounters();
-      refreshStartLabel();
+      refreshIntro();
       show(-1);
     }
   });
@@ -273,8 +253,7 @@ export function initLustro() {
 
   /* ---------- Boot ---------- */
 
-  refreshCounters();
-  refreshStartLabel();
+  refreshIntro();
   refreshMirror(false);
   show(state.step, { focus: false });
 

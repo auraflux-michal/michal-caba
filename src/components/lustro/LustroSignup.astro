@@ -3,7 +3,7 @@
  * Newsletter sign-up (ink panel, like "Początek"): name, e-mail, GDPR consent (unticked by
  * default), honeypot. Posts to /api/lustro (MailerLite, double opt-in) via scripts/lustro.
  */
-import CtaRow from '@/components/ui/CtaRow.astro';
+import Button from '@/components/ui/Button.astro';
 import { site } from '@/data/site';
 
 const privacyExternal = site.privacyUrl.startsWith('http');
@@ -12,7 +12,11 @@ const field =
   'mt-2 w-full rounded-none border-0 border-b border-paper/40 bg-transparent py-3 font-body text-body-sm font-medium text-paper transition-colors duration-300 outline-none placeholder:text-paper/40 focus:border-accent lg:text-body';
 ---
 
-<div data-signup class="mt-16 bg-ink px-5 py-10 text-paper lg:mt-24 lg:px-10 lg:py-14">
+<div
+  id="plan"
+  data-signup
+  class="scroll-mt-header mt-16 bg-ink px-5 py-10 text-paper lg:mt-24 lg:px-10 lg:py-14"
+>
   <div data-signup-form-wrap>
     <p class:list={[label, 'text-accent']}>Plan działania</p>
     <h3 class="mt-4 font-display text-h3-sm font-bold lg:text-h3">Wyślę Ci pełny plan działania</h3>
@@ -92,9 +96,9 @@ const field =
         class="mt-4 min-h-6 font-body text-body-sm font-medium text-accent"
       ></p>
 
-      <CtaRow type="submit" tone="paper" data-signup-submit class="mt-4">
+      <Button type="submit" surface="dark" data-signup-submit class="mt-2">
         <span data-signup-submit-label>Wyślij mi plan</span>
-      </CtaRow>
+      </Button>
     </form>
   </div>
 

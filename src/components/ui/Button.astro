@@ -1,0 +1,60 @@
+---
+/**
+ * Solid action button for in-page actions (quiz steps, forms). Same box language as `ui/Tag`
+ * (accent fill, 1px ink border, display uppercase); hover inverts to ink. The arrow → nudges
+ * forward on hover; `back` flips it for "Wstecz"-type actions (ghost style).
+ * Use `ui/CtaRow` for outbound links, this for actions on the page.
+ */
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = Omit<HTMLAttributes<'button'>, 'href'> & {
+  /** In-page link (e.g. "#plan") rendered with the same look */
+  href?: string;
+  variant?: 'solid' | 'ghost';
+  /** Arrow direction: forward (default) or back */
+  back?: boolean;
+  /** Surface the button sits on (hover + ghost colours) */
+  surface?: 'light' | 'dark';
+};
+
+const {
+  variant = 'solid',
+  back = false,
+  surface = 'light',
+  type = 'button',
+  href,
+  class: className,
+  ...rest
+} = Astro.props;
+const Tag = href ? 'a' : 'button';
+const tagProps = href ? { href } : { type };
+---
+
+<Tag
+  {...tagProps}
+  class:list={[
+    'group inline-flex min-h-12 items-center justify-center gap-3 border px-5 font-display text-label-sm font-bold whitespace-nowrap uppercase transition-colors duration-300 disabled:cursor-wait disabled:opacity-60 lg:min-h-14 lg:px-7 lg:text-label',
+    variant === 'solid' &&
+      (surface === 'light'
+        ? 'border-ink bg-accent text-ink hover:bg-ink hover:text-paper'
+        : 'border-accent bg-accent text-ink hover:border-paper hover:bg-paper'),
+    variant === 'ghost' &&
+      (surface === 'light'
+        ? 'border-ink/25 text-ink hover:border-ink'
+        : 'border-paper/30 text-paper hover:border-paper'),
+    back && 'flex-row-reverse',
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+  <span
+    aria-hidden="true"
+    class:list={[
+      'inline-block transition-transform duration-500 ease-out-expo',
+      back ? 'group-hover:-translate-x-1' : 'group-hover:translate-x-1',
+    ]}
+  >
+    {back ? '←' : href?.startsWith('#') ? '↓' : '→'}
+  </span>
+</Tag>

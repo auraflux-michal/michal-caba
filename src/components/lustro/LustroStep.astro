@@ -1,10 +1,9 @@
 ---
 /**
- * One checklist step: rows separated by 1px ink rules (same rhythm as Notes), a square checkbox
- * that fills accent when ticked, and an accent rule that draws under a ticked row.
+ * One checklist step: segmented progress (done ink, current accent), title, why, then rows
+ * separated by 1px ink rules (Notes rhythm). The whole row toggles; the square checkbox fills
+ * accent and an accent rule draws under a ticked row. Navigation lives in LustroNav (sticky).
  */
-import CtaRow from '@/components/ui/CtaRow.astro';
-import LustroProgress from '@/components/lustro/LustroProgress.astro';
 import type { LustroSection } from '@/data/lustro';
 
 interface Props {
@@ -14,20 +13,34 @@ interface Props {
 }
 
 const { section, index, total } = Astro.props;
-const pad = (n: number) => String(n).padStart(2, '0');
-const isLast = index === total - 1;
 ---
 
 <div data-screen={index} hidden>
-  <LustroProgress value={index / total} />
+  <div class="flex items-baseline justify-between gap-4 font-display text-label-sm uppercase lg:text-label">
+    <p class="text-muted">
+      Krok <span class="text-ink">{index + 1}</span> z {total}
+    </p>
+    <p class="text-muted">{section.items.length} punktów</p>
+  </div>
+  <ol
+    class="mt-3 grid gap-1.5"
+    style={`grid-template-columns: repeat(${total}, minmax(0, 1fr))`}
+    aria-hidden="true"
+  >
+    {Array.from({ length: total }, (_, i) => (
+      <li class:list={['h-1', i < index ? 'bg-ink' : i === index ? 'bg-accent' : 'bg-ink/15']} />
+    ))}
+  </ol>
 
-  <p class="mt-10 font-display text-label-sm text-muted uppercase lg:mt-14 lg:text-label">
-    <span class="text-accent">_{pad(index + 1)}</span>&nbsp;&nbsp;Krok {index + 1} z {total}
+  <h2 class="mt-10 font-display text-h2-sm font-bold lg:mt-12 lg:text-h2">{section.title}</h2>
+  <p class="mt-4 max-w-[35rem] font-body text-body-sm font-medium text-ink/75 lg:text-body">
+    {section.why}
   </p>
-  <h2 class="mt-4 font-display text-h2-sm font-bold lg:text-h2">{section.title}</h2>
-  <p class="mt-6 max-w-[35rem] font-body text-body-sm font-medium lg:text-body">{section.why}</p>
 
-  <ul class="mt-10 lg:mt-12">
+  <p class="mt-10 font-display text-label-sm text-muted uppercase lg:text-label">
+    Zaznacz to, co już masz
+  </p>
+  <ul class="mt-3">
     {section.items.map((entry, i) => {
       const id = `${index}-${i}`;
       return (
@@ -35,11 +48,11 @@ const isLast = index === total - 1;
           <input type="checkbox" id={`lustro-${id}`} data-item={id} class="sr-only" />
           <label
             for={`lustro-${id}`}
-            class="grid cursor-pointer grid-cols-[1.75rem_1fr] gap-x-5 py-6 group-has-focus-visible/item:outline-2 group-has-focus-visible/item:outline-offset-2 group-has-focus-visible/item:outline-accent lg:gap-x-8 lg:py-7"
+            class="grid cursor-pointer grid-cols-[1.75rem_1fr] gap-x-5 py-5 transition-colors duration-300 group-hover/item:bg-ink/[0.03] group-has-checked/item:bg-accent/[0.06] group-has-focus-visible/item:outline-2 group-has-focus-visible/item:outline-offset-2 group-has-focus-visible/item:outline-accent lg:gap-x-6 lg:py-6"
           >
             <span
               data-item-box
-              class="mt-0.5 grid size-7 place-items-center border border-ink text-ink transition-colors duration-300 group-hover/item:bg-ink/5 group-has-checked/item:bg-accent"
+              class="mt-0.5 grid size-7 place-items-center border border-ink text-ink transition-colors duration-300 group-has-checked/item:bg-accent"
             >
               <svg
                 viewBox="0 0 16 16"
@@ -55,8 +68,8 @@ const isLast = index === total - 1;
                 />
               </svg>
             </span>
-            <span class="transition-transform duration-700 ease-out-expo group-hover/item:translate-x-2">
-              <span class="block font-display text-lead-sm font-bold lg:text-lead">
+            <span>
+              <span class="block font-display text-[1.1875rem] leading-snug font-bold lg:text-[1.375rem]">
                 {entry.title}
               </span>
               <span class="mt-1 block font-body text-body-sm font-medium text-ink/65">
@@ -67,28 +80,9 @@ const isLast = index === total - 1;
           <span
             aria-hidden="true"
             class="absolute -bottom-px left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-700 ease-out-expo group-has-checked/item:scale-x-100"
-          ></span>
+          />
         </li>
       );
     })}
   </ul>
-
-  <p
-    data-step-counter
-    aria-live="polite"
-    class="mt-10 text-right font-display text-label-sm text-accent uppercase lg:mt-12 lg:text-label"
-  >
-    Masz 0 z {section.items.length}
-  </p>
-
-  <CtaRow data-lustro-next class="mt-4">
-    {isLast ? 'Pokaż mój wynik' : 'Dalej'}
-  </CtaRow>
-  <button
-    type="button"
-    data-lustro-back
-    class="link-underline mt-2 font-display text-label-sm text-muted uppercase transition-colors hover:text-ink lg:text-label"
-  >
-    Wstecz
-  </button>
 </div>

@@ -23,7 +23,7 @@ src/
 │  ├─ layout/       Header, IndexMenu, Footer
 │  ├─ sections/     Hero, About, Roles, Build, Philosophy, Notes, Next
 │  ├─ lustro/       Mirror + quiz screens for /lustro
-│  └─ ui/           SectionLabel, Tag, SplitLines, CtaRow, EmailLink
+│  └─ ui/           SectionLabel, Tag, SplitLines, CtaRow, Button, EmailLink
 ├─ data/            site.ts (links, nav, SEO) · content.ts (roles, notes) · lustro.ts (quiz)
 ├─ pages/           index · lustro · api/lustro (Vercel Function) · robots/sitemap/llms
 ├─ layouts/         BaseLayout (SEO, fonts, motion bootstrap)

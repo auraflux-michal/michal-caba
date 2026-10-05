@@ -1,28 +1,62 @@
 ---
 /**
- * Intro screen: title, promise, Michał's story, start CTA.
- * The CTA label switches to "Kontynuuj" when a saved run exists (scripts/lustro).
+ * Intro screen. Everything needed to start sits above the fold (title, promise, start button);
+ * "how it works" and Michał's note follow. A saved run shows a resume line + "start over".
  */
-import CtaRow from '@/components/ui/CtaRow.astro';
-import { LUSTRO_TOTAL } from '@/data/lustro';
+import Button from '@/components/ui/Button.astro';
+import { LUSTRO_TOTAL, lustroSections } from '@/data/lustro';
 import { site } from '@/data/site';
+
+const steps = [
+  [
+    'Zaznacz, co już masz',
+    `${LUSTRO_TOTAL} konkretnych punktów w ${lustroSections.length} obszarach.`,
+  ],
+  ['Patrz, jak lustro się rozjaśnia', 'Każde zaznaczenie odsłania kawałek odbicia.'],
+  ['Odbierz wynik', 'Etap Twojej marki i 3 miejsca, od których warto zacząć.'],
+];
+const label = 'font-display text-label-sm uppercase lg:text-label';
 ---
 
-<div data-screen="intro">
-  <p class="font-display text-label-sm text-muted uppercase lg:text-label">
-    Checklista marki osobistej
-  </p>
+<div data-screen="intro" class="pb-16 lg:pb-24">
+  <p class:list={[label, 'text-muted']}>Bezpłatna checklista · około 4 minut</p>
 
-  <h1 id="lustro-title" class="mt-6 font-display text-h1-sm font-bold uppercase lg:mt-8 lg:text-h1">
+  <h1 id="lustro-title" class="mt-5 font-display text-h1-sm font-bold uppercase lg:text-h1">
     <span class="block">Lustro marki</span>
     <span class="block text-accent">osobistej</span>
   </h1>
 
-  <p class="mt-8 max-w-[34rem] font-body text-lead-sm font-medium lg:mt-10 lg:text-lead">
+  <p class="mt-6 max-w-[34rem] font-body text-lead-sm font-medium lg:mt-8 lg:text-lead">
     Zaznacz, co już masz. Puste pola pokażą Ci potencjał, którego z bliska nie widać.
   </p>
 
-  <div class="mt-12 max-w-[35rem] border-t border-ink pt-8 lg:mt-16">
+  <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 lg:mt-10">
+    <Button data-lustro-start>
+      <span data-lustro-start-label>Spójrz w lustro</span>
+    </Button>
+    <p data-lustro-resume hidden class="font-body text-body-sm font-medium text-ink/70">
+      <span data-lustro-resume-text></span>
+      <button
+        type="button"
+        data-lustro-restart
+        class="link-underline ml-1 font-display text-label-sm text-ink uppercase lg:text-label"
+      >
+        Zacznij od nowa
+      </button>
+    </p>
+  </div>
+
+  <ol class="mt-14 grid gap-6 border-t border-ink pt-8 sm:grid-cols-3 lg:mt-20">
+    {steps.map(([title, text], index) => (
+      <li>
+        <span class:list={[label, 'text-accent']}>_0{index + 1}</span>
+        <p class="mt-2 font-display text-[1.125rem] leading-snug font-bold">{title}</p>
+        <p class="mt-1 font-body text-body-sm font-medium text-ink/65">{text}</p>
+      </li>
+    ))}
+  </ol>
+
+  <div class="mt-14 max-w-[35rem] lg:mt-20">
     <div class="space-y-4 font-body text-body-sm font-medium lg:text-body">
       <p>
         Od lat widzę potencjał w ludziach i firmach, bo patrzę na nie z zewnątrz. Któregoś dnia
@@ -33,18 +67,8 @@ import { site } from '@/data/site';
         Ty.
       </p>
     </div>
-    <p class="mt-6 font-display text-label-sm text-accent uppercase lg:text-label">{site.name}</p>
+    <p class:list={[label, 'mt-6 text-accent']}>{site.name}</p>
   </div>
-
-  <CtaRow data-lustro-start class="mt-12 lg:mt-16">
-    <span data-lustro-start-label>Spójrz w lustro</span>
-  </CtaRow>
-  <p class="mt-4 font-display text-label-sm text-muted uppercase lg:text-label">
-    {LUSTRO_TOTAL} punktów, około 4 minut
-  </p>
-  <p class="mt-1 font-body text-body-sm font-medium text-ink/70">
-    Lustro rozjaśnia się z każdą odpowiedzią.
-  </p>
 
   <noscript>
     <p class="mt-8 border border-ink bg-accent px-6 py-4 font-body text-body-sm font-medium">

@@ -5,7 +5,7 @@
  * lives here, in markup.
  */
 import CtaRow from '@/components/ui/CtaRow.astro';
-import LustroProgress from '@/components/lustro/LustroProgress.astro';
+import Button from '@/components/ui/Button.astro';
 import LustroSignup from '@/components/lustro/LustroSignup.astro';
 import { lustroStages } from '@/data/lustro';
 import { site } from '@/data/site';
@@ -19,10 +19,8 @@ const linkedInShare = `https://www.linkedin.com/sharing/share-offsite/?url=${enc
 const label = 'font-display text-label-sm uppercase lg:text-label';
 ---
 
-<div data-screen="result" hidden>
-  <LustroProgress value={1} />
-
-  <p class:list={[label, 'mt-10 text-accent lg:mt-14']}>Gratulacje, lustro przejrzane!</p>
+<div data-screen="result" hidden class="pb-20 lg:pb-32">
+  <p class:list={[label, 'text-accent']}>Gratulacje, lustro przejrzane!</p>
   <p class:list={[label, 'mt-1 text-muted']}>Twoja marka jest na etapie</p>
   <h2
     data-result-stage
@@ -38,8 +36,12 @@ const label = 'font-display text-label-sm uppercase lg:text-label';
     {lustroStages[0].description}
   </p>
 
-  {/* Stage scale: past = ink, current = accent, future = ink/20 */}
-  <ol class="mt-12 grid grid-cols-5 gap-2 lg:mt-16 lg:gap-3" aria-label="Skala etapów">
+  <Button href="#plan" class="mt-8 lg:mt-10">
+    Odbierz plan działania
+  </Button>
+
+  {/* Stage scale (mobile; desktop shows the ladder in the mirror panel) */}
+  <ol class="mt-12 grid grid-cols-5 gap-2 lg:hidden" aria-label="Skala etapów">
     {lustroStages.map((stage, index) => (
       <li data-scale-step class="group/step" aria-current="false">
         <span class="block h-0.5 bg-ink/20 transition-colors duration-700 group-data-[state=past]/step:bg-ink group-data-[state=here]/step:bg-accent" />
