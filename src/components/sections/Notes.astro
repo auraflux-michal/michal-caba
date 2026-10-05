@@ -3,8 +3,8 @@
  * "Notes": Figma 910:705 (4879-5823px, paper).
  * Left: heading + intro (top 412). Right: list 791px wide @ x569, 1px ink rules, rows padded
  * 41/40 (rule included), columns 131 | 540 | auto, then the "Archiwum myśli" CTA (top 704).
- * Figma stacks the CTA's top border right under the last row rule (2px); here the CTA has no
- * rule of its own, so the last (animated) row rule is the single 1px line above it.
+ * The CTA sits 40px below the list with its own 1px rule: two separate hairlines, and only the
+ * CTA's turns accent on hover (CtaRow).
  */
 import { notes } from '@/data/content';
 import SectionLabel from '@/components/ui/SectionLabel.astro';
@@ -78,7 +78,7 @@ import { site } from '@/data/site';
         })}
       </ol>
 
-      <CtaRow href={site.notesArchiveUrl} rule={false}>
+      <CtaRow href={site.notesArchiveUrl} class="mt-10">
         Archiwum myśli
       </CtaRow>
     </div>
