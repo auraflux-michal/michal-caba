@@ -6,6 +6,7 @@
  */
 import { sections, site } from '@/data/site';
 import EmailLink from '@/components/ui/EmailLink.astro';
+import { sectionHref } from '@/lib/seo';
 ---
 
 <div
@@ -23,7 +24,7 @@ import EmailLink from '@/components/ui/EmailLink.astro';
       {sections.map((section, index) => (
         <li class="overflow-hidden border-b border-ink/25 first:border-t">
           <a
-            href={`#${section.id}`}
+            href={sectionHref(section.id, Astro.url.pathname)}
             data-menu-link
             class="group flex items-baseline gap-6 py-3 font-display text-h2-sm font-bold uppercase transition-colors duration-300 focus-visible:outline-ink hover:text-paper lg:gap-10 lg:py-4 lg:text-h2"
           >

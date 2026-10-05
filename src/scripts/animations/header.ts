@@ -1,7 +1,7 @@
 /**
  * Header auto-hide: slides away while scrolling down, returns on scroll up / near the top.
  */
-import { gsap, ScrollTrigger } from '@/scripts/lib/gsap';
+import { gsap, ScrollTrigger, unveil } from '@/scripts/lib/gsap';
 
 export function initHeader(isMenuOpen: () => boolean) {
   const header = document.querySelector<HTMLElement>('[data-header]');
@@ -26,4 +26,12 @@ export function initHeader(isMenuOpen: () => boolean) {
     hidden = false;
     show(0);
   });
+}
+
+/** Header entrance on pages without the hero (whose intro timeline normally slides it in) */
+export function introHeader() {
+  const header = document.querySelector('[data-header]');
+  if (!header) return;
+  unveil(header);
+  gsap.from(header, { yPercent: -100, duration: 1 });
 }

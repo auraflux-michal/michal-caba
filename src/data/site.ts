@@ -56,6 +56,11 @@ export const site = {
    * script assembles the mailto: link (anti-harvesting). Kept out of llms.txt / JSON-LD.
    */
   email: 'do@michalcaba.pl',
+  /**
+   * Privacy policy. TODO: the page does not exist yet; '#' until it does (used by /lustro's
+   * newsletter consent). External URLs open in a new tab.
+   */
+  privacyUrl: '#',
   /** Notes CTA "Archiwum myśli" (all posts) */
   notesArchiveUrl: substackUrl('/archive'),
   socials: [

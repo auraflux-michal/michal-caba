@@ -17,6 +17,16 @@ export function assetPath(path: string): string {
 }
 
 /**
+ * Link to a home-page section: a bare `#id` on the home page (smooth in-page scroll),
+ * `/#id` from subpages (e.g. /lustro), so the shared header/menu work everywhere.
+ */
+export function sectionHref(id: string, currentPath: string): string {
+  const home = assetPath('/');
+  const onHome = currentPath === home || currentPath === `${home}index.html`;
+  return onHome ? `#${id}` : `${home}#${id}`;
+}
+
+/**
  * Robots directive. Indexable only when `site.indexable` is on AND this is a production build:
  * Vercel preview/branch deployments (VERCEL_ENV=preview|development) and the GitHub Pages
  * preview (PUBLIC_PREVIEW) are always noindex, so Google never sees duplicate copies.
@@ -35,12 +45,23 @@ interface GraphInput {
   homepage: string;
   /** Social card (og.png) */
   imageUrl: string;
+  imageCaption?: string;
+  /** The page itself: the home ProfilePage (default) or a subpage WebPage (e.g. /lustro) */
+  page?: { type: 'ProfilePage' | 'WebPage'; name: string; description: string };
   /** Real portrait photo for the Person entity */
   portraitUrl: string;
 }
 
 /** One connected @graph: WebSite → ProfilePage → Person ↔ Organization (Auraflux) */
-export function buildJsonLd({ canonical, homepage, imageUrl, portraitUrl }: GraphInput) {
+export function buildJsonLd({
+  canonical,
+  homepage,
+  imageUrl,
+  imageCaption = `${site.name}: Widzę potencjał w ludziach`,
+  portraitUrl,
+  page = { type: 'ProfilePage', name: site.title, description: site.description },
+}: GraphInput) {
+  const isProfile = page.type === 'ProfilePage';
   const ids = {
     website: `${homepage}#website`,
     page: `${canonical}#webpage`,
@@ -62,15 +83,16 @@ export function buildJsonLd({ canonical, homepage, imageUrl, portraitUrl }: Grap
         publisher: { '@id': ids.person },
       },
       {
-        '@type': 'ProfilePage',
+        '@type': page.type,
         '@id': ids.page,
         url: canonical,
-        name: site.title,
-        description: site.description,
+        name: page.name,
+        description: page.description,
         inLanguage: 'pl-PL',
         isPartOf: { '@id': ids.website },
-        about: { '@id': ids.person },
-        mainEntity: { '@id': ids.person },
+        ...(isProfile
+          ? { about: { '@id': ids.person }, mainEntity: { '@id': ids.person } }
+          : { author: { '@id': ids.person } }),
         primaryImageOfPage: { '@id': ids.image },
       },
       {
@@ -80,7 +102,7 @@ export function buildJsonLd({ canonical, homepage, imageUrl, portraitUrl }: Grap
         contentUrl: imageUrl,
         width: 1200,
         height: 630,
-        caption: `${site.name}: Widzę potencjał w ludziach`,
+        caption: imageCaption,
       },
       {
         '@type': 'Person',

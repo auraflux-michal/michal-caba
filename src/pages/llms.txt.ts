@@ -6,6 +6,7 @@ import type { APIRoute } from 'astro';
 import { site, sections } from '@/data/site';
 import { heroPhrases, notes, roles } from '@/data/content';
 import { absoluteUrl } from '@/lib/seo';
+import { LUSTRO_TOTAL, lustroSections, lustroStages } from '@/data/lustro';
 
 export const GET: APIRoute = ({ site: siteUrl }) => {
   const home = absoluteUrl('/', siteUrl);
@@ -34,6 +35,10 @@ Nie musisz zmieniać całego świata. Wystarczy, że przesuniesz coś o jeden me
 ## Notes
 
 ${notes.map((note) => `- ${note.href ? `[${note.title}](${note.href.split('?')[0]})` : note.title} (${note.readingTime} czytania)`).join('\n')}
+
+## Lustro marki osobistej
+
+Bezpłatna, interaktywna checklista marki osobistej (${absoluteUrl('/lustro', siteUrl)}): ${LUSTRO_TOTAL} punktów w ${lustroSections.length} obszarach (${lustroSections.map((section) => section.title).join(', ')}). Wynik to jeden z etapów: ${lustroStages.map((stage) => stage.name).join(', ')}, oraz obszary z największym potencjałem.
 
 ## Kontakt i profile
 

@@ -1,0 +1,54 @@
+---
+/**
+ * Intro screen: title, promise, Michał's story, start CTA.
+ * The CTA label switches to "Kontynuuj" when a saved run exists (scripts/lustro).
+ */
+import CtaRow from '@/components/ui/CtaRow.astro';
+import { LUSTRO_TOTAL } from '@/data/lustro';
+import { site } from '@/data/site';
+---
+
+<div data-screen="intro">
+  <p class="font-display text-label-sm text-muted uppercase lg:text-label">
+    Checklista marki osobistej
+  </p>
+
+  <h1 id="lustro-title" class="mt-6 font-display text-h1-sm font-bold uppercase lg:mt-8 lg:text-h1">
+    <span class="block">Lustro marki</span>
+    <span class="block text-accent">osobistej</span>
+  </h1>
+
+  <p class="mt-8 max-w-[34rem] font-body text-lead-sm font-medium lg:mt-10 lg:text-lead">
+    Zaznacz, co już masz. Puste pola pokażą Ci potencjał, którego z bliska nie widać.
+  </p>
+
+  <div class="mt-12 max-w-[35rem] border-t border-ink pt-8 lg:mt-16">
+    <div class="space-y-4 font-body text-body-sm font-medium lg:text-body">
+      <p>
+        Od lat widzę potencjał w ludziach i firmach, bo patrzę na nie z zewnątrz. Któregoś dnia
+        zrozumiałem, że nie używam tego talentu na sobie.
+      </p>
+      <p>
+        Ta checklista to droga, którą sam przeszedłem, budując swoją markę. Teraz możesz przejść ją
+        Ty.
+      </p>
+    </div>
+    <p class="mt-6 font-display text-label-sm text-accent uppercase lg:text-label">{site.name}</p>
+  </div>
+
+  <CtaRow data-lustro-start class="mt-12 lg:mt-16">
+    <span data-lustro-start-label>Spójrz w lustro</span>
+  </CtaRow>
+  <p class="mt-4 font-display text-label-sm text-muted uppercase lg:text-label">
+    {LUSTRO_TOTAL} punktów, około 4 minut
+  </p>
+  <p class="mt-1 font-body text-body-sm font-medium text-ink/70">
+    Lustro rozjaśnia się z każdą odpowiedzią.
+  </p>
+
+  <noscript>
+    <p class="mt-8 border border-ink bg-accent px-6 py-4 font-body text-body-sm font-medium">
+      Lustro działa w przeglądarce: włącz JavaScript, żeby przejść checklistę.
+    </p>
+  </noscript>
+</div>

@@ -7,7 +7,7 @@ import { ScrollTrigger, prefersReducedMotion } from '@/scripts/lib/gsap';
 import { initAnchorLinks, initSmoothScroll, scrollToTarget } from '@/scripts/lib/smooth-scroll';
 import { initMenu } from '@/scripts/animations/menu';
 import { initEmailLinks } from '@/scripts/lib/email';
-import { initHeader } from '@/scripts/animations/header';
+import { initHeader, introHeader } from '@/scripts/animations/header';
 import { initHero } from '@/scripts/animations/hero';
 import { initReveals } from '@/scripts/animations/reveal';
 import { initParallax } from '@/scripts/animations/parallax';
@@ -42,7 +42,9 @@ async function boot() {
 
   initSmoothScroll();
   initHeader(menu.isOpen);
-  initHero({ intro: choreography });
+  const hero = initHero({ intro: choreography });
+  // No hero on this page (e.g. /lustro): its intro would have slid the header in
+  if (choreography && !hero) introHeader();
   if (choreography) {
     initReveals();
     initParallax();

@@ -6,6 +6,7 @@
  */
 import type { HTMLAttributes } from 'astro/types';
 import { site } from '@/data/site';
+import { sectionHref } from '@/lib/seo';
 
 type Props = HTMLAttributes<'a'>;
 
@@ -13,6 +14,11 @@ const { class: className, ...rest } = Astro.props;
 const encoded = Buffer.from([...site.email].reverse().join(''), 'utf8').toString('base64');
 ---
 
-<a href="#poczatek" data-email={encoded} class={className} {...rest}>
+<a
+  href={sectionHref('poczatek', Astro.url.pathname)}
+  data-email={encoded}
+  class={className}
+  {...rest}
+>
   <slot>Email</slot>
 </a>

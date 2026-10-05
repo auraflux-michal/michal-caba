@@ -1,0 +1,112 @@
+---
+/**
+ * /lustro: "Lustro marki osobistej", interactive checklist + newsletter lead magnet.
+ * Layout: sticky ink panel with the mirror (left half, like the "Człowiek" portrait) and the
+ * paper quiz panel (right half). Mobile: compact mirror strip above the quiz.
+ * Logic: scripts/lustro. Content: data/lustro.ts. Sign-up: pages/api/lustro.ts (MailerLite).
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/layout/Header.astro';
+import IndexMenu from '@/components/layout/IndexMenu.astro';
+import Footer from '@/components/layout/Footer.astro';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import Mirror from '@/components/lustro/Mirror.astro';
+import LustroIntro from '@/components/lustro/LustroIntro.astro';
+import LustroStep from '@/components/lustro/LustroStep.astro';
+import LustroResult from '@/components/lustro/LustroResult.astro';
+import { lustroCopy, lustroSections, lustroStages } from '@/data/lustro';
+import { absoluteUrl, assetPath } from '@/lib/seo';
+
+const shareUrl = absoluteUrl('/lustro', Astro.site);
+const label = 'font-display text-label-sm uppercase lg:text-label';
+---
+
+<BaseLayout
+  title={lustroCopy.title}
+  description={lustroCopy.description}
+  ogImage="/og-lustro.png"
+  ogImageAlt={lustroCopy.ogAlt}
+  pageType="WebPage"
+>
+  <Fragment slot="header">
+    <Header />
+    <IndexMenu />
+  </Fragment>
+
+  <section
+    id="lustro"
+    data-lustro
+    data-endpoint={assetPath('/api/lustro')}
+    aria-labelledby="lustro-title"
+    class="bg-paper text-ink lg:grid lg:grid-cols-2"
+  >
+    <aside
+      aria-label="Odbicie Twojej marki"
+      class="relative overflow-hidden bg-ink pt-header text-paper lg:sticky lg:top-0 lg:flex lg:h-svh lg:flex-col"
+    >
+      <div class="gutter-x flex h-label items-center">
+        <SectionLabel tone="paper">Lustro</SectionLabel>
+      </div>
+
+      <div
+        data-reveal="custom"
+        class="gutter-x flex items-center gap-6 pb-8 lg:flex-1 lg:justify-center lg:pb-0"
+      >
+        <Mirror class="max-w-24 shrink-0 lg:max-w-[min(20rem,calc((100svh-var(--spacing-header)*2-var(--spacing-label))*0.7))]" />
+        {/* Mobile caption (desktop: bottom rail) */}
+        <div class="lg:hidden" aria-hidden="true">
+          <p class:list={[label, 'text-muted']}>
+            Odbicie: <span data-mirror-percent>0%</span>
+          </p>
+          <p data-mirror-stage class="mt-1 font-display text-h4-sm font-bold">
+            {lustroStages[0].name}
+          </p>
+        </div>
+      </div>
+
+      {/* Bottom rail, as in the hero: label left, live stage right */}
+      <div
+        class="hidden h-header grid-cols-[auto_1fr] items-center gap-6 border-t border-line lg:grid"
+        aria-live="polite"
+      >
+        <p class:list={[label, 'gutter-x text-muted']}>
+          Odbicie:{' '}
+          <span data-mirror-percent class="text-paper">
+            0%
+          </span>
+        </p>
+        <p
+          data-mirror-stage
+          class:list={[label, 'gutter-x truncate text-right font-bold text-paper']}
+        >
+          {lustroStages[0].name}
+        </p>
+      </div>
+    </aside>
+
+    <div
+      data-lustro-panel
+      data-reveal="custom"
+      class="gutter-x scroll-mt-header pt-12 pb-24 lg:px-inset lg:pt-[calc(var(--spacing-header)+6.5rem)] lg:pb-32"
+    >
+      <LustroIntro />
+      {lustroSections.map((section, index) => (
+        <LustroStep section={section} index={index} total={lustroSections.length} />
+      ))}
+      <LustroResult shareUrl={shareUrl} />
+    </div>
+  </section>
+
+  <canvas
+    data-confetti
+    aria-hidden="true"
+    class="pointer-events-none fixed inset-0 z-[60] size-full"
+  ></canvas>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script>
+  import { initLustro } from '@/scripts/lustro';
+  initLustro();
+</script>

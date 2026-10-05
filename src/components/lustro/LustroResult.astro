@@ -1,0 +1,108 @@
+---
+/**
+ * Result screen. Stage, scale and the "biggest potential" list are filled by scripts/lustro
+ * from the same data (src/data/lustro.ts); rows are cloned from <template>s so all styling
+ * lives here, in markup.
+ */
+import CtaRow from '@/components/ui/CtaRow.astro';
+import LustroProgress from '@/components/lustro/LustroProgress.astro';
+import LustroSignup from '@/components/lustro/LustroSignup.astro';
+import { lustroStages } from '@/data/lustro';
+import { site } from '@/data/site';
+
+interface Props {
+  shareUrl: string;
+}
+
+const { shareUrl } = Astro.props;
+const linkedInShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+const label = 'font-display text-label-sm uppercase lg:text-label';
+---
+
+<div data-screen="result" hidden>
+  <LustroProgress value={1} />
+
+  <p class:list={[label, 'mt-10 text-accent lg:mt-14']}>Gratulacje, lustro przejrzane!</p>
+  <p class:list={[label, 'mt-1 text-muted']}>Twoja marka jest na etapie</p>
+  <h2
+    data-result-stage
+    tabindex="-1"
+    class="mt-6 font-display text-h1-sm font-bold uppercase outline-none lg:text-h1"
+  >
+    {lustroStages[0].name}
+  </h2>
+  <p
+    data-result-description
+    class="mt-8 max-w-[38rem] font-body text-lead-sm font-medium lg:text-lead"
+  >
+    {lustroStages[0].description}
+  </p>
+
+  {/* Stage scale: past = ink, current = accent, future = ink/20 */}
+  <ol class="mt-12 grid grid-cols-5 gap-2 lg:mt-16 lg:gap-3" aria-label="Skala etapów">
+    {lustroStages.map((stage, index) => (
+      <li data-scale-step class="group/step" aria-current="false">
+        <span class="block h-0.5 bg-ink/20 transition-colors duration-700 group-data-[state=past]/step:bg-ink group-data-[state=here]/step:bg-accent" />
+        <span
+          class:list={[label, 'mt-3 block text-muted group-data-[state=here]/step:text-accent']}
+        >
+          _{String(index + 1).padStart(2, '0')}
+        </span>
+        <span class="mt-1 hidden font-display text-label-sm leading-tight text-muted uppercase group-data-[state=here]/step:font-bold group-data-[state=here]/step:text-ink sm:block">
+          {stage.name}
+        </span>
+      </li>
+    ))}
+  </ol>
+
+  <div data-result-potential class="mt-16 lg:mt-24">
+    <h3 class="font-display text-h3-sm font-bold lg:text-h3">Tu jest Twój największy potencjał</h3>
+    <p class="mt-4 max-w-[35rem] font-body text-body-sm font-medium lg:text-body">
+      Obszary, w których masz najwięcej pustych pól. Zacznij od pierwszego kroku w każdym z nich.
+    </p>
+    <ol data-potential-list class="mt-10"></ol>
+    <template data-potential-row>
+      <li class="grid grid-cols-[1fr_auto] gap-x-6 gap-y-2 border-b border-ink py-6 first:border-t lg:py-8">
+        <span data-potential-title class="font-display text-h4-sm font-bold lg:text-h4"></span>
+        <span
+          data-potential-percent
+          class:list={[label, 'pt-1 text-accent lg:pt-[0.3125rem]']}
+        ></span>
+        <span class="col-span-2 font-body text-body-sm font-medium lg:text-body">
+          Pierwszy krok: <strong data-potential-first class="font-bold"></strong>
+        </span>
+      </li>
+    </template>
+  </div>
+  <p
+    data-result-complete
+    hidden
+    class="mt-16 max-w-[35rem] font-body text-body-sm font-medium lg:text-body"
+  >
+    Masz zaznaczone wszystkie punkty. Twoja marka jest kompletna, teraz pora ją skalować.
+  </p>
+
+  <LustroSignup />
+
+  <div class="mt-16 lg:mt-24">
+    <h3 class="max-w-[36rem] font-display text-h3-sm font-bold lg:text-h3">
+      Chcesz, żebym spojrzał na Twoją markę <span class="text-accent">z zewnątrz?</span>
+    </h3>
+    <p class="mt-6 max-w-[35rem] font-body text-body-sm font-medium lg:text-body">
+      Czasem najtrudniej zobaczyć własny potencjał. W 30 minut pokażę Ci, gdzie jest i od czego
+      zacząć.
+    </p>
+    <CtaRow href={site.consultationUrl} class="mt-10">
+      Umów bezpłatną rozmowę
+    </CtaRow>
+  </div>
+
+  <div class:list={[label, 'mt-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-ink pt-8']}>
+    <a href={linkedInShare} target="_blank" rel="noopener" data-lustro-share class="link-underline">
+      Udostępnij na LinkedIn<span class="sr-only"> (otwiera się w nowej karcie)</span>
+    </a>
+    <button type="button" data-lustro-restart class="link-underline uppercase">
+      Przejdź jeszcze raz
+    </button>
+  </div>
+</div>

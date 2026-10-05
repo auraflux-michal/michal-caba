@@ -1,8 +1,11 @@
-/** sitemap.xml: single-page site; extend `pages` when articles (Notes) get their own URLs. */
+/** sitemap.xml: extend `pages` when new routes (e.g. Notes articles) get their own URLs. */
 import type { APIRoute } from 'astro';
 import { absoluteUrl } from '@/lib/seo';
 
-const pages = [{ path: '/', priority: '1.0', changefreq: 'monthly' }];
+const pages = [
+  { path: '/', priority: '1.0', changefreq: 'monthly' },
+  { path: '/lustro', priority: '0.8', changefreq: 'monthly' },
+];
 
 export const GET: APIRoute = ({ site }) => {
   const lastmod = new Date().toISOString().slice(0, 10);

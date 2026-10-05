@@ -12,17 +12,40 @@ import { absoluteUrl, assetPath, buildJsonLd, robotsDirective } from '@/lib/seo'
 interface Props {
   title?: string;
   description?: string;
+  /** Social card in /public (1200×630 PNG). Defaults to the site card (og.png). */
+  ogImage?: string;
+  ogImageAlt?: string;
+  /** Home = the profile; subpages (e.g. /lustro) are plain web pages of that profile's site */
+  pageType?: 'ProfilePage' | 'WebPage';
 }
 
-const { title = site.title, description = site.description } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const {
+  title = site.title,
+  description = site.description,
+  ogImage = '/og.png',
+  ogImageAlt: customOgAlt,
+  pageType = 'ProfilePage',
+} = Astro.props;
+const isProfile = pageType === 'ProfilePage';
+// One URL per page, matching sitemap.xml: no trailing slash on subpages (/lustro, not /lustro/)
+const canonicalPath = Astro.url.pathname.replace(/(.)\/$/, '$1').replace(/\/index\.html$/, '/');
+const canonical = new URL(canonicalPath, Astro.site).href;
 const homepage = absoluteUrl('/', Astro.site);
-// Social card designed by Michał (public/og.png, 1200×630)
-const ogImageUrl = absoluteUrl('/og.png', Astro.site);
-const ogImageAlt = `${site.name}: portret i hasło „Projektuję marki. Buduję firmy. Dostrzegam to, czego jeszcze nie ma.”`;
+// Social card designed by Michał (public/og.png, 1200×630); subpages pass their own
+const ogImageUrl = absoluteUrl(ogImage, Astro.site);
+const ogImageAlt =
+  customOgAlt ??
+  `${site.name}: portret i hasło „Projektuję marki. Buduję firmy. Dostrzegam to, czego jeszcze nie ma.”`;
 const portrait = await getImage({ src: portraitSource, width: 800, format: 'jpg' });
 const portraitUrl = new URL(portrait.src, Astro.site).href;
-const jsonLd = buildJsonLd({ canonical, homepage, imageUrl: ogImageUrl, portraitUrl });
+const jsonLd = buildJsonLd({
+  canonical,
+  homepage,
+  imageUrl: ogImageUrl,
+  imageCaption: ogImageAlt,
+  portraitUrl,
+  page: { type: pageType, name: title, description },
+});
 ---
 
 <!doctype html>
@@ -41,9 +64,9 @@ const jsonLd = buildJsonLd({ canonical, homepage, imageUrl: ogImageUrl, portrait
     <link rel="sitemap" type="application/xml" href={assetPath('/sitemap.xml')} />
     <link rel="me" href={site.socials[0].href} />
 
-    <meta property="og:type" content="profile" />
-    <meta property="profile:first_name" content={site.person.givenName} />
-    <meta property="profile:last_name" content={site.person.familyName} />
+    <meta property="og:type" content={isProfile ? 'profile' : 'website'} />
+    {isProfile && <meta property="profile:first_name" content={site.person.givenName} />}
+    {isProfile && <meta property="profile:last_name" content={site.person.familyName} />}
     <meta property="og:locale" content={site.locale} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />

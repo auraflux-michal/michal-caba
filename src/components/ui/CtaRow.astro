@@ -3,30 +3,32 @@
  * Full-width CTA row (Figma 899:572 "Odwiedź Auraflux", 910:698 "Porozmawiaj"):
  * 1px top rule, 24px vertical padding, bold 18/28 uppercase label, 24px arrow.
  * Hover: accent rule draws across, arrow exits top-right while a twin enters bottom-left.
- * Always opens in a new tab (external destinations only).
+ * With `href`: a link that always opens in a new tab (external destinations only).
+ * Without `href`: the same row as a <button> (in-page actions, forms: /lustro).
  */
+import type { HTMLAttributes } from 'astro/types';
 import ArrowInk from '@/assets/icons/arrow-up-right.svg';
 import ArrowPaper from '@/assets/icons/arrow-up-right-light.svg';
 
-interface Props {
-  href: string;
+type Props = Omit<HTMLAttributes<'button'>, 'class'> & {
+  href?: string;
   tone?: 'ink' | 'paper';
   /** Draw the 1px top rule (off when the row sits right under an existing rule) */
   rule?: boolean;
   class?: string;
-}
+};
 
-const { href, tone = 'ink', rule = true, class: className } = Astro.props;
+const { href, tone = 'ink', rule = true, class: className, type = 'button', ...rest } = Astro.props;
 const Arrow = tone === 'ink' ? ArrowInk : ArrowPaper;
+const Tag = href ? 'a' : 'button';
+const tagProps = href ? { href, target: '_blank', rel: 'noopener' } : { type, ...rest };
 ---
 
-<a
-  href={href}
-  target="_blank"
-  rel="noopener"
+<Tag
+  {...tagProps}
   data-cta
   class:list={[
-    'group relative flex items-start justify-between py-6 font-display text-label-sm font-bold uppercase lg:text-label',
+    'group relative flex w-full items-start justify-between py-6 text-left font-display text-label-sm font-bold uppercase disabled:cursor-wait disabled:opacity-60 lg:text-label',
     rule && 'border-t',
     tone === 'ink' ? 'border-ink text-ink' : 'border-paper text-paper',
     className,
@@ -34,13 +36,13 @@ const Arrow = tone === 'ink' ? ArrowInk : ArrowPaper;
 >
   <span
     aria-hidden="true"
-    class="absolute -top-px left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-700 ease-out-expo group-hover:scale-x-100"
+    class="absolute -top-px left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-700 ease-out-expo group-hover:scale-x-100 group-focus-visible:scale-x-100"
   ></span>
   <span>
     <slot />
-    <span class="sr-only"> (otwiera się w nowej karcie)</span>
+    {href && <span class="sr-only"> (otwiera się w nowej karcie)</span>}
   </span>
-  <span class="relative size-6 overflow-hidden" aria-hidden="true">
+  <span class="relative size-6 shrink-0 overflow-hidden" aria-hidden="true">
     <Arrow
       width={24}
       height={24}
@@ -52,4 +54,4 @@ const Arrow = tone === 'ink' ? ArrowInk : ArrowPaper;
       class="absolute inset-0 size-6 -translate-x-6 translate-y-6 transition-transform duration-500 ease-out-expo group-hover:translate-0"
     />
   </span>
-</a>
+</Tag>
