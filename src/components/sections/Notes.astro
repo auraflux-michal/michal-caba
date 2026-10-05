@@ -1,11 +1,16 @@
 ---
 /**
- * "Notes": Figma 899:524 (4879-5823px, paper).
- * List: 791px wide @ x569, 1px ink rules, rows padded 41/40 (rule included), columns 131 | 540 | auto.
+ * "Notes": Figma 910:705 (4879-5823px, paper).
+ * Left: heading + intro (top 412). Right: list 791px wide @ x569, 1px ink rules, rows padded
+ * 41/40 (rule included), columns 131 | 540 | auto, then the "Archiwum myśli" CTA (top 704).
+ * Figma stacks the CTA's top border right under the last row rule (2px); here the CTA has no
+ * rule of its own, so the last (animated) row rule is the single 1px line above it.
  */
 import { notes } from '@/data/content';
 import SectionLabel from '@/components/ui/SectionLabel.astro';
 import SplitLines from '@/components/ui/SplitLines.astro';
+import CtaRow from '@/components/ui/CtaRow.astro';
+import { site } from '@/data/site';
 ---
 
 <section id="notes" aria-labelledby="notes-title" class="bg-paper text-ink lg:h-[59rem]">
@@ -14,15 +19,26 @@ import SplitLines from '@/components/ui/SplitLines.astro';
   </div>
 
   <div class="gutter-x grid gap-12 pt-12 pb-24 lg:grid-cols-[1fr_49.4375rem] lg:gap-0 lg:pt-[6.5rem] lg:pr-inset lg:pb-0 lg:pl-inset">
-    <h2 id="notes-title" class="font-display text-h2-sm font-bold uppercase lg:text-h2">
-      <SplitLines as="span" class="block">
-        Dobre wieści
-        <br />Z mojego
-      </SplitLines>
-      <SplitLines as="span" class="block text-accent" delay={0.15}>
-        umysłu
-      </SplitLines>
-    </h2>
+    <div>
+      <h2 id="notes-title" class="font-display text-h2-sm font-bold uppercase lg:text-h2">
+        <SplitLines as="span" class="block">
+          Dobre wieści
+          <br />Z mojego
+        </SplitLines>
+        <SplitLines as="span" class="block text-accent" delay={0.15}>
+          umysłu
+        </SplitLines>
+      </h2>
+
+      <div class="mt-10 space-y-4 font-body text-body-sm font-medium lg:text-body">
+        <SplitLines delay={0.2}>To, co akurat żywe.</SplitLines>
+        <SplitLines delay={0.3}>
+          <span class="lg:block">Myśli, obserwacje i pytania,</span>
+          <span class="lg:block">których nie chcę zostawić</span>
+          <span class="lg:block">tylko w swojej głowie.</span>
+        </SplitLines>
+      </div>
+    </div>
 
     <div class="relative" data-notes>
       <span
@@ -61,6 +77,10 @@ import SplitLines from '@/components/ui/SplitLines.astro';
           );
         })}
       </ol>
+
+      <CtaRow href={site.notesArchiveUrl} rule={false}>
+        Archiwum myśli
+      </CtaRow>
     </div>
   </div>
 </section>

@@ -1,6 +1,7 @@
 /**
  * Photography: curtain reveal on entry + gentle scroll-linked parallax inside the frame.
- * Frames must clip (`overflow-hidden`); cover-fitted media gets a safety scale so edges never show.
+ * Frames must clip (`overflow-hidden`). Media that fills its frame edge to edge opts in to a
+ * safety zoom with `data-parallax-cover`, so the vertical drift never reveals an edge.
  */
 import { gsap, motion } from '@/scripts/lib/gsap';
 
@@ -9,7 +10,7 @@ export function initParallax() {
     const media = frame.querySelector<HTMLElement>('[data-parallax-media]');
     if (!media) return;
 
-    const isCover = media.classList.contains('object-cover');
+    const isCover = media.hasAttribute('data-parallax-cover');
 
     gsap.from(frame, {
       clipPath: 'inset(0% 0% 100% 0%)',

@@ -1,6 +1,7 @@
 /**
  * Page copy & repeatable content. Kept out of components so sections stay presentational.
  */
+import { substackUrl } from './site';
 
 /** Hero headline, 3rd line: rotates in this order, then loops (first = static / no-JS fallback). */
 export const heroPhrases = ['W ludziach', 'W firmach', 'W pomysłach'] as const;
@@ -30,9 +31,7 @@ export const roles: Role[] = [
   },
 ];
 
-/** Notes link to the Substack posts. UTM tags attribute traffic from this site. */
-const substack = (slug: string) =>
-  `https://michalcaba.substack.com/p/${slug}?utm_source=michalcaba&utm_medium=referral&utm_campaign=notes`;
+const substack = (slug: string) => substackUrl(`/p/${slug}`);
 
 /** Reading speed for Polish prose; rounded up, minimum 1 minute */
 const WORDS_PER_MINUTE = 200;

@@ -11,10 +11,12 @@ import ArrowPaper from '@/assets/icons/arrow-up-right-light.svg';
 interface Props {
   href: string;
   tone?: 'ink' | 'paper';
+  /** Draw the 1px top rule (off when the row sits right under an existing rule) */
+  rule?: boolean;
   class?: string;
 }
 
-const { href, tone = 'ink', class: className } = Astro.props;
+const { href, tone = 'ink', rule = true, class: className } = Astro.props;
 const Arrow = tone === 'ink' ? ArrowInk : ArrowPaper;
 ---
 
@@ -24,7 +26,8 @@ const Arrow = tone === 'ink' ? ArrowInk : ArrowPaper;
   rel="noopener"
   data-cta
   class:list={[
-    'group relative flex items-start justify-between border-t py-6 font-display text-label-sm font-bold uppercase lg:text-label',
+    'group relative flex items-start justify-between py-6 font-display text-label-sm font-bold uppercase lg:text-label',
+    rule && 'border-t',
     tone === 'ink' ? 'border-ink text-ink' : 'border-paper text-paper',
     className,
   ]}

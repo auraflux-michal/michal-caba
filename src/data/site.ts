@@ -2,6 +2,10 @@
  * Global site configuration: navigation, contact & social links, SEO defaults.
  * Update URLs here; components never hard-code them.
  */
+/** Substack URLs for Notes, UTM-tagged so traffic from this site is attributable */
+export const substackUrl = (path: string) =>
+  `https://michalcaba.substack.com${path}?utm_source=michalcaba&utm_medium=referral&utm_campaign=notes`;
+
 export const site = {
   name: 'Michał Caba',
   /** <title> & og:title (~60 chars) */
@@ -47,6 +51,8 @@ export const site = {
     footerUrl:
       'https://auraflux.pl/?utm_source=michalcaba&utm_medium=referral&utm_campaign=footer_link',
   },
+  /** Notes CTA "Archiwum myśli" (all posts) */
+  notesArchiveUrl: substackUrl('/archive'),
   socials: [
     { label: 'Linkedin', href: 'https://www.linkedin.com/in/michal-caba/' },
     { label: 'Instagram', href: 'https://www.instagram.com/cabamichal' },
