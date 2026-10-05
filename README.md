@@ -54,7 +54,7 @@ src/
 
 Live: `indexable: true` in `src/data/site.ts`. Production builds get
 `index, follow, max-image-preview:large`; Vercel preview deployments (`VERCEL_ENV` ≠ `production`)
-and the GitHub Pages preview are always `noindex`. To hide the site again, set `indexable: false`.
+are always `noindex`. To hide the site again, set `indexable: false`.
 
 ## Deploy
 
