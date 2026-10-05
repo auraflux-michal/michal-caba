@@ -5,6 +5,7 @@
  * Accent surface with ink typography on every breakpoint.
  */
 import { sections, site } from '@/data/site';
+import EmailLink from '@/components/ui/EmailLink.astro';
 ---
 
 <div
@@ -63,6 +64,9 @@ import { sections, site } from '@/data/site';
           </a>
         </li>
       ))}
+      <li>
+        <EmailLink class="link-underline focus-visible:outline-ink hover:text-paper" />
+      </li>
     </ul>
   </div>
 </div>

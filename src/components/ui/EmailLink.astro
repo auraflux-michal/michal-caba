@@ -1,0 +1,18 @@
+---
+/**
+ * Spam-protected e-mail link. The address is shipped reversed + base64 in a data attribute (no
+ * "@", no "mailto:", nothing a harvester regex can match) and turned into a real mailto: link by
+ * scripts/lib/email.ts on load. Without JS the link points to the contact section instead.
+ */
+import type { HTMLAttributes } from 'astro/types';
+import { site } from '@/data/site';
+
+type Props = HTMLAttributes<'a'>;
+
+const { class: className, ...rest } = Astro.props;
+const encoded = Buffer.from([...site.email].reverse().join(''), 'utf8').toString('base64');
+---
+
+<a href="#poczatek" data-email={encoded} class={className} {...rest}>
+  <slot>Email</slot>
+</a>

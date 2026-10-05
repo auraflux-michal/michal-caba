@@ -51,6 +51,11 @@ export const site = {
     footerUrl:
       'https://auraflux.pl/?utm_source=michalcaba&utm_medium=referral&utm_campaign=footer_link',
   },
+  /**
+   * Contact e-mail. Never rendered as plain text: ui/EmailLink ships it encoded and the client
+   * script assembles the mailto: link (anti-harvesting). Kept out of llms.txt / JSON-LD.
+   */
+  email: 'do@michalcaba.pl',
   /** Notes CTA "Archiwum myśli" (all posts) */
   notesArchiveUrl: substackUrl('/archive'),
   socials: [

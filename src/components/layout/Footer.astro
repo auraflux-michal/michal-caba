@@ -3,6 +3,7 @@
  * Footer: Figma 901:644 (253px, 1px #272727 top rule). Middle column at 50% - 20px (x=700, aligned with the "Początek" content column).
  */
 import { site } from '@/data/site';
+import EmailLink from '@/components/ui/EmailLink.astro';
 
 const year = new Date().getFullYear();
 ---
@@ -21,6 +22,9 @@ const year = new Date().getFullYear();
         </a>
       </li>
     ))}
+    <li>
+      <EmailLink class="link-underline" />
+    </li>
   </ul>
 
   <p class="lg:absolute lg:top-10 lg:right-gutter lg:text-right">

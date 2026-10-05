@@ -6,6 +6,7 @@
 import { ScrollTrigger, prefersReducedMotion } from '@/scripts/lib/gsap';
 import { initAnchorLinks, initSmoothScroll, scrollToTarget } from '@/scripts/lib/smooth-scroll';
 import { initMenu } from '@/scripts/animations/menu';
+import { initEmailLinks } from '@/scripts/lib/email';
 import { initHeader } from '@/scripts/animations/header';
 import { initHero } from '@/scripts/animations/hero';
 import { initReveals } from '@/scripts/animations/reveal';
@@ -23,6 +24,7 @@ declare global {
 
 async function boot() {
   const reducedMotion = prefersReducedMotion();
+  initEmailLinks();
 
   const menu = initMenu(reducedMotion);
   initAnchorLinks(menu);
