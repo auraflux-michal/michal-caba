@@ -13,10 +13,10 @@ export const site = {
   lang: 'pl',
   themeColor: '#0b0b0b',
   /**
-   * Search-engine indexing. Keep `false` until launch: when flipping to `true`, also remove
-   * the X-Robots-Tag header in vercel.json.
+   * Search-engine indexing (launched). Only production deployments are ever indexable:
+   * Vercel preview deployments and the GitHub Pages preview always get noindex (src/lib/seo.ts).
    */
-  indexable: false,
+  indexable: true,
   author: 'Michał Caba',
   /** Structured data (schema.org Person) + llms.txt: facts AI answer engines can quote */
   person: {

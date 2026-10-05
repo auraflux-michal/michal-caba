@@ -50,11 +50,11 @@ src/
 - **Domain:** absolute URLs use `SITE_URL` if set, otherwise Vercel's production domain
   (`VERCEL_PROJECT_PRODUCTION_URL`: the vercel.app URL now, the custom domain once assigned).
 
-## Indexing (pre-launch)
+## Indexing
 
-The site is currently **noindex**: `<meta name="robots">` and the `X-Robots-Tag` header
-(`vercel.json`). `robots.txt` deliberately allows crawling so search engines can see the noindex.
-To launch: set `indexable: true` in `src/data/site.ts` and remove the `X-Robots-Tag` header.
+Live: `indexable: true` in `src/data/site.ts`. Production builds get
+`index, follow, max-image-preview:large`; Vercel preview deployments (`VERCEL_ENV` ≠ `production`)
+and the GitHub Pages preview are always `noindex`. To hide the site again, set `indexable: false`.
 
 ## Deploy
 

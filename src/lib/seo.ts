@@ -16,9 +16,15 @@ export function assetPath(path: string): string {
   return `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}${path.replace(/^\//, '')}`;
 }
 
-/** Preview builds are never indexed; production only once `site.indexable` is enabled */
+/**
+ * Robots directive. Indexable only when `site.indexable` is on AND this is a production build:
+ * Vercel preview/branch deployments (VERCEL_ENV=preview|development) and the GitHub Pages
+ * preview (PUBLIC_PREVIEW) are always noindex, so Google never sees duplicate copies.
+ */
 export function robotsDirective(): string {
-  const isPreview = import.meta.env.PUBLIC_PREVIEW === 'true';
+  const isPreview =
+    import.meta.env.PUBLIC_PREVIEW === 'true' ||
+    (process.env.VERCEL_ENV !== undefined && process.env.VERCEL_ENV !== 'production');
   return isPreview || !site.indexable
     ? 'noindex, nofollow'
     : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
