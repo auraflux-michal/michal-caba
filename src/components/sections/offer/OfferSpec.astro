@@ -1,0 +1,100 @@
+---
+/**
+ * Offer, direction B "Karta produktu": split 50/50 like "Człowiek". Left: the pitch.
+ * Right: a brutalist product sheet with a hard accent shadow: name, spec rows (what you
+ * leave with), price slab, CTA. Reads like a label on a box: what it is, what's inside, price.
+ */
+import { offer } from '@/data/content';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import SplitLines from '@/components/ui/SplitLines.astro';
+import OfferCta from './OfferCta.astro';
+
+const label = 'font-display text-label-sm uppercase lg:text-label';
+---
+
+<section aria-labelledby="offer-b-title" class="relative bg-ink text-paper">
+  <div class="gutter-x flex h-label items-center">
+    <SectionLabel tone="paper">Warsztat</SectionLabel>
+  </div>
+
+  <div class="gutter-x grid gap-16 pt-12 pb-24 lg:grid-cols-2 lg:gap-0 lg:px-0 lg:pt-16 lg:pb-[8.5rem]">
+    {/* Pitch */}
+    <div class="flex flex-col lg:pr-20 lg:pl-inset">
+      <p class:list={[label, 'text-paper/60']}>{offer.eyebrow}</p>
+      <h2
+        id="offer-b-title"
+        class="mt-8 font-display text-h1-sm font-bold uppercase lg:mt-10 lg:text-h1"
+      >
+        <SplitLines as="span" class="block">
+          {offer.headline[0]}
+          <br />
+          {offer.headline[1]}
+        </SplitLines>
+        <SplitLines as="span" class="block text-accent" delay={0.15}>
+          {offer.headlineAccent}
+        </SplitLines>
+      </h2>
+      <SplitLines
+        class="mt-10 max-w-[33rem] font-body text-body-sm font-semibold lg:mt-12 lg:text-body"
+        delay={0.2}
+      >
+        {offer.lead}
+      </SplitLines>
+      <SplitLines
+        class="mt-5 max-w-[33rem] font-body text-body-sm font-medium text-paper/60"
+        delay={0.3}
+      >
+        {offer.body}
+      </SplitLines>
+      <p class:list={[label, 'mt-12 text-accent lg:mt-auto']}>
+        {offer.closing[0]}
+        <br />
+        {offer.closing[1]}
+      </p>
+    </div>
+
+    {/* Product sheet */}
+    <div class="lg:pr-inset lg:pl-10">
+      <article
+        data-reveal
+        data-clip-up
+        class="border border-paper bg-ink shadow-[0.75rem_0.75rem_0_var(--color-accent)] lg:shadow-[1rem_1rem_0_var(--color-accent)]"
+      >
+        <header class="flex items-start justify-between gap-6 border-b border-paper p-6 lg:p-8">
+          <div>
+            <p class:list={[label, 'text-paper/60']}>{offer.format}</p>
+            <h3 class="mt-4 font-display text-[2.75rem] leading-[0.95] font-bold uppercase lg:text-[3.5rem]">
+              {offer.name[0]}
+              <br />
+              <span class="inline-flex items-start">{offer.name[1]}<sup class="mt-[0.2em] text-[0.3em]">™</sup></span>
+            </h3>
+          </div>
+          <span class:list={[label, 'border border-paper px-3 py-1']}>1:1</span>
+        </header>
+
+        <ol>
+          {offer.outcomes.map((item) => (
+            <li class="grid grid-cols-[3rem_1fr] gap-x-4 border-b border-paper/25 p-6 lg:grid-cols-[3.5rem_1fr] lg:px-8">
+              <span class:list={[label, 'pt-0.5 text-accent']}>{item.number}</span>
+              <div>
+                <h4 class="font-display text-[1.375rem] leading-tight font-bold">{item.title}</h4>
+                <p class="mt-2 font-body text-body-sm font-medium text-paper/65">{item.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div class="flex items-end justify-between gap-6 bg-accent p-6 text-ink lg:px-8 lg:py-7">
+          <p class={label}>Cena</p>
+          <p class="flex items-baseline gap-2 font-display leading-none font-bold">
+            <span class="text-[3.5rem] lg:text-[4.5rem]">{offer.price}</span>
+            <span class="text-label-sm lg:text-label">{offer.currency}</span>
+          </p>
+        </div>
+        <div class="p-6 lg:p-8">
+          <OfferCta surface="ink" />
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

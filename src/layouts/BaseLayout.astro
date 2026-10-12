@@ -17,6 +17,8 @@ interface Props {
   ogImageAlt?: string;
   /** Home = the profile; subpages (e.g. /lustro) are plain web pages of that profile's site */
   pageType?: 'ProfilePage' | 'WebPage';
+  /** Internal previews: never indexed, whatever the environment */
+  noindex?: boolean;
 }
 
 const {
@@ -25,6 +27,7 @@ const {
   ogImage = '/og.png',
   ogImageAlt: customOgAlt,
   pageType = 'ProfilePage',
+  noindex = false,
 } = Astro.props;
 const isProfile = pageType === 'ProfilePage';
 // One URL per page, matching sitemap.xml: no trailing slash on subpages (/lustro, not /lustro/)
@@ -58,7 +61,7 @@ const jsonLd = buildJsonLd({
     <meta name="author" content={site.author} />
     <meta name="theme-color" content={site.themeColor} />
     <link rel="canonical" href={canonical} />
-    <meta name="robots" content={robotsDirective()} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : robotsDirective()} />
     <link rel="icon" href={assetPath('/favicon.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={assetPath('/apple-touch-icon.png')} />
     <link rel="sitemap" type="application/xml" href={assetPath('/sitemap.xml')} />
