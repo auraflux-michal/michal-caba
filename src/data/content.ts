@@ -99,6 +99,20 @@ export const offer = {
     },
   ],
   closing: ['Najpierw kierunek.', 'Potem kolejny metr.'],
+  /** Pain-first copy for the framed panel (podglad/panel) */
+  pain: {
+    headline: ['Nie wiesz,', 'co dalej'],
+    /** Last line: "z" stays with "marką?" (no single-letter word at a line end) */
+    headlinePre: 'z',
+    headlineAccent: 'marką?',
+    lead: 'Publikujesz, poprawiasz, zaczynasz od nowa. Dużo ruchu, mało kierunku. A każdy kolejny pomysł tylko dokłada chaosu.',
+    points: [
+      'Nie wiesz, na czym się skupić.',
+      'Marka mówi jedno, oferta drugie.',
+      'Tracisz czas na działania, które nic nie zmieniają.',
+    ],
+    resolution: 'Jedno spotkanie. Trzy decyzje, które porządkują następny krok.',
+  },
   cta: 'Umów warsztat',
   /** Booking link; while null the CTA renders disabled with the note below */
   bookingUrl: null as string | null,

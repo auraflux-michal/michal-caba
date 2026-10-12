@@ -1,0 +1,118 @@
+---
+/**
+ * Offer, framed panel (Michał's draft, refined): one accent-framed box on ink.
+ * Left: pain first (headline, what it feels like, three symptoms), then the way out.
+ * Right (after an accent divider): format, price, the three steps as an exclusive accordion
+ * (native <details name>, first open; smooth height where ::details-content is supported),
+ * booking CTA. Compact: ~1 screen. Mobile: the two columns stack.
+ */
+import { offer } from '@/data/content';
+import OfferCta from './OfferCta.astro';
+
+const label = 'font-display text-label-sm uppercase lg:text-label';
+const { pain } = offer;
+---
+
+<section
+  id="warsztat"
+  aria-labelledby="offer-panel-title"
+  class="relative bg-ink py-16 text-paper lg:py-20"
+>
+  <div class="mx-5 grid border border-accent lg:mx-gutter lg:grid-cols-[1fr_1px_minmax(0,31rem)] lg:gap-x-16 lg:px-16 lg:py-14">
+    {/* Pain */}
+    <div class="p-6 pt-8 lg:p-0">
+      <p class:list={[label, 'font-bold text-accent']}>{offer.kicker}</p>
+      <h2
+        id="offer-panel-title"
+        class="mt-8 font-display text-h2-sm font-bold uppercase lg:mt-10 lg:text-[5rem] lg:leading-[0.92]"
+      >
+        <span class="block">{pain.headline[0]}</span>
+        <span class="block">{pain.headline[1]}</span>
+        <span class="block">
+          {pain.headlinePre}&nbsp;<span class="text-accent">{pain.headlineAccent}</span>
+        </span>
+      </h2>
+      <p class="mt-8 max-w-[34rem] font-body text-body-sm font-semibold lg:mt-10 lg:text-body">
+        {pain.lead}
+      </p>
+      <ul class="mt-6 space-y-2">
+        {pain.points.map((point) => (
+          <li class="flex gap-3 font-body text-body-sm font-medium text-paper/75">
+            <span aria-hidden="true" class="font-display font-bold text-accent">
+              ×
+            </span>
+            {point}
+          </li>
+        ))}
+      </ul>
+      <p class:list={[label, 'mt-8 max-w-[30rem] text-paper lg:mt-10']}>{pain.resolution}</p>
+    </div>
+
+    <span aria-hidden="true" class="hidden bg-accent lg:block"></span>
+
+    {/* Offer */}
+    <div class="border-t border-accent p-6 pb-8 lg:border-0 lg:p-0">
+      <p class:list={[label, 'text-paper/60']}>{offer.format}</p>
+      <p class="mt-3 flex items-baseline gap-3 font-display leading-none font-bold">
+        <span class="text-[4rem] text-accent lg:text-[5.5rem]">{offer.price}</span>
+        <span class="text-label-sm lg:text-label">{offer.currency}</span>
+      </p>
+
+      <div class="mt-8 border-t border-line lg:mt-10">
+        {offer.outcomes.map((item, index) => (
+          <details name="mapa-kroki" class="step group border-b border-line" open={index === 0}>
+            <summary class="flex cursor-pointer list-none items-baseline gap-4 py-4 lg:py-5 [&::-webkit-details-marker]:hidden">
+              <span class="w-6 shrink-0 font-display text-[0.8125rem] text-paper/50 group-open:text-accent">
+                {item.number}
+              </span>
+              <span class="flex-1 font-display text-[1.5rem] leading-tight font-bold uppercase transition-colors group-hover:text-accent lg:text-[1.75rem]">
+                {item.title}
+              </span>
+              <span
+                aria-hidden="true"
+                class="font-display text-[1.5rem] leading-none text-accent transition-transform duration-500 ease-out-expo group-open:rotate-45"
+              >
+                +
+              </span>
+            </summary>
+            <p class="pr-8 pb-5 pl-10 font-body text-body-sm font-medium text-paper/70">
+              {item.text}
+            </p>
+          </details>
+        ))}
+      </div>
+
+      <OfferCta surface="ink" class="mt-8 lg:mt-10" />
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Smooth open/close where supported (Chromium); instant elsewhere */
+  .step {
+    interpolate-size: allow-keywords;
+  }
+
+  .step::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+      content-visibility 0.5s allow-discrete;
+  }
+
+  .step[open]::details-content {
+    block-size: auto;
+  }
+
+  .step summary:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .step::details-content {
+      transition: none;
+    }
+  }
+</style>
