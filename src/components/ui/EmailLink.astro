@@ -15,7 +15,7 @@ const encoded = Buffer.from([...site.email].reverse().join(''), 'utf8').toString
 ---
 
 <a
-  href={sectionHref('poczatek', Astro.url.pathname)}
+  href={sectionHref('poczatek', Astro.url.pathname, Astro.locals.homeSections)}
   data-email={encoded}
   class={className}
   {...rest}

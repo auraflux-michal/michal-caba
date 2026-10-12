@@ -14,7 +14,7 @@ import { sectionHref } from '@/lib/seo';
   class="gutter-x fixed inset-x-0 top-0 z-50 flex h-header items-center justify-between border-b border-line bg-ink font-display text-label-sm font-bold text-white uppercase transition-colors duration-500 will-change-transform lg:text-label in-data-menu-open:border-ink/25 in-data-menu-open:bg-accent in-data-menu-open:text-ink"
 >
   <a
-    href={sectionHref('start', Astro.url.pathname)}
+    href={sectionHref('start', Astro.url.pathname, Astro.locals.homeSections)}
     class="link-underline"
     aria-label={`${site.name}: początek strony`}
   >

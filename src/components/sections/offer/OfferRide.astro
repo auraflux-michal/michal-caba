@@ -16,6 +16,7 @@ const ticks = Array.from({ length: 11 }, (_, i) => i * 10);
 ---
 
 <section
+  id="warsztat"
   aria-labelledby="offer-ride-title"
   data-ride
   class="ride relative overflow-hidden bg-ink text-paper"
@@ -227,6 +228,8 @@ const ticks = Array.from({ length: 11 }, (_, i) => i * 10);
           pin: true,
           scrub: 0.6,
           anticipatePin: 1,
+          // Computed before the triggers below it (Filozofia, Notes…), which shift by the pin
+          refreshPriority: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => update(self.progress),
           onRefresh: (self) => update(self.progress),

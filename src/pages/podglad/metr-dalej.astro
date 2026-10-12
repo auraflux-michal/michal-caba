@@ -1,0 +1,12 @@
+---
+/**
+ * Internal preview (noindex: meta + X-Robots-Tag in vercel.json; not linked, not in the
+ * sitemap): the full home page with the offer "Metr dalej" (E+) between Buduję and Filozofia.
+ */
+import HomePage from '@/components/pages/HomePage.astro';
+import OfferRide from '@/components/sections/offer/OfferRide.astro';
+---
+
+<HomePage noindex title="Podgląd: oferta „Metr dalej”">
+  <OfferRide slot="offer" />
+</HomePage>

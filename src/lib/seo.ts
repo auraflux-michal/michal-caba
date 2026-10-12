@@ -17,12 +17,13 @@ export function assetPath(path: string): string {
 }
 
 /**
- * Link to a home-page section: a bare `#id` on the home page (smooth in-page scroll),
- * `/#id` from subpages (e.g. /lustro), so the shared header/menu work everywhere.
+ * Link to a home-page section: a bare `#id` on pages that render the home sections (the home
+ * page, its internal previews: `Astro.locals.homeSections`), `/#id` from other subpages
+ * (e.g. /lustro), so the shared header/menu work everywhere.
  */
-export function sectionHref(id: string, currentPath: string): string {
+export function sectionHref(id: string, currentPath: string, inPage = false): string {
   const home = assetPath('/');
-  const onHome = currentPath === home || currentPath === `${home}index.html`;
+  const onHome = inPage || currentPath === home || currentPath === `${home}index.html`;
   return onHome ? `#${id}` : `${home}#${id}`;
 }
 

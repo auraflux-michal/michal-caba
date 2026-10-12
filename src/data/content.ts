@@ -67,7 +67,7 @@ export const notes: Note[] = [
   },
 ];
 
-/** Offer module "Mapa Kierunku™" (sections/Offer.astro), between "Buduję" and "Filozofia". */
+/** Offer module "Mapa Kierunku™" (sections/offer/*), between "Buduję" and "Filozofia". */
 export const offer = {
   kicker: '04 / Warsztat strategiczny',
   name: ['Mapa', 'Kierunku'],

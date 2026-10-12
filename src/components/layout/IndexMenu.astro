@@ -7,6 +7,13 @@
 import { sections, site } from '@/data/site';
 import EmailLink from '@/components/ui/EmailLink.astro';
 import { sectionHref } from '@/lib/seo';
+
+// Internal previews with the offer module list it after "Buduję"
+const items: { id: string; label: string }[] = Astro.locals.offerSection
+  ? sections.flatMap((section) =>
+      section.id === 'buduje' ? [section, { id: 'warsztat', label: 'Warsztat' }] : [section],
+    )
+  : [...sections];
 ---
 
 <div
@@ -21,10 +28,10 @@ import { sectionHref } from '@/lib/seo';
 >
   <nav aria-label="Sekcje strony" class="gutter-x flex flex-1 flex-col justify-center lg:px-inset">
     <ol class="flex flex-col">
-      {sections.map((section, index) => (
+      {items.map((section, index) => (
         <li class="overflow-hidden border-b border-ink/25 first:border-t">
           <a
-            href={sectionHref(section.id, Astro.url.pathname)}
+            href={sectionHref(section.id, Astro.url.pathname, Astro.locals.homeSections)}
             data-menu-link
             class="group flex items-baseline gap-6 py-3 font-display text-h2-sm font-bold uppercase transition-colors duration-300 focus-visible:outline-ink hover:text-paper lg:gap-10 lg:py-4 lg:text-h2"
           >
