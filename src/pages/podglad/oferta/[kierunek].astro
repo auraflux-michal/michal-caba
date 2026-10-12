@@ -1,0 +1,41 @@
+---
+/**
+ * Internal preview (noindex, not linked): one offer direction in its real context, between the
+ * actual "Buduję" and "Filozofia" sections. /podglad/oferta/b, /podglad/oferta/c.
+ * Delete with the rest of /podglad once a direction is chosen.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/layout/Header.astro';
+import IndexMenu from '@/components/layout/IndexMenu.astro';
+import Footer from '@/components/layout/Footer.astro';
+import Build from '@/components/sections/Build.astro';
+import Philosophy from '@/components/sections/Philosophy.astro';
+import OfferSpec from '@/components/sections/offer/OfferSpec.astro';
+import OfferRoute from '@/components/sections/offer/OfferRoute.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { kierunek: 'b' }, props: { name: 'B / Karta produktu', Offer: OfferSpec } },
+    { params: { kierunek: 'c' }, props: { name: 'C / Trasa', Offer: OfferRoute } },
+  ];
+}
+
+const { name, Offer } = Astro.props;
+---
+
+<BaseLayout title={`Podgląd oferty: ${name}`} noindex pageType="WebPage">
+  <Fragment slot="header">
+    <Header />
+    <IndexMenu />
+  </Fragment>
+
+  <div class="h-header bg-ink"></div>
+  <p class="gutter-x bg-paper py-4 font-display text-label-sm font-bold text-ink uppercase lg:text-label">
+    Podgląd: kierunek {name}
+  </p>
+  <Build />
+  <Offer />
+  <Philosophy />
+
+  <Footer slot="footer" />
+</BaseLayout>
