@@ -1,0 +1,155 @@
+---
+/**
+ * Offer, direction F "Bilet": compact (one screen). The workshop as a ticket for the route
+ * "Z: Nie wiem, co dalej → Do: Jasny kierunek": main part with the three stops, a perforated
+ * edge (dashed rule + punched notches) and an accent stub with name, price and CTA.
+ * Slightly tilted, straightens on hover. Mobile: the stub drops below, perforation turns horizontal.
+ */
+import { offer } from '@/data/content';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import SplitLines from '@/components/ui/SplitLines.astro';
+import OfferCta from './OfferCta.astro';
+
+const label = 'font-display text-label-sm uppercase lg:text-label';
+---
+
+<section aria-labelledby="offer-f-title" class="relative overflow-hidden bg-ink text-paper">
+  <div class="gutter-x flex h-label items-center">
+    <SectionLabel tone="paper">Warsztat</SectionLabel>
+  </div>
+
+  <div class="gutter-x pt-10 pb-20 lg:px-inset lg:pt-12 lg:pb-24">
+    <div class="grid gap-8 lg:grid-cols-[1fr_30rem] lg:items-end lg:gap-20">
+      <h2 id="offer-f-title" class="font-display text-h2-sm font-bold uppercase lg:text-h2">
+        <SplitLines as="span" class="block">
+          {offer.headline[0]} {offer.headline[1]}
+        </SplitLines>
+        <SplitLines as="span" class="block text-accent" delay={0.15}>
+          {offer.headlineAccent}
+        </SplitLines>
+      </h2>
+      <SplitLines class="font-body text-body-sm font-medium text-paper/70" delay={0.2}>
+        {offer.lead}
+      </SplitLines>
+    </div>
+
+    {/* Ticket */}
+    <article
+      data-reveal
+      data-fade
+      aria-label="Bilet: Mapa Kierunku, warsztat strategiczny 1:1"
+      class="ticket mt-12 flex flex-col border border-paper lg:mt-14 lg:flex-row"
+    >
+      <div class="flex-1 p-6 lg:p-8">
+        <div class:list={[label, 'flex justify-between gap-4 text-paper/60']}>
+          <span>{offer.format}</span>
+          <span>Bilet nr 001</span>
+        </div>
+
+        {/* From → To */}
+        <div class="mt-8 grid grid-cols-[1fr_auto_1fr] items-end gap-4 lg:mt-10 lg:gap-8">
+          <div>
+            <p class:list={[label, 'text-paper/60']}>Z</p>
+            <p class="mt-1 font-display text-[1.375rem] leading-tight font-bold uppercase lg:text-h3">
+              Nie wiem, co dalej
+            </p>
+          </div>
+          <span aria-hidden="true" class="font-display text-h3-sm font-bold text-accent lg:text-h3">
+            →
+          </span>
+          <div>
+            <p class:list={[label, 'text-paper/60']}>Do</p>
+            <p class="mt-1 font-display text-[1.375rem] leading-tight font-bold text-accent uppercase lg:text-h3">
+              Jasny kierunek
+            </p>
+          </div>
+        </div>
+
+        {/* Stops */}
+        <ol class="mt-8 grid gap-px bg-paper/25 sm:grid-cols-3 lg:mt-10">
+          {offer.outcomes.map((item) => (
+            <li class="bg-ink pt-4 sm:pr-6">
+              <p class:list={[label, 'text-accent']}>Przystanek {item.number}</p>
+              <p class="mt-1 font-display text-[1.25rem] leading-tight font-bold">{item.title}</p>
+              <p class="mt-2 font-body text-[0.9375rem] leading-6 font-medium text-paper/60">
+                {item.text}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* Stub */}
+      <div class="ticket-stub relative flex flex-col justify-between gap-8 border-t border-dashed border-paper bg-accent p-6 text-ink lg:w-[24rem] lg:border-t-0 lg:border-l lg:p-8">
+        <span aria-hidden="true" class="ticket-notch ticket-notch--a"></span>
+        <span aria-hidden="true" class="ticket-notch ticket-notch--b"></span>
+        <div>
+          <p class="font-display text-[2.5rem] leading-[0.92] font-bold uppercase lg:text-[3rem]">
+            Mapa
+            <br />
+            Kierunku<sup class="text-[0.3em]">™</sup>
+          </p>
+          <p class:list={[label, 'mt-3']}>{offer.tagline}</p>
+        </div>
+        <div>
+          <p class="flex items-baseline gap-2 font-display leading-none font-bold">
+            <span class="text-[3.5rem] lg:text-[4rem]">{offer.price}</span>
+            <span class="text-label-sm lg:text-label">{offer.currency}</span>
+          </p>
+          <OfferCta surface="accent" class="mt-6" />
+        </div>
+      </div>
+    </article>
+
+    <p class:list={[label, 'mt-8 text-paper/60 lg:mt-10']}>
+      {offer.closing[0]}
+      {offer.closing[1]}
+    </p>
+  </div>
+</section>
+
+<style>
+  .ticket {
+    transform: rotate(-1deg);
+    transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .ticket:hover {
+    transform: none;
+  }
+
+  /* Punched notches on the perforation (ink circles biting into the border) */
+  .ticket-notch {
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--color-paper);
+    border-radius: 50%;
+    background: var(--color-ink);
+  }
+
+  .ticket-notch--a {
+    top: -0.75rem;
+    left: -0.75rem;
+  }
+
+  .ticket-notch--b {
+    top: -0.75rem;
+    right: -0.75rem;
+  }
+
+  @media (min-width: 64rem) {
+    .ticket-notch--b {
+      top: auto;
+      right: auto;
+      bottom: -0.75rem;
+      left: -0.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticket {
+      transition: none;
+    }
+  }
+</style>

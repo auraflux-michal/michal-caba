@@ -1,0 +1,122 @@
+---
+/**
+ * Offer, direction G "Kompakt": direction C condensed to one screen. Pitch left, the route
+ * right as a vertical line with three stops and the travelling "current", then one slim accent
+ * bar: name | tagline | price | CTA. Nothing to learn, nothing hidden, ~1 viewport tall.
+ */
+import { offer } from '@/data/content';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import SplitLines from '@/components/ui/SplitLines.astro';
+import OfferCta from './OfferCta.astro';
+
+const label = 'font-display text-label-sm uppercase lg:text-label';
+---
+
+<section aria-labelledby="offer-g-title" class="relative overflow-hidden bg-ink text-paper">
+  <div class="gutter-x flex h-label items-center">
+    <SectionLabel tone="paper">Warsztat</SectionLabel>
+  </div>
+
+  <div class="gutter-x grid gap-14 pt-10 pb-14 lg:grid-cols-2 lg:gap-20 lg:px-inset lg:pt-12 lg:pb-16">
+    <div>
+      <p class:list={[label, 'text-paper/60']}>{offer.eyebrow}</p>
+      <h2
+        id="offer-g-title"
+        class="mt-6 font-display text-h2-sm font-bold uppercase lg:mt-8 lg:text-h2"
+      >
+        <SplitLines as="span" class="block">
+          {offer.headline[0]}
+          <br />
+          {offer.headline[1]}
+        </SplitLines>
+        <SplitLines as="span" class="block text-accent" delay={0.15}>
+          {offer.headlineAccent}
+        </SplitLines>
+      </h2>
+      <SplitLines
+        class="mt-8 max-w-[34rem] font-body text-body-sm font-semibold lg:text-body"
+        delay={0.2}
+      >
+        {offer.lead}
+      </SplitLines>
+      <SplitLines
+        class="mt-4 max-w-[34rem] font-body text-body-sm font-medium text-paper/60"
+        delay={0.3}
+      >
+        {offer.body}
+      </SplitLines>
+    </div>
+
+    {/* Route (vertical) */}
+    <div>
+      <p class:list={[label, 'text-paper/60']}>{offer.outcomesLabel}</p>
+      <ol class="relative mt-6 space-y-8 pl-10 lg:mt-8 lg:space-y-9">
+        <span aria-hidden="true" class="absolute top-2 bottom-2 left-[0.4375rem] w-px bg-paper/25">
+          <span class="compact-spark absolute"></span>
+        </span>
+        {offer.outcomes.map((item) => (
+          <li data-reveal data-fade class="relative">
+            <span
+              aria-hidden="true"
+              class="absolute top-1.5 -left-10 size-3.5 border border-paper bg-ink"
+            />
+            <p class:list={[label, 'text-accent']}>Etap {item.number}</p>
+            <h3 class="mt-1 font-display text-h4-sm font-bold lg:text-h4">{item.title}</h3>
+            <p class="mt-2 max-w-[30rem] font-body text-body-sm font-medium text-paper/65">
+              {item.text}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+
+  {/* Slim product bar */}
+  <div
+    data-reveal
+    data-wipe
+    class="mx-5 mb-16 grid gap-6 bg-accent px-5 py-8 text-ink lg:mx-inset lg:mb-20 lg:grid-cols-[auto_1fr_auto_auto] lg:items-center lg:gap-12 lg:px-10 lg:py-7"
+  >
+    <p class="font-display text-[2.25rem] leading-none font-bold uppercase lg:text-h3">
+      Mapa Kierunku<sup class="text-[0.35em]">™</sup>
+    </p>
+    <p class={label}>{offer.format}</p>
+    <p class="flex items-baseline gap-2 font-display leading-none font-bold">
+      <span class="text-[3rem] lg:text-[3.5rem]">{offer.price}</span>
+      <span class="text-label-sm lg:text-label">{offer.currency}</span>
+    </p>
+    <OfferCta surface="accent" />
+  </div>
+</section>
+
+<style>
+  .compact-spark {
+    inset: -0.5rem auto auto -0.75rem;
+    width: 1.5rem;
+    height: 4rem;
+    background: radial-gradient(closest-side, var(--color-accent), transparent);
+    filter: blur(2px);
+    animation: compact-y 4s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+  }
+
+  @keyframes compact-y {
+    from {
+      top: -4rem;
+      opacity: 0;
+    }
+    15%,
+    85% {
+      opacity: 1;
+    }
+    to {
+      top: 100%;
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .compact-spark {
+      display: none;
+    }
+  }
+</style>

@@ -1,7 +1,7 @@
 ---
 /**
  * Internal preview (noindex, not linked): one offer direction in its real context, between the
- * actual "Buduję" and "Filozofia" sections. /podglad/oferta/b … /e.
+ * actual "Buduję" and "Filozofia" sections. /podglad/oferta/b … /g.
  * Delete with the rest of /podglad once a direction is chosen.
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
@@ -14,6 +14,8 @@ import OfferSpec from '@/components/sections/offer/OfferSpec.astro';
 import OfferRoute from '@/components/sections/offer/OfferRoute.astro';
 import OfferMap from '@/components/sections/offer/OfferMap.astro';
 import OfferTrack from '@/components/sections/offer/OfferTrack.astro';
+import OfferTicket from '@/components/sections/offer/OfferTicket.astro';
+import OfferCompact from '@/components/sections/offer/OfferCompact.astro';
 
 export function getStaticPaths() {
   return [
@@ -21,6 +23,8 @@ export function getStaticPaths() {
     { params: { kierunek: 'c' }, props: { name: 'C / Trasa', Offer: OfferRoute } },
     { params: { kierunek: 'd' }, props: { name: 'D / Mapa', Offer: OfferMap } },
     { params: { kierunek: 'e' }, props: { name: 'E / Przejazd', Offer: OfferTrack } },
+    { params: { kierunek: 'f' }, props: { name: 'F / Bilet', Offer: OfferTicket } },
+    { params: { kierunek: 'g' }, props: { name: 'G / Kompakt', Offer: OfferCompact } },
   ];
 }
 
