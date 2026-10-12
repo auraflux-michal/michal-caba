@@ -2,7 +2,9 @@
 /**
  * "INDEX +" overlay: full-screen section index. Opened/closed by scripts/animations/menu.ts.
  * Hidden with `hidden` until opened, so it is out of the a11y tree and tab order.
- * Accent surface with ink typography on every breakpoint.
+ * Accent surface with ink typography on every breakpoint. Wide desktop screens (aspect ≥ 3:2:
+ * laptops, 16:9 monitors), where the rem-scaled rows would outgrow the height, get compact rows;
+ * if it still does not fit, the overlay scrolls (data-lenis-prevent).
  */
 import { sections, site } from '@/data/site';
 import EmailLink from '@/components/ui/EmailLink.astro';
@@ -23,17 +25,18 @@ const items: { id: string; label: string }[] = Astro.locals.offerSection
   aria-modal="true"
   aria-label="Index sekcji"
   hidden
-  class="fixed inset-0 z-40 flex flex-col bg-accent pt-header text-ink [clip-path:inset(0_0_100%_0)]"
+  class="fixed inset-0 z-40 flex flex-col overflow-y-auto overscroll-contain bg-accent pt-header text-ink [clip-path:inset(0_0_100%_0)]"
   data-lenis-prevent
 >
-  <nav aria-label="Sekcje strony" class="gutter-x flex flex-1 flex-col justify-center lg:px-inset">
-    <ol class="flex flex-col">
+  <nav aria-label="Sekcje strony" class="gutter-x flex flex-1 flex-col lg:px-inset">
+    {/* my-auto: centred when it fits, scrollable from the top when it does not */}
+    <ol class="my-auto flex flex-col py-6">
       {items.map((section, index) => (
         <li class="overflow-hidden border-b border-ink/25 first:border-t">
           <a
             href={sectionHref(section.id, Astro.url.pathname, Astro.locals.homeSections)}
             data-menu-link
-            class="group flex items-baseline gap-6 py-3 font-display text-h2-sm font-bold uppercase transition-colors duration-300 focus-visible:outline-ink hover:text-paper lg:gap-10 lg:py-4 lg:text-h2"
+            class="group flex items-baseline gap-6 py-3 font-display text-h2-sm font-bold uppercase transition-colors duration-300 focus-visible:outline-ink hover:text-paper lg:gap-10 lg:py-4 lg:text-h2 [@media(min-width:64rem)_and_(min-aspect-ratio:3/2)]:py-2 [@media(min-width:64rem)_and_(min-aspect-ratio:3/2)]:text-h3"
           >
             <span class="font-normal text-ink/60 text-label-sm lg:text-label">
               _{String(index + 1).padStart(2, '0')}
