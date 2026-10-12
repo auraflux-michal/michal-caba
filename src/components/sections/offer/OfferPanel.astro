@@ -38,6 +38,11 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
       aria-hidden="true"
       data-frame="left"
       class="absolute inset-y-0 left-0 w-px origin-top bg-accent"
+    ></span>
+    {/* Pulse track: clips the pulse to the rule's own length (top rule → Filozofia) */}
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-y-0 -left-4 w-8 overflow-hidden"
     >
       <span
         data-frame-spark
@@ -45,7 +50,7 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
       ></span>
     </span>
 
-    <div class="grid pb-6 lg:grid-cols-[51rem_1px_minmax(0,1fr)] lg:gap-x-10 lg:pt-14 lg:pr-gutter lg:pb-24 lg:pl-16">
+    <div class="grid pt-6 pb-14 lg:grid-cols-[51rem_1px_minmax(0,1fr)] lg:gap-x-10 lg:pt-[6.5rem] lg:pr-gutter lg:pb-[6.5rem] lg:pl-16">
       {/* Pain */}
       <div class="py-10 pr-5 pl-6 lg:p-0">
         <h2
@@ -273,7 +278,13 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
     if (!spark) return;
     const pulse = gsap.timeline({ repeat: -1, repeatDelay: 1.4, paused: true, delay });
     pulse
-      .fromTo(spark, { top: '-8rem' }, { top: '100%', duration: 2.4, ease: 'power1.inOut' }, 0)
+      // From just above the rule's top to past its bottom: the track clips it to the rule
+      .fromTo(
+        spark,
+        { yPercent: -100, top: '0%' },
+        { top: '100%', yPercent: 0, duration: 2.6, ease: 'power1.inOut' },
+        0,
+      )
       .fromTo(spark, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'none' }, 0)
       .to(spark, { opacity: 0, duration: 0.5, ease: 'none' }, 1.9);
     ScrollTrigger.create({
