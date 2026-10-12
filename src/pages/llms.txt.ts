@@ -4,7 +4,7 @@
  */
 import type { APIRoute } from 'astro';
 import { site, sections } from '@/data/site';
-import { heroPhrases, notes, roles } from '@/data/content';
+import { heroPhrases, notes, offer, roles } from '@/data/content';
 import { absoluteUrl } from '@/lib/seo';
 import { LUSTRO_TOTAL, lustroSections, lustroStages } from '@/data/lustro';
 
@@ -14,7 +14,7 @@ export const GET: APIRoute = ({ site: siteUrl }) => {
 
 > ${site.person.summary}
 
-${site.name}: ${site.person.jobTitles.join(', ')}. Motto: "Widzę potencjał ${heroPhrases.map((phrase) => phrase.toLowerCase()).join(', ')}". Projektuje marki, buduje firmy i dostrzega to, czego jeszcze nie ma.
+${site.name}: ${site.person.jobTitles.join(', ')}. Motto: "Widzę potencjał ${heroPhrases.map((phrase) => phrase.toLowerCase()).join(', ')}". Projektuje marki, buduje firmy i upraszcza trudne pytania.
 
 ## Role
 
@@ -27,6 +27,14 @@ ${site.person.knowsAbout.map((topic) => `- ${topic}`).join('\n')}
 ## Auraflux
 
 ${site.auraflux.name} (${site.auraflux.homepage}) to studio założone przez ${site.name}. ${site.auraflux.description}
+
+## Warsztat strategiczny: Mapa Kierunku™
+
+${offer.format}, ${offer.price} ${offer.currency}. Dla osób i firm, które nie wiedzą, co dalej z marką. ${offer.pain.resolution}
+
+${offer.outcomes.map((item) => `- **${item.title}**: ${item.text}`).join('\n')}
+
+Rezerwacja: ${offer.bookingUrl ?? site.consultationUrl}
 
 ## Filozofia #1metrDalej
 

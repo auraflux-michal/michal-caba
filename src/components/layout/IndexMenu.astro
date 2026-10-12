@@ -59,7 +59,7 @@ const items: { id: string; label: string }[] = Astro.locals.offerSection
     >
       Konsultacja<span class="sr-only"> (otwiera się w nowej karcie)</span>
     </a>
-    <ul class="flex gap-6 lg:gap-10">
+    <ul class="flex flex-wrap gap-x-6 gap-y-3 lg:gap-x-10">
       {site.socials.map((social) => (
         <li>
           <a

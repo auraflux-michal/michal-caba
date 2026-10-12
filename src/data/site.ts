@@ -67,6 +67,7 @@ export const site = {
     { label: 'Linkedin', href: 'https://www.linkedin.com/in/michal-caba/' },
     { label: 'Instagram', href: 'https://www.instagram.com/cabamichal' },
     { label: 'Facebook', href: 'https://www.facebook.com/michalcabaPL/' },
+    { label: 'Substack', href: 'https://michalcaba.substack.com' },
   ],
 } as const;
 

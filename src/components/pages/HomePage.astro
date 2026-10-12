@@ -1,7 +1,7 @@
 ---
 /**
- * The home page composition, shared by `/` and its internal previews (/podglad/*).
- * Optional `offer` slot renders between "Buduję" and "Filozofia" (its place on the page).
+ * The home page composition. The `offer` slot renders between "Buduję" and "Filozofia";
+ * when filled, the INDEX menu lists it as "Warsztat" (Astro.locals.offerSection).
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/layout/Header.astro';
@@ -16,7 +16,7 @@ import Notes from '@/components/sections/Notes.astro';
 import Next from '@/components/sections/Next.astro';
 
 interface Props {
-  /** Internal previews: never indexed */
+  /** Never index this render (e.g. an internal preview) */
   noindex?: boolean;
   title?: string;
 }

@@ -73,7 +73,7 @@ export const offer = {
   name: ['Mapa', 'Kierunku'],
   tagline: 'Jedna marka. Jasny kierunek.',
   format: 'Warsztat strategiczny 1:1',
-  price: '1500',
+  price: '2500',
   currency: 'PLN',
   eyebrow: 'Mniej zgadywania. Więcej decyzji.',
   headline: ['Nie wiesz,', 'co dalej'],
@@ -99,7 +99,7 @@ export const offer = {
     },
   ],
   closing: ['Najpierw kierunek.', 'Potem kolejny metr.'],
-  /** Pain-first copy for the framed panel (podglad/panel) */
+  /** Pain-first copy for the offer panel (sections/offer/OfferPanel.astro) */
   pain: {
     headline: ['Nie wiesz,', 'co dalej'],
     /** Last line: "z" stays with "marką?" (no single-letter word at a line end) */

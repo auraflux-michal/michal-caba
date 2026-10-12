@@ -3,7 +3,7 @@
  * Facts come from src/data/*, so page copy, structured data and llms.txt never drift apart.
  */
 import { site } from '@/data/site';
-import { roles } from '@/data/content';
+import { offer, roles } from '@/data/content';
 
 /** Absolute URL that respects `site` + `base` (works on Vercel and the GitHub Pages preview) */
 export function absoluteUrl(path: string, siteUrl: URL | undefined): string {
@@ -128,6 +128,17 @@ export function buildJsonLd({
           description: role.description,
         })),
         worksFor: { '@id': ids.org },
+        makesOffer: {
+          '@type': 'Offer',
+          price: offer.price,
+          priceCurrency: offer.currency,
+          url: `${homepage}#warsztat`,
+          itemOffered: {
+            '@type': 'Service',
+            name: `Mapa Kierunku™: ${offer.format}`,
+            description: `${offer.pain.resolution} ${offer.outcomes.map((item) => item.title).join(', ')}.`,
+          },
+        },
         sameAs: [...site.socials.map((social) => social.href), site.consultationUrl],
       },
       {

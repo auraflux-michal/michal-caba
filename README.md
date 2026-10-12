@@ -80,14 +80,6 @@ is installed; until then the calls are no-ops. Both need a cookie-consent banner
 **Links:** privacy policy = `site.privacyUrl` (`#` until the page exists), booking =
 `site.consultationUrl`. Social card: `public/og-lustro.png`.
 
-## Internal previews (`/podglad/*`)
-
-Full home page with the offer module "Mapa Kierunku™" in place (between Buduję and Filozofia):
-`/podglad/metr-dalej` (E+, horizontal ride + 0–100 cm ruler) and `/podglad/trasa` (C+, route
-that lights up), `/podglad/panel` (framed panel: pain-first copy, price, step accordion). Never indexed (meta robots + `X-Robots-Tag` in `vercel.json`), not linked, not in
-the sitemap. Composition lives in `components/pages/HomePage.astro` (optional `offer` slot);
-to go live, put the chosen component in that slot in `src/pages/index.astro` and delete `/podglad`.
-
 ## Indexing
 
 Live: `indexable: true` in `src/data/site.ts`. Production builds get
