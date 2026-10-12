@@ -22,7 +22,7 @@ const label = 'font-display text-label-sm uppercase lg:text-label';
     <div class="grid gap-8 lg:grid-cols-[1fr_30rem] lg:items-end lg:gap-20">
       <h2 id="offer-f-title" class="font-display text-h2-sm font-bold uppercase lg:text-h2">
         <SplitLines as="span" class="block">
-          {offer.headline[0]} {offer.headline[1]}
+          {`${offer.headline[0]} ${offer.headline[1]}`}
         </SplitLines>
         <SplitLines as="span" class="block text-accent" delay={0.15}>
           {offer.headlineAccent}
