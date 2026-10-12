@@ -110,16 +110,19 @@ export const copyV2: SiteCopy = {
     cta: 'Odkryj Auraflux',
   },
   offer: {
-    lead: 'Masz pomysły, możliwości i pytania. Ale brakuje Ci jasności, co naprawdę ma sens i od czego zacząć.',
-    body: 'Spotkajmy się 1:1. Przyjrzymy się Twojej marce, nazwiemy najważniejsze wyzwania i wyznaczymy kierunek dalszych działań.',
-    points: [],
+    // Structure of the live module (lead, × symptoms, closing line), copy tuned to v2
+    lead: 'Masz pomysły, możliwości i pytania. Dużo ruchu, mało kierunku. A każdy kolejny pomysł tylko dokłada chaosu.',
+    points: [
+      'Nie wiesz, na czym się skupić.',
+      'Marka mówi jedno, oferta drugie.',
+      'Tracisz czas na działania, które nic nie zmieniają.',
+    ],
+    resolution: 'Jedno spotkanie. Trzy decyzje, które porządkują następny krok.',
     steps: [
       'Przyglądamy się Twojej marce, jej sytuacji i wyzwaniom. Szukamy tego, co działa, co blokuje rozwój i gdzie kryje się potencjał.',
       'Oddzielamy rzeczy ważne od pilnych. Wybieramy obszary, na których warto się skupić, zamiast próbować zmieniać wszystko naraz.',
       'Zamieniamy wnioski w konkretne następne kroki. Wiesz, od czego zacząć, co zrobić najpierw i jak ruszyć z miejsca.',
     ],
-    afterSteps:
-      'Kierunek jest Twój. Możesz działać samodzielnie, ze swoim zespołem albo skorzystać ze wsparcia Auraflux.',
   },
   philosophy: {
     lead: 'Nie musisz zmieniać całego świata. Wystarczy, że zrobisz jeden krok, który coś zmieni.',
@@ -133,8 +136,8 @@ export const copyV2: SiteCopy = {
     lines: ['O markach, decyzjach, projektowaniu,', 'biznesie i ciekawości świata.'],
   },
   next: {
-    line: 'Nie wiem jeszcze, dokąd zmierzasz.',
-    accent: 'Chętnie pomogę Ci to odkryć.',
+    line: 'Nie wiem...',
+    accent: 'dlatego jest ciekawie',
     body: [
       'Masz pomysł, wyzwanie albo poczucie,',
       'że czas coś zmienić?',
