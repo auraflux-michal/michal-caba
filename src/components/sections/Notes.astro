@@ -6,11 +6,13 @@
  * The CTA has its own 1px rule directly under the list's last rule (two touching hairlines; the
  * last row rule overhangs its row by 1px, hence mt-px). Only the CTA's turns accent on hover.
  */
+import { copyV1 } from '@/data/copy';
 import { notes } from '@/data/content';
 import SectionLabel from '@/components/ui/SectionLabel.astro';
 import SplitLines from '@/components/ui/SplitLines.astro';
 import CtaRow from '@/components/ui/CtaRow.astro';
 import { site } from '@/data/site';
+const copy = Astro.locals.copy ?? copyV1;
 ---
 
 <section id="notes" aria-labelledby="notes-title" class="bg-paper text-ink lg:h-[59rem]">
@@ -31,11 +33,11 @@ import { site } from '@/data/site';
       </h2>
 
       <div class="mt-10 space-y-4 font-body text-body-sm font-medium lg:text-body">
-        <SplitLines delay={0.2}>To, co akurat żywe.</SplitLines>
+        <SplitLines delay={0.2}>{copy.notes.intro}</SplitLines>
         <SplitLines delay={0.3}>
-          <span class="lg:block">Myśli, obserwacje i pytania,</span>
-          <span class="lg:block">których nie chcę zostawić</span>
-          <span class="lg:block">tylko w swojej głowie.</span>
+          {copy.notes.lines.map((line) => (
+            <span class="lg:block">{`${line} `}</span>
+          ))}
         </SplitLines>
       </div>
     </div>

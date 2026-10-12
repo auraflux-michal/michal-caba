@@ -13,9 +13,12 @@
  */
 import { offer } from '@/data/content';
 import OfferCta from './OfferCta.astro';
+import { copyV1 } from '@/data/copy';
 
 const label = 'font-display text-label-sm uppercase lg:text-label';
 const { pain } = offer;
+// Versioned copy (src/data/copy.ts): live = v1, previews may pass another version
+const copy = (Astro.locals.copy ?? copyV1).offer;
 const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
 ---
 
@@ -89,25 +92,40 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
           data-panel-fade
           class="mt-8 max-w-[34rem] font-body text-body-sm font-semibold lg:mt-10 lg:text-body"
         >
-          {pain.lead}
+          {copy.lead}
         </p>
-        <ul class="mt-6 space-y-2">
-          {pain.points.map((point) => (
-            <li data-panel-fade class="flex gap-3 font-body text-body-sm font-medium text-paper/75">
-              <span
-                aria-hidden="true"
-                data-panel-x
-                class="inline-block font-display font-bold text-accent"
+        {copy.body && (
+          <p
+            data-panel-fade
+            class="mt-4 max-w-[34rem] font-body text-body-sm font-medium text-paper/75 lg:text-body"
+          >
+            {copy.body}
+          </p>
+        )}
+        {copy.points.length > 0 && (
+          <ul class="mt-6 space-y-2">
+            {copy.points.map((point) => (
+              <li
+                data-panel-fade
+                class="flex gap-3 font-body text-body-sm font-medium text-paper/75"
               >
-                ×
-              </span>
-              {point}
-            </li>
-          ))}
-        </ul>
-        <p data-panel-fade class:list={[label, 'mt-8 max-w-[30rem] text-paper lg:mt-10']}>
-          {pain.resolution}
-        </p>
+                <span
+                  aria-hidden="true"
+                  data-panel-x
+                  class="inline-block font-display font-bold text-accent"
+                >
+                  ×
+                </span>
+                {point}
+              </li>
+            ))}
+          </ul>
+        )}
+        {copy.resolution && (
+          <p data-panel-fade class:list={[label, 'mt-8 max-w-[30rem] text-paper lg:mt-10']}>
+            {copy.resolution}
+          </p>
+        )}
       </div>
 
       {/*
@@ -166,7 +184,7 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
                 </summary>
                 <div data-step-body class="overflow-hidden">
                   <p class="pr-8 pb-5 pl-10 font-body text-body-sm font-medium text-paper/70">
-                    {item.text}
+                    {copy.steps[index] ?? item.text}
                   </p>
                 </div>
               </details>
@@ -179,6 +197,11 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
           ))}
         </div>
 
+        {copy.afterSteps && (
+          <p data-panel-fade class="mt-6 font-body text-body-sm font-medium text-paper/60">
+            {copy.afterSteps}
+          </p>
+        )}
         <div data-panel-fade data-panel-cta class="relative mt-8 lg:mt-10">
           {/*
             Connector into the CTA's bottom edge. Mobile: from the left rule (column padding

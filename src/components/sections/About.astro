@@ -9,10 +9,12 @@
  * Copy updated after Figma (longer headline + bio): top padding 160px (Figma 221) keeps the
  * tagline clear of the bio.
  */
+import { copyV1 } from '@/data/copy';
 import { Image } from 'astro:assets';
 import portrait from '@/assets/images/michal-portrait.png';
 import Tag from '@/components/ui/Tag.astro';
 import SplitLines from '@/components/ui/SplitLines.astro';
+const copy = Astro.locals.copy ?? copyV1;
 ---
 
 <section
@@ -49,12 +51,12 @@ import SplitLines from '@/components/ui/SplitLines.astro';
   <div class="gutter-x flex flex-col border-ink py-16 lg:border-l lg:pt-[10rem] lg:pr-inset lg:pb-10 lg:pl-inset">
     <h2 id="about-title" class="font-display text-h2-sm font-bold lg:text-h2">
       <SplitLines as="span" class="block">
-        Projektuję marki.
+        {copy.about.headline[0]}
         <br />
-        Buduję firmy.
+        {copy.about.headline[1]}
       </SplitLines>
       <SplitLines as="span" class="block text-accent" delay={0.15}>
-        Upraszczam trudne pytania.
+        {copy.about.accent}
       </SplitLines>
     </h2>
 
@@ -62,9 +64,7 @@ import SplitLines from '@/components/ui/SplitLines.astro';
       class="mt-10 max-w-[35rem] font-body text-body-sm font-medium lg:text-body"
       delay={0.3}
     >
-      Jestem Michał. Od ponad 15 lat poruszam się między strategią, designem, technologią i
-      biznesem. Projektuję marki i pomagam ludziom zamieniać pomysły w rzeczy, które naprawdę
-      istnieją.
+      {copy.about.bio}
     </SplitLines>
 
     <p

@@ -6,8 +6,10 @@
  * and the group is placed at the same proportional depth as in Figma (exactly 311px @ 800px).
  * The 3rd line rotates through `heroPhrases` (src/data/content.ts).
  */
+import { copyV1 } from '@/data/copy';
 import ArrowDown from '@/assets/icons/arrow-down.svg';
 import { heroPhrases } from '@/data/content';
+const copy = Astro.locals.copy ?? copyV1;
 ---
 
 <section
@@ -73,12 +75,12 @@ import { heroPhrases } from '@/data/content';
       class="max-w-[18rem] font-body text-lead-sm font-medium text-paper lg:absolute lg:top-[8.4375rem] lg:left-[59.1875rem] lg:max-w-none lg:text-lead lg:whitespace-nowrap"
     >
       {/* Desktop line breaks via lg:block spans (hidden <br>s confuse SplitText on mobile) */}
-      <span class="lg:block">Lubię sprawdzać co się</span>
-      <span class="lg:block">stanie kiedy przesuniemy</span>
+      <span class="lg:block">{copy.hero.quote[0]}</span>
+      <span class="lg:block">{copy.hero.quote[1]}</span>
       <span class="lg:block">
-        go o{' '}
+        {copy.hero.quotePre && `${copy.hero.quotePre} `}
         <span class="text-accent" data-hero-tag>
-          #1metrDalej
+          {copy.hero.quoteAccent}
         </span>
       </span>
     </p>

@@ -5,12 +5,14 @@
  * Desktop content column starts at x=700 (shared with the footer's middle column), 700px wide.
  * Portrait crop reproduces the Figma fill transform of 901:639 (198.67×245.34 frame).
  */
+import { copyV1 } from '@/data/copy';
 import { Image } from 'astro:assets';
 import portrait from '@/assets/images/michal-footer.png';
 import SectionLabel from '@/components/ui/SectionLabel.astro';
 import SplitLines from '@/components/ui/SplitLines.astro';
 import CtaRow from '@/components/ui/CtaRow.astro';
 import { site } from '@/data/site';
+const copy = Astro.locals.copy ?? copyV1;
 ---
 
 <section
@@ -44,18 +46,19 @@ import { site } from '@/data/site';
       <div class="lg:w-[28.5625rem]">
         <p class="font-display text-h3-sm font-bold lg:text-h3">
           <SplitLines as="span" class="block">
-            Nie wiem...
+            {copy.next.line}
           </SplitLines>
           <SplitLines as="span" class="block text-accent" delay={0.15}>
-            dlatego jest ciekawie
+            {copy.next.accent}
           </SplitLines>
         </p>
         <SplitLines
           class="mt-6 max-w-[23.9375rem] font-body lg:max-w-none lg:whitespace-nowrap text-body-sm font-medium lg:mt-10 lg:text-body"
           delay={0.25}
         >
-          <span class="lg:block">Masz coś, w czym widzisz potencjał,</span>
-          <span class="lg:block">ale nie wiesz, jaki zrobić następny ruch?</span>
+          {copy.next.body.map((line) => (
+            <span class="lg:block">{`${line} `}</span>
+          ))}
         </SplitLines>
       </div>
 

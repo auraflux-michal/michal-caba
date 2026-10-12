@@ -7,9 +7,11 @@
  * Desktop grid columns (1440): 214 | 369 | 415 | 362 (+80 inset) → rem below.
  * Row pitch follows Figma: 320 → 360 → 286 (last row = numeral + description height).
  */
+import { copyV1 } from '@/data/copy';
 import { roles } from '@/data/content';
 import SectionLabel from '@/components/ui/SectionLabel.astro';
 import SplitLines from '@/components/ui/SplitLines.astro';
+const copy = Astro.locals.copy ?? copyV1;
 ---
 
 <section id="role" aria-labelledby="roles-title" class="relative overflow-hidden bg-ink">
@@ -26,7 +28,7 @@ import SplitLines from '@/components/ui/SplitLines.astro';
   </div>
 
   <ol class="gutter-x relative flex flex-col gap-16 pt-6 pb-20 lg:gap-0 lg:px-0 lg:pt-[2.75rem] lg:pb-[8.125rem]">
-    {roles.map((role) => (
+    {roles.map((role, index) => (
       <li
         data-role
         class="grid grid-cols-1 lg:h-[20rem] lg:even:h-[22.5rem] lg:last:h-[17.875rem] lg:grid-cols-[13.375rem_23.0625rem_25.9375rem_22.625rem]"
@@ -50,7 +52,7 @@ import SplitLines from '@/components/ui/SplitLines.astro';
           {role.title}
         </h3>
         <SplitLines class="mt-6 max-w-[22.625rem] font-body text-body-sm font-medium text-paper lg:mt-[9.875rem] lg:text-body">
-          {role.description}
+          {copy.roles[index] ?? role.description}
         </SplitLines>
       </li>
     ))}

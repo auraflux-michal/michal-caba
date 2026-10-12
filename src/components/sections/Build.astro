@@ -3,6 +3,7 @@
  * "Buduję": Figma 899:522 (photo 960×800), 899:521 (paper card 480×876), 903:660 (label box).
  * The card is 76px taller than the section and intentionally overlaps "Filozofia" (as in Figma).
  */
+import { copyV1 } from '@/data/copy';
 import { Image } from 'astro:assets';
 import photo from '@/assets/images/michal-auraflux.jpg';
 import LogoAuraflux from '@/assets/icons/logo-auraflux.svg';
@@ -10,6 +11,7 @@ import SectionLabel from '@/components/ui/SectionLabel.astro';
 import SplitLines from '@/components/ui/SplitLines.astro';
 import CtaRow from '@/components/ui/CtaRow.astro';
 import { site } from '@/data/site';
+const copy = Astro.locals.copy ?? copyV1;
 ---
 
 <section
@@ -63,28 +65,21 @@ import { site } from '@/data/site';
       class="mt-12 font-display text-h2-sm font-bold lg:mt-[4.625rem] lg:text-h2"
     >
       <SplitLines as="span" class="block">
-        Najpierw
+        {copy.build.headline.map((line, i) => (i ? [<br />, line] : line))}
       </SplitLines>
       <SplitLines as="span" class="block text-accent" delay={0.1}>
-        znajdujemy
-        <br />
-        sens
+        {copy.build.accent.map((line, i) => (i ? [<br />, line] : line))}
       </SplitLines>
     </h2>
 
     <div class="mt-10 space-y-4 font-body text-body-sm font-medium lg:text-body">
-      <SplitLines delay={0.1}>
-        Pomagamy firmom odkryć, co naprawdę jest w nich wartościowe, a później nadajemy temu
-        strategię, język, formę i doświadczenie.
-      </SplitLines>
-      <SplitLines delay={0.2}>
-        Nie interesuje nas robienie marek głośniejszych. Interesuje nas sprawianie, żeby było
-        wiadomo, dlaczego warto ich słuchać.
-      </SplitLines>
+      {copy.build.paragraphs.map((text, i) => (
+        <SplitLines delay={0.1 * (i + 1)}>{text}</SplitLines>
+      ))}
     </div>
 
     <CtaRow href={site.auraflux.url} class="mt-16 lg:mt-auto">
-      Odwiedź Auraflux
+      {copy.build.cta}
     </CtaRow>
   </div>
 </section>

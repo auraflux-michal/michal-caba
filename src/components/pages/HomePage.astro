@@ -19,9 +19,12 @@ interface Props {
   /** Never index this render (e.g. an internal preview) */
   noindex?: boolean;
   title?: string;
+  /** Copy version (src/data/copy.ts); omitted = v1, the live copy */
+  copy?: import('@/data/copy').SiteCopy;
 }
 
-const { noindex = false, title } = Astro.props;
+const { noindex = false, title, copy } = Astro.props;
+if (copy) Astro.locals.copy = copy;
 Astro.locals.homeSections = true;
 Astro.locals.offerSection = Astro.slots.has('offer');
 ---

@@ -4,5 +4,7 @@ declare namespace App {
     homeSections?: boolean;
     /** The page includes the offer module: the INDEX menu lists it after "Buduję" */
     offerSection?: boolean;
+    /** Copy version for the home sections (src/data/copy.ts); defaults to v1 (live) */
+    copy?: import('@/data/copy').SiteCopy;
   }
 }

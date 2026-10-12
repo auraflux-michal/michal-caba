@@ -4,8 +4,10 @@
  * "DALEJ" is offset 149px right / 31px up from "#1METR": expressed in `em` so the
  * composition holds at every font size. On scroll it literally moves "one metre further".
  */
+import { copyV1 } from '@/data/copy';
 import SectionLabel from '@/components/ui/SectionLabel.astro';
 import SplitLines from '@/components/ui/SplitLines.astro';
+const copy = Astro.locals.copy ?? copyV1;
 ---
 
 <section
@@ -34,20 +36,15 @@ import SplitLines from '@/components/ui/SplitLines.astro';
 
     <div class="mt-16 lg:mt-[6.6875rem] lg:pl-[38.75rem]">
       <SplitLines as="p" class="max-w-[41.25rem] font-display text-h3-sm font-bold lg:text-h3">
-        Nie musisz zmieniać całego świata. Wystarczy, że przesuniesz coś o jeden metr.
+        {copy.philosophy.lead}
       </SplitLines>
 
       <div class="mt-10 space-y-4 font-body text-body-sm font-medium lg:text-body">
-        <SplitLines delay={0.1}>
-          Siebie. Pomysł. Firmę. Relacje.
-          <br />
-          Nie chodzi o wielką rewolucję, tylko o ruch.
-        </SplitLines>
-        <SplitLines delay={0.2}>
-          A jutro?
-          <br />
-          Jeszcze metr.
-        </SplitLines>
+        {copy.philosophy.blocks.map((lines, i) => (
+          <SplitLines delay={0.1 * (i + 1)}>
+            {lines.map((line, j) => (j ? [<br />, line] : line))}
+          </SplitLines>
+        ))}
       </div>
     </div>
   </div>
