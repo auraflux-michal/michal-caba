@@ -1,0 +1,213 @@
+---
+/**
+ * Offer, direction D "Mapa": the product is a map, so the module is one. Ink sheet with a fine
+ * coordinate grid, the three stages as waypoints on a zig-zag dashed route ("Tu jesteś" →
+ * Diagnoza → Priorytety → Plan na 30 dni → kolejny metr), the route draws itself in accent when
+ * it scrolls into view. The offer itself is the map's legend box (name, format, price, CTA).
+ * Mobile: legend under the pitch, route turns vertical.
+ */
+import { offer } from '@/data/content';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import SplitLines from '@/components/ui/SplitLines.astro';
+import OfferCta from './OfferCta.astro';
+
+const label = 'font-display text-label-sm uppercase lg:text-label';
+/** Waypoint heights (% of the route box), left → right: the route climbs, like progress.
+ * Each segment rises, so it always runs above the previous waypoint's text. */
+const stops = [62, 34, 6];
+const points = stops.map((y, i) => `${i * 100},${y}`).join(' ');
+---
+
+<section
+  aria-labelledby="offer-d-title"
+  data-offer-map
+  class="map-grid relative overflow-hidden bg-ink text-paper"
+>
+  <div class="gutter-x flex h-label items-center">
+    <SectionLabel tone="paper">Warsztat</SectionLabel>
+  </div>
+
+  <div class="gutter-x grid gap-12 pt-10 lg:grid-cols-[1fr_27rem] lg:gap-20 lg:px-inset lg:pt-14">
+    <div>
+      <p class:list={[label, 'text-paper/60']}>{offer.eyebrow}</p>
+      <h2 id="offer-d-title" class="mt-8 font-display text-h1-sm font-bold uppercase lg:text-h1">
+        <SplitLines as="span" class="block">
+          {offer.headline[0]}
+          <br />
+          {offer.headline[1]}
+        </SplitLines>
+        <SplitLines as="span" class="block text-accent" delay={0.15}>
+          {offer.headlineAccent}
+        </SplitLines>
+      </h2>
+      <SplitLines
+        class="mt-8 max-w-[38rem] font-body text-body-sm font-semibold lg:mt-10 lg:text-body"
+        delay={0.2}
+      >
+        {offer.lead}
+      </SplitLines>
+      <SplitLines
+        class="mt-4 max-w-[38rem] font-body text-body-sm font-medium text-paper/60"
+        delay={0.3}
+      >
+        {offer.body}
+      </SplitLines>
+    </div>
+
+    {/* Legend = the offer */}
+    <aside
+      data-reveal
+      data-pop
+      aria-label="Legenda: oferta"
+      class="self-start border border-paper bg-ink lg:mt-[4.5rem]"
+    >
+      <p class:list={[label, 'border-b border-paper px-5 py-3 text-paper/60']}>Legenda</p>
+      <div class="p-5 lg:p-6">
+        <p class="font-display text-[2.25rem] leading-[0.95] font-bold uppercase lg:text-[2.75rem]">
+          Mapa Kierunku<sup class="text-[0.35em]">™</sup>
+        </p>
+        <p class:list={[label, 'mt-2 text-paper/60']}>{offer.format}</p>
+        <dl class="mt-6 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 font-body text-body-sm font-medium">
+          <dt class="text-accent">+</dt>
+          <dd>3 punkty na trasie</dd>
+          <dt class="text-accent">→</dt>
+          <dd>Plan na 30 dni na wyjściu</dd>
+        </dl>
+        <p class="mt-6 flex items-baseline gap-2 border-t border-paper/25 pt-5 font-display leading-none font-bold">
+          <span class="text-[3.5rem] lg:text-[4rem]">{offer.price}</span>
+          <span class="text-label-sm lg:text-label">{offer.currency}</span>
+        </p>
+        <OfferCta surface="ink" class="mt-6" />
+      </div>
+    </aside>
+  </div>
+
+  {/* Route */}
+  <div class="gutter-x mt-16 pb-24 lg:mt-20 lg:px-inset lg:pb-28">
+    <p class:list={[label, 'text-paper/60']}>{offer.outcomesLabel}</p>
+
+    <div class="relative mt-10 lg:mt-6 lg:h-[30rem]">
+      {/* Desktop route line (zig-zag through the waypoints, then up and off the map) */}
+      <svg
+        aria-hidden="true"
+        class="absolute inset-0 hidden size-full overflow-visible lg:block"
+        viewBox="0 0 300 100"
+        preserveAspectRatio="none"
+      >
+        <polyline
+          points={`${points} 330,0`}
+          fill="none"
+          class="stroke-paper/35"
+          stroke-width="1"
+          stroke-dasharray="6 8"
+          vector-effect="non-scaling-stroke"
+        ></polyline>
+        <polyline
+          data-map-route
+          points={`${points} 330,0`}
+          fill="none"
+          pathLength="1"
+          class="map-route stroke-accent"
+          stroke-width="2"
+          vector-effect="non-scaling-stroke"
+        ></polyline>
+      </svg>
+
+      <ol class="relative grid gap-12 border-l border-dashed border-paper/35 pl-8 lg:block lg:h-full lg:border-0 lg:pl-0">
+        {offer.outcomes.map((item, index) => (
+          <li
+            class="relative lg:absolute lg:w-[24rem]"
+            style={`--x: ${(index * 100) / 3}%; --y: ${stops[index]}%`}
+          >
+            {/* Crosshair waypoint */}
+            <span
+              aria-hidden="true"
+              class="map-pin absolute top-1 -left-[2.4rem] grid size-4 place-items-center lg:top-[-0.5rem] lg:left-[-0.5rem]"
+            >
+              <span class="absolute h-px w-4 bg-accent" />
+              <span class="absolute h-4 w-px bg-accent" />
+              <span class="size-2 border border-accent bg-ink" />
+            </span>
+            {index === 0 && (
+              <span
+                class:list={[
+                  label,
+                  'absolute -top-9 left-0 bg-paper px-2 text-ink lg:-top-12 lg:-left-2',
+                ]}
+              >
+                Tu jesteś
+              </span>
+            )}
+            <div class="lg:pt-5 lg:pl-6">
+              <p class:list={[label, 'text-accent']}>Punkt {item.number}</p>
+              <h3 class="mt-2 font-display text-h3-sm font-bold lg:text-h3">{item.title}</h3>
+              <p class="mt-2 max-w-[22rem] font-body text-body-sm font-medium text-paper/65">
+                {item.text}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class:list={[label, 'mt-12 text-paper/60 lg:absolute lg:right-0 lg:bottom-0 lg:mt-0']}>
+        {offer.closing[0]} {offer.closing[1]} →
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Coordinate grid: 5rem squares, barely there */
+  .map-grid {
+    background-image:
+      linear-gradient(rgb(241 238 232 / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(241 238 232 / 0.05) 1px, transparent 1px);
+    background-size: 5rem 5rem;
+  }
+
+  @media (min-width: 64rem) {
+    li[style] {
+      left: var(--x);
+      top: var(--y);
+    }
+  }
+
+  /* Accent route draws itself once visible (class set by the script below) */
+  .map-route {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 2.4s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .is-drawn .map-route {
+    stroke-dashoffset: 0;
+  }
+
+  .map-pin {
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  li:hover .map-pin {
+    transform: scale(1.6) rotate(45deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .map-route {
+      transition: none;
+      stroke-dashoffset: 0;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-offer-map]').forEach((map) => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        map.classList.add('is-drawn');
+        observer.disconnect();
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(map);
+  });
+</script>
