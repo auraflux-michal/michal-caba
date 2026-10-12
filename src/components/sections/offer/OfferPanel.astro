@@ -3,7 +3,7 @@
  * Offer, framed panel (Michał's draft, refined).
  * Frame: open on the right. The top rule meets the Build card and runs to the viewport edge.
  * Mobile: the left rule drops and turns right into the CTA. lg: the divider drops from the top
- * rule and turns into the CTA; the left rule ends at the same level (no bottom rule).
+ * rule and turns into the CTA; the left rule runs down into "Filozofia" (no bottom rule).
  * Drawn in on scroll (GSAP); the end level is measured (--line-end) so the path always meets
  * the CTA, whatever the accordion.
  * Left: pain first (headline, what it feels like, three symptoms), then the way out.
@@ -40,7 +40,7 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
     <span
       aria-hidden="true"
       data-frame="left"
-      class="absolute top-0 bottom-(--line-end,0px) left-0 w-px origin-top bg-accent"
+      class="absolute top-0 bottom-(--line-end,0px) left-0 w-px origin-top bg-accent lg:bottom-0"
     ></span>
     {/*
       Divider (lg): from the top rule down to the CTA's bottom edge, where it turns into the
@@ -51,10 +51,10 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
       data-frame="divider"
       class="absolute top-0 bottom-(--line-end,0px) left-[57.5rem] hidden w-px origin-top bg-accent lg:block"
     ></span>
-    {/* Pulse track: clips the pulse to the rule's own length (top rule → CTA) */}
+    {/* Pulse track: clips the pulse to the rule's own length (top rule → CTA / lg: → Filozofia) */}
     <span
       aria-hidden="true"
-      class="pointer-events-none absolute top-0 bottom-(--line-end,0px) -left-4 w-8 overflow-hidden"
+      class="pointer-events-none absolute top-0 bottom-(--line-end,0px) -left-4 w-8 overflow-hidden lg:bottom-0"
     >
       <span
         data-frame-spark
