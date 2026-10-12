@@ -1,7 +1,7 @@
 /**
  * Page copy & repeatable content. Kept out of components so sections stay presentational.
  */
-import { substackUrl } from './site';
+import { site, substackUrl } from './site';
 
 /** Hero headline, 3rd line: rotates in this order, then loops (first = static / no-JS fallback). */
 export const heroPhrases = ['W ludziach', 'W firmach', 'W pomysłach'] as const;
@@ -115,6 +115,6 @@ export const offer = {
   },
   cta: 'Umów warsztat',
   /** Booking link; while null the CTA renders disabled with the note below */
-  bookingUrl: null as string | null,
+  bookingUrl: site.consultationUrl as string | null,
   bookingNote: 'Rezerwacja wkrótce',
 };
