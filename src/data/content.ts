@@ -66,3 +66,41 @@ export const notes: Note[] = [
     href: substack('108-cv-108-mantr-i-jeden-krok-w-przepasc'),
   },
 ];
+
+/** Offer module "Mapa Kierunku™" (sections/Offer.astro), between "Buduję" and "Filozofia". */
+export const offer = {
+  kicker: '04 / Warsztat strategiczny',
+  name: ['Mapa', 'Kierunku'],
+  tagline: 'Jedna marka. Jasny kierunek.',
+  format: 'Warsztat strategiczny 1:1',
+  price: '1500',
+  currency: 'PLN',
+  eyebrow: 'Mniej zgadywania. Więcej decyzji.',
+  headline: ['Nie wiesz,', 'co dalej'],
+  headlineAccent: 'z Twoją marką?',
+  lead: 'Nie potrzebujesz kolejnej luźnej rozmowy. Potrzebujesz spojrzenia z zewnątrz i decyzji, które porządkują następny krok.',
+  body: 'Zobaczmy, co działa, co Cię blokuje i gdzie warto skierować energię. Bez dokładania kolejnych pomysłów do listy. Z konkretnym kierunkiem działania.',
+  outcomesLabel: 'Z czym wychodzisz',
+  outcomes: [
+    {
+      number: '01',
+      title: 'Diagnoza',
+      text: 'Przyglądamy się Twojej marce, komunikacji i obecnym działaniom. Oddzielamy to, co działa, od tego, co tylko zajmuje czas.',
+    },
+    {
+      number: '02',
+      title: 'Priorytety',
+      text: 'Nazywamy blokady i miejsca, w których tracisz potencjał. Ustalamy, co zasługuje na uwagę, a co można odpuścić.',
+    },
+    {
+      number: '03',
+      title: 'Plan na 30 dni',
+      text: 'Wychodzisz z mapą kolejnych działań: co zrobić najpierw, co później i w co naprawdę warto inwestować.',
+    },
+  ],
+  closing: ['Najpierw kierunek.', 'Potem kolejny metr.'],
+  cta: 'Umów warsztat',
+  /** Booking link; while null the CTA renders disabled with the note below */
+  bookingUrl: null as string | null,
+  bookingNote: 'Rezerwacja wkrótce',
+};
