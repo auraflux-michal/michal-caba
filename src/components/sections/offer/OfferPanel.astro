@@ -21,10 +21,14 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
   data-panel
   data-reveal="custom"
   aria-labelledby="offer-panel-title"
-  class="relative overflow-hidden bg-ink pt-16 pb-16 text-paper lg:pt-20 lg:pb-20"
+  class="relative overflow-hidden bg-ink text-paper lg:pt-label"
 >
   <div class="relative ml-5 lg:ml-gutter">
-    {/* Frame: top + bottom to the right edge, left side, no right side */}
+    {/*
+      Frame: the top rule meets the Build card's bottom edge (the section starts 76px lower on
+      lg, exactly the card's overhang) and runs to the right edge; the left rule runs down into
+      "Filozofia" and carries a looping pulse. No bottom or right rule.
+    */}
     <span
       aria-hidden="true"
       data-frame="top"
@@ -34,14 +38,14 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
       aria-hidden="true"
       data-frame="left"
       class="absolute inset-y-0 left-0 w-px origin-top bg-accent"
-    ></span>
-    <span
-      aria-hidden="true"
-      data-frame="bottom"
-      class="absolute inset-x-0 bottom-0 h-px origin-left bg-accent"
-    ></span>
+    >
+      <span
+        data-frame-spark
+        class="frame-spark absolute top-0 left-1/2 h-32 w-[3px] -translate-x-1/2 opacity-0"
+      ></span>
+    </span>
 
-    <div class="grid lg:grid-cols-[1fr_1px_minmax(0,31rem)] lg:gap-x-16 lg:py-14 lg:pr-[calc(var(--spacing-gutter)+4rem)] lg:pl-16">
+    <div class="grid pb-6 lg:grid-cols-[51rem_1px_minmax(0,1fr)] lg:gap-x-10 lg:pt-14 lg:pr-gutter lg:pb-24 lg:pl-16">
       {/* Pain */}
       <div class="py-10 pr-5 pl-6 lg:p-0">
         <h2
@@ -89,7 +93,10 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
         </p>
       </div>
 
-      {/* Dividers: vertical (lg) / horizontal (mobile) */}
+      {/*
+        Dividers: vertical (lg) sits at 60rem, the Build card's left edge; the right column ends
+        2.5rem from the edge like the card's text / horizontal (mobile)
+      */}
       <span
         aria-hidden="true"
         data-frame="divider"
@@ -178,6 +185,20 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
     color: var(--color-accent);
   }
 
+  /* Pulse on the left rule: soft glow + bright core, like the hero's "current" */
+  .frame-spark {
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-accent) 35%,
+      var(--color-white) 55%,
+      var(--color-accent) 70%,
+      transparent
+    );
+    box-shadow: 0 0 0.75rem 0.125rem rgb(219 57 45 / 0.6);
+    border-radius: 9999px;
+  }
+
   .step summary:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 4px;
@@ -185,7 +206,7 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
 </style>
 
 <script>
-  import { gsap, motion, prefersReducedMotion, unveil } from '@/scripts/lib/gsap';
+  import { gsap, ScrollTrigger, motion, prefersReducedMotion, unveil } from '@/scripts/lib/gsap';
 
   /** One-open-at-a-time accordion with GSAP height (replaces the native `name` exclusivity) */
   function initAccordion(section: HTMLElement, reduced: boolean) {
@@ -246,6 +267,23 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
     });
   }
 
+  /** Looping pulse down the left rule (top → Filozofia); runs only while the section is on screen */
+  function initPulse(section: HTMLElement, delay: number) {
+    const spark = section.querySelector<HTMLElement>('[data-frame-spark]');
+    if (!spark) return;
+    const pulse = gsap.timeline({ repeat: -1, repeatDelay: 1.4, paused: true, delay });
+    pulse
+      .fromTo(spark, { top: '-8rem' }, { top: '100%', duration: 2.4, ease: 'power1.inOut' }, 0)
+      .fromTo(spark, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'none' }, 0)
+      .to(spark, { opacity: 0, duration: 0.5, ease: 'none' }, 1.9);
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top bottom',
+      end: 'bottom top',
+      onToggle: (self) => (self.isActive ? pulse.play() : pulse.pause()),
+    });
+  }
+
   function initEntrance(section: HTMLElement) {
     const q = (selector: string) => [...section.querySelectorAll<HTMLElement>(selector)];
     const frame = (side: string) => section.querySelector(`[data-frame="${side}"]`);
@@ -257,10 +295,9 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
       scrollTrigger: { trigger: section, start: 'top 75%', once: true },
     });
 
-    // 1. The pen: top rule runs to the edge, the left rule drops, the bottom rule follows
+    // 1. The pen: top rule runs to the edge, the left rule drops into "Filozofia"
     tl.from(frame('top'), { scaleX: 0, duration: 1.4, ease: motion.easeInOut }, 0)
-      .from(frame('left'), { scaleY: 0, duration: 1, ease: motion.easeInOut }, 0.15)
-      .from(frame('bottom'), { scaleX: 0, duration: 1.4, ease: motion.easeInOut }, 0.7)
+      .from(frame('left'), { scaleY: 0, duration: 1.8, ease: motion.easeInOut }, 0.15)
       .from(frame('divider'), { scaleY: 0, duration: 1.1, ease: motion.easeInOut }, 0.5)
       .from(frame('divider-x'), { scaleX: 0, duration: 1.1, ease: motion.easeInOut }, 0.5)
       // 2. Headline rises through its masks
@@ -305,7 +342,10 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
     initAccordion(section, reduced);
     const animated = document.documentElement.classList.contains('is-animated');
     try {
-      if (animated && !reduced) initEntrance(section);
+      if (!reduced) {
+        if (animated) initEntrance(section);
+        initPulse(section, animated ? 2 : 0);
+      }
     } finally {
       unveil(section); // never leave the module hidden, even if the entrance failed
     }
