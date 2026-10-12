@@ -1,8 +1,9 @@
 ---
 /**
  * Offer, framed panel (Michał's draft, refined).
- * Frame: open on the right. The top and bottom accent rules run to the viewport edge, the left
- * rule closes it, there is no right rule. It draws itself in on scroll (GSAP).
+ * Frame: open on the right. The top rule meets the Build card and runs to the viewport edge; the
+ * left rule drops and turns right into the CTA (a path to the action). Drawn in on scroll (GSAP);
+ * the left rule's end is measured (--line-end) so it always meets the CTA, whatever the accordion.
  * Left: pain first (headline, what it feels like, three symptoms), then the way out.
  * Right (after an accent divider): format, price (counts up), the three steps as an accordion
  * (one open at a time, GSAP height), booking CTA (offer.bookingUrl).
@@ -37,12 +38,12 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
     <span
       aria-hidden="true"
       data-frame="left"
-      class="absolute inset-y-0 left-0 w-px origin-top bg-accent"
+      class="absolute top-0 bottom-(--line-end,0px) left-0 w-px origin-top bg-accent"
     ></span>
-    {/* Pulse track: clips the pulse to the rule's own length (top rule → Filozofia) */}
+    {/* Pulse track: clips the pulse to the rule's own length (top rule → CTA) */}
     <span
       aria-hidden="true"
-      class="pointer-events-none absolute inset-y-0 -left-4 w-8 overflow-hidden"
+      class="pointer-events-none absolute top-0 bottom-(--line-end,0px) -left-4 w-8 overflow-hidden"
     >
       <span
         data-frame-spark
@@ -110,7 +111,7 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
       <span
         aria-hidden="true"
         data-frame="divider-x"
-        class="ml-6 h-px origin-left bg-accent lg:hidden"
+        class="h-px origin-left bg-accent lg:hidden"
       ></span>
 
       {/* Offer */}
@@ -170,7 +171,17 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
           ))}
         </div>
 
-        <div data-panel-fade class="mt-8 lg:mt-10">
+        <div data-panel-fade data-panel-cta class="relative mt-8 lg:mt-10">
+          {/*
+            Connector: the left rule turns right here and runs into the CTA's bottom edge.
+            Width = from the frame's left rule to the CTA (mobile: column padding 1.5rem;
+            lg: 4rem padding + 51rem column + 2 × 2.5rem gaps + 1px divider).
+          */}
+          <span
+            aria-hidden="true"
+            data-frame="connector"
+            class="absolute right-full bottom-0 h-px w-6 origin-left bg-accent lg:w-[calc(60rem+1px)]"
+          ></span>
           <OfferCta surface="ink" />
         </div>
       </div>
@@ -272,6 +283,26 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
     });
   }
 
+  /** Keep the left rule ending exactly at the CTA's bottom edge (layout, accordion, resize) */
+  function initLineEnd(section: HTMLElement) {
+    const frame = section.querySelector<HTMLElement>('[data-frame="left"]')?.parentElement;
+    const cta = section.querySelector<HTMLElement>('[data-panel-cta]');
+    if (!frame || !cta) return;
+    // Layout offsets (not getBoundingClientRect): immune to the entrance transforms.
+    // cta.offsetParent is the frame (nearest positioned ancestor).
+    const update = () => {
+      const end = frame.offsetHeight - (cta.offsetTop + cta.offsetHeight);
+      frame.style.setProperty('--line-end', `${Math.max(0, end)}px`);
+    };
+    update();
+    // The frame (and the stretched grid column) keep their height when only the accordion
+    // changes, so watch the accordion list itself too
+    const observer = new ResizeObserver(update);
+    observer.observe(frame);
+    const steps = section.querySelector('[data-panel-step]')?.parentElement?.parentElement;
+    if (steps) observer.observe(steps);
+  }
+
   /** Looping pulse down the left rule (top → Filozofia); runs only while the section is on screen */
   function initPulse(section: HTMLElement, delay: number) {
     const spark = section.querySelector<HTMLElement>('[data-frame-spark]');
@@ -306,9 +337,10 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
       scrollTrigger: { trigger: section, start: 'top 75%', once: true },
     });
 
-    // 1. The pen: top rule runs to the edge, the left rule drops into "Filozofia"
+    // 1. The pen: top rule runs to the edge, the left rule drops and turns into the CTA
     tl.from(frame('top'), { scaleX: 0, duration: 1.4, ease: motion.easeInOut }, 0)
-      .from(frame('left'), { scaleY: 0, duration: 1.8, ease: motion.easeInOut }, 0.15)
+      .from(frame('left'), { scaleY: 0, duration: 1.4, ease: motion.easeInOut }, 0.15)
+      .from(frame('connector'), { scaleX: 0, duration: 0.9, ease: motion.easeInOut }, 1.4)
       .from(frame('divider'), { scaleY: 0, duration: 1.1, ease: motion.easeInOut }, 0.5)
       .from(frame('divider-x'), { scaleX: 0, duration: 1.1, ease: motion.easeInOut }, 0.5)
       // 2. Headline rises through its masks
@@ -350,6 +382,7 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
 
   document.querySelectorAll<HTMLElement>('[data-panel]').forEach((section) => {
     const reduced = prefersReducedMotion();
+    initLineEnd(section);
     initAccordion(section, reduced);
     const animated = document.documentElement.classList.contains('is-animated');
     try {
