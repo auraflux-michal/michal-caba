@@ -26,7 +26,10 @@ const label = 'font-display text-label-sm uppercase lg:text-label';
       <SplitLines as="span" class="block">
         {offer.name[0]}
         <br />
-        <span class="inline-flex items-start">{offer.name[1]}<sup class="mt-[0.2em] text-[0.25em] font-medium">™</sup></span>
+        <span class="inline-flex items-start">
+          {offer.name[1]}
+          <sup class="mt-[0.2em] text-[0.25em] font-medium">™</sup>
+        </span>
       </SplitLines>
     </p>
     <p class:list={[label, 'mt-6 lg:mt-8']}>{offer.tagline}</p>

@@ -66,7 +66,10 @@ const label = 'font-display text-label-sm uppercase lg:text-label';
             <h3 class="mt-4 font-display text-[2.75rem] leading-[0.95] font-bold uppercase lg:text-[3.5rem]">
               {offer.name[0]}
               <br />
-              <span class="inline-flex items-start">{offer.name[1]}<sup class="mt-[0.2em] text-[0.3em]">™</sup></span>
+              <span class="inline-flex items-start">
+                {offer.name[1]}
+                <sup class="mt-[0.2em] text-[0.3em]">™</sup>
+              </span>
             </h3>
           </div>
           <span class:list={[label, 'border border-paper px-3 py-1']}>1:1</span>
