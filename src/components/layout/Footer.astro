@@ -1,6 +1,8 @@
 ---
 /**
- * Footer: Figma 901:644 (253px, 1px #272727 top rule). Middle column at 50% - 20px (x=700, aligned with the "Początek" content column).
+ * Footer: Figma 901:644 (253px min, 1px #272727 top rule). Middle column at 50% - 20px (x=700,
+ * aligned with the "Początek" content column). Grid, not absolute columns: the footer grows with
+ * the socials list and always keeps its 40px bottom padding (Figma's 253px was sized for 4 links).
  */
 import { site } from '@/data/site';
 import EmailLink from '@/components/ui/EmailLink.astro';
@@ -8,12 +10,12 @@ import EmailLink from '@/components/ui/EmailLink.astro';
 const year = new Date().getFullYear();
 ---
 
-<footer class="gutter-x relative grid gap-10 border-t border-line bg-ink pt-10 pb-16 font-display text-label-sm text-paper uppercase lg:block lg:h-[15.8125rem] lg:pb-0 lg:text-label">
+<footer class="gutter-x relative grid gap-10 border-t border-line bg-ink pt-10 pb-16 font-display text-label-sm text-paper uppercase lg:min-h-[15.8125rem] lg:grid-cols-[calc(50%-1.25rem)_1fr_auto] lg:items-start lg:gap-0 lg:pb-10 lg:text-label">
   <p>
     {year} © {site.name}
   </p>
 
-  <ul class="flex flex-col gap-4 lg:absolute lg:top-10 lg:left-[calc(50%-1.25rem)]">
+  <ul class="flex flex-col gap-4">
     {site.socials.map((social) => (
       <li>
         <a href={social.href} target="_blank" rel="noopener" class="link-underline">
@@ -27,7 +29,7 @@ const year = new Date().getFullYear();
     </li>
   </ul>
 
-  <p class="lg:absolute lg:top-10 lg:right-gutter lg:text-right">
+  <p class="lg:text-right">
     Stworzone z miłością
     <br />
     przez

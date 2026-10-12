@@ -1,9 +1,11 @@
 ---
 /**
  * Offer, framed panel (Michał's draft, refined).
- * Frame: open on the right. The top rule meets the Build card and runs to the viewport edge; the
- * left rule drops and turns right into the CTA (a path to the action). Drawn in on scroll (GSAP);
- * the left rule's end is measured (--line-end) so it always meets the CTA, whatever the accordion.
+ * Frame: open on the right. The top rule meets the Build card and runs to the viewport edge.
+ * Mobile: the left rule drops and turns right into the CTA. lg: the divider drops from the top
+ * rule and turns into the CTA; the left rule ends at the same level (no bottom rule).
+ * Drawn in on scroll (GSAP); the end level is measured (--line-end) so the path always meets
+ * the CTA, whatever the accordion.
  * Left: pain first (headline, what it feels like, three symptoms), then the way out.
  * Right (after an accent divider): format, price (counts up), the three steps as an accordion
  * (one open at a time, GSAP height), booking CTA (offer.bookingUrl).
@@ -39,6 +41,15 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
       aria-hidden="true"
       data-frame="left"
       class="absolute top-0 bottom-(--line-end,0px) left-0 w-px origin-top bg-accent"
+    ></span>
+    {/*
+      Divider (lg): from the top rule down to the CTA's bottom edge, where it turns into the
+      button. At 57.5rem from the frame = 60rem on the page, the Build card's left edge.
+    */}
+    <span
+      aria-hidden="true"
+      data-frame="divider"
+      class="absolute top-0 bottom-(--line-end,0px) left-[57.5rem] hidden w-px origin-top bg-accent lg:block"
     ></span>
     {/* Pulse track: clips the pulse to the rule's own length (top rule → CTA) */}
     <span
@@ -103,11 +114,8 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
         Dividers: vertical (lg) sits at 60rem, the Build card's left edge; the right column ends
         2.5rem from the edge like the card's text / horizontal (mobile)
       */}
-      <span
-        aria-hidden="true"
-        data-frame="divider"
-        class="hidden origin-top bg-accent lg:block"
-      ></span>
+      {/* 1px grid track for the divider; the rule itself is drawn by the frame (below) */}
+      <span aria-hidden="true" class="hidden lg:block"></span>
       <span
         aria-hidden="true"
         data-frame="divider-x"
@@ -173,14 +181,13 @@ const mask = 'block overflow-hidden pb-[0.12em] -mb-[0.12em]';
 
         <div data-panel-fade data-panel-cta class="relative mt-8 lg:mt-10">
           {/*
-            Connector: the left rule turns right here and runs into the CTA's bottom edge.
-            Width = from the frame's left rule to the CTA (mobile: column padding 1.5rem;
-            lg: 4rem padding + 51rem column + 2 × 2.5rem gaps + 1px divider).
+            Connector into the CTA's bottom edge. Mobile: from the left rule (column padding
+            1.5rem). lg: from the divider (2.5rem gap + its 1px).
           */}
           <span
             aria-hidden="true"
             data-frame="connector"
-            class="absolute right-full bottom-0 h-px w-6 origin-left bg-accent lg:w-[calc(60rem+1px)]"
+            class="absolute right-full bottom-0 h-px w-6 origin-left bg-accent lg:w-[calc(2.5rem+1px)]"
           ></span>
           <OfferCta surface="ink" />
         </div>

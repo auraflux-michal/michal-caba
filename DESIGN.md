@@ -86,7 +86,7 @@ Mirrored in GSAP as custom eases `expo` / `inOutQuart` (`src/scripts/lib/gsap.ts
 | 800-1600           | `sections/About.astro`        | Exact Figma fill crop on portrait; paper panel starts in hero rail |
 | 1600-2816          | `sections/Roles.astro`        | Red digits vanish into the red rail (layering, no mask)   |
 | 2816-3616 (+76)    | `sections/Build.astro`        | Card overlaps “Filozofia” by 76px, as designed           |
-| after Buduję       | `sections/offer/OfferPanel.astro` | "Warsztat" (no Figma frame): ink, accent frame open on the right (top rule meets the Build card's bottom edge; left rule drops with a looping pulse and turns right into the CTA, its end measured so it always meets the button), divider on the card's left edge (60rem). Pain-first copy, price counts up, GSAP accordion of the 3 steps, CTA → booking. Copy: `offer` in `data/content.ts` |
+| after Buduję       | `sections/offer/OfferPanel.astro` | "Warsztat" (no Figma frame): ink, accent frame open on the right (top rule meets the Build card's bottom edge; divider drops from the top rule on the card's left edge and turns into the CTA; mobile: the left rule turns into it; end level measured so it always meets the button), divider on the card's left edge (60rem). Pain-first copy, price counts up, GSAP accordion of the 3 steps, CTA → booking. Copy: `offer` in `data/content.ts` |
 | 3616-4879          | `sections/Philosophy.astro`   | `DALEJ` offset in `em` (0.745em / −0.155em)              |
 | 4879-5823          | `sections/Notes.astro`        | Rows render as links once `href` is set in data          |
 | 5823-6931          | `sections/Next.astro`         | Figma 910:704: content column x=700 (shared with footer), portrait + `ui/CtaRow` "Porozmawiajmy" (booking) |
