@@ -28,7 +28,7 @@ export const site = {
     familyName: 'Caba',
     jobTitles: ['Strateg marki', 'Projektant', 'Founder Auraflux'],
     summary:
-      'Michał Caba jest strategiem marki, projektantem i założycielem studia Auraflux (strategia, branding, technologia). Od ponad 15 lat porusza się między strategią, designem, technologią i biznesem. Projektuje marki i pomaga ludziom zamieniać pomysły w rzeczy, które naprawdę istnieją. Jego filozofia #1metrDalej zakłada, że nie trzeba zmieniać całego świata: wystarczy przesunąć coś o jeden metr.',
+      'Michał Caba jest strategiem marki, projektantem i założycielem studia Auraflux (strategia, branding, technologia). Od ponad 15 lat łączy strategię, design, technologię i biznes. Pomaga przedsiębiorcom spojrzeć na swoje pomysły z nowej perspektywy, uporządkować to, co złożone, i zdecydować, co naprawdę warto zrobić. Jego filozofia #1metrDalej zakłada, że nie trzeba zmieniać całego świata: wystarczy zrobić jeden krok, który coś zmieni.',
     knowsAbout: [
       'Strategia marki',
       'Branding',
@@ -57,8 +57,7 @@ export const site = {
    */
   email: 'do@michalcaba.pl',
   /**
-   * Privacy policy. TODO: the page does not exist yet; '#' until it does (used by /lustro's
-   * newsletter consent). External URLs open in a new tab.
+   * Privacy policy. TODO: the page does not exist yet; '#' until it does. External URLs open in a new tab.
    */
   privacyUrl: '#',
   /** Notes CTA "Archiwum myśli" (all posts) */

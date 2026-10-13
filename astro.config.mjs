@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, envField, fontProviders } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -42,16 +42,8 @@ export default defineConfig({
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : 'https://michalcaba.pl'),
   base: process.env.BASE_PATH ?? '/',
-  // Pages stay static (prerendered). Only routes with `prerender = false` (src/pages/api/*)
-  // become Vercel Functions: the newsletter endpoint keeps the MailerLite key server-side.
+  // Pages stay static (prerendered). Routes with `prerender = false` would become Vercel Functions.
   adapter: vercel(),
-  env: {
-    schema: {
-      // Vercel → Settings → Environment Variables (never exposed to the browser)
-      MAILERLITE_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
-      MAILERLITE_GROUP_ID: envField.string({ context: 'server', access: 'secret', optional: true }),
-    },
-  },
   compressHTML: true,
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   image: {

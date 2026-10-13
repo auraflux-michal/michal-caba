@@ -43,7 +43,7 @@ async function boot() {
   initSmoothScroll();
   initHeader(menu.isOpen);
   const hero = initHero({ intro: choreography });
-  // No hero on this page (e.g. /lustro): its intro would have slid the header in
+  // No hero on this page (e.g. a future /notes page): its intro would have slid the header in
   if (choreography && !hero) introHeader();
   if (choreography) {
     initReveals();

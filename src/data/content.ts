@@ -16,12 +16,12 @@ export const roles: Role[] = [
   {
     number: '01',
     title: 'Strateg',
-    description: 'Patrzę z dystansu, łączę kropki i szukam tego, co naprawdę ma znaczenie.',
+    description: 'Łączę fakty, zadaję właściwe pytania i pomagam odnaleźć kierunek, który ma sens.',
   },
   {
     number: '02',
     title: 'Projektant',
-    description: 'Upraszczam złożone rzeczy i nadaję pomysłom formę, która wydaje się oczywista.',
+    description: 'Zamieniam idee w doświadczenia, marki i rozwiązania, które ludzie rozumieją.',
   },
   {
     number: '03',
@@ -85,17 +85,17 @@ export const offer = {
     {
       number: '01',
       title: 'Diagnoza',
-      text: 'Przyglądamy się Twojej marce, komunikacji i obecnym działaniom. Oddzielamy to, co działa, od tego, co tylko zajmuje czas.',
+      text: 'Przyglądamy się Twojej marce, jej sytuacji i wyzwaniom. Szukamy tego, co działa, co blokuje rozwój i gdzie kryje się potencjał.',
     },
     {
       number: '02',
       title: 'Priorytety',
-      text: 'Nazywamy blokady i miejsca, w których tracisz potencjał. Ustalamy, co zasługuje na uwagę, a co można odpuścić.',
+      text: 'Oddzielamy rzeczy ważne od pilnych. Wybieramy obszary, na których warto się skupić, zamiast próbować zmieniać wszystko naraz.',
     },
     {
       number: '03',
       title: 'Plan na 30 dni',
-      text: 'Wychodzisz z mapą kolejnych działań: co zrobić najpierw, co później i w co naprawdę warto inwestować.',
+      text: 'Zamieniamy wnioski w konkretne następne kroki. Wiesz, od czego zacząć, co zrobić najpierw i jak ruszyć z miejsca.',
     },
   ],
   closing: ['Najpierw kierunek.', 'Potem kolejny metr.'],
@@ -105,7 +105,7 @@ export const offer = {
     /** Last line: "z" stays with "marką?" (no single-letter word at a line end) */
     headlinePre: 'z',
     headlineAccent: 'marką?',
-    lead: 'Publikujesz, poprawiasz, zaczynasz od nowa. Dużo ruchu, mało kierunku. A każdy kolejny pomysł tylko dokłada chaosu.',
+    lead: 'Masz pomysły, możliwości i pytania. Dużo ruchu, mało kierunku. A każdy kolejny pomysł tylko dokłada chaosu.',
     points: [
       'Nie wiesz, na czym się skupić.',
       'Marka mówi jedno, oferta drugie.',

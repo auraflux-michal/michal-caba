@@ -19,7 +19,7 @@ export function assetPath(path: string): string {
 /**
  * Link to a home-page section: a bare `#id` on pages that render the home sections (the home
  * page, its internal previews: `Astro.locals.homeSections`), `/#id` from other subpages
- * (e.g. /lustro), so the shared header/menu work everywhere.
+ * (e.g. a future /notes page), so the shared header/menu work everywhere.
  */
 export function sectionHref(id: string, currentPath: string, inPage = false): string {
   const home = assetPath('/');
@@ -47,7 +47,7 @@ interface GraphInput {
   /** Social card (og.png) */
   imageUrl: string;
   imageCaption?: string;
-  /** The page itself: the home ProfilePage (default) or a subpage WebPage (e.g. /lustro) */
+  /** The page itself: the home ProfilePage (default) or a subpage WebPage (e.g. a future /notes page) */
   page?: { type: 'ProfilePage' | 'WebPage'; name: string; description: string };
   /** Real portrait photo for the Person entity */
   portraitUrl: string;

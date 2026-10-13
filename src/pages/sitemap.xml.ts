@@ -4,7 +4,6 @@ import { absoluteUrl } from '@/lib/seo';
 
 const pages = [
   { path: '/', priority: '1.0', changefreq: 'monthly' },
-  { path: '/lustro', priority: '0.8', changefreq: 'monthly' },
 ];
 
 export const GET: APIRoute = ({ site }) => {

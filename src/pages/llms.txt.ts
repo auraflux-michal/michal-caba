@@ -6,7 +6,6 @@ import type { APIRoute } from 'astro';
 import { site, sections } from '@/data/site';
 import { heroPhrases, notes, offer, roles } from '@/data/content';
 import { absoluteUrl } from '@/lib/seo';
-import { LUSTRO_TOTAL, lustroSections, lustroStages } from '@/data/lustro';
 
 export const GET: APIRoute = ({ site: siteUrl }) => {
   const home = absoluteUrl('/', siteUrl);
@@ -14,7 +13,7 @@ export const GET: APIRoute = ({ site: siteUrl }) => {
 
 > ${site.person.summary}
 
-${site.name}: ${site.person.jobTitles.join(', ')}. Motto: "Widzę potencjał ${heroPhrases.map((phrase) => phrase.toLowerCase()).join(', ')}". Projektuje marki, buduje firmy i upraszcza trudne pytania.
+${site.name}: ${site.person.jobTitles.join(', ')}. Motto: "Widzę potencjał ${heroPhrases.map((phrase) => phrase.toLowerCase()).join(', ')}". Projektuje marki, buduje firmy i pomaga znaleźć kierunek.
 
 ## Role
 
@@ -38,15 +37,11 @@ Rezerwacja: ${offer.bookingUrl ?? site.consultationUrl}
 
 ## Filozofia #1metrDalej
 
-Nie musisz zmieniać całego świata. Wystarczy, że przesuniesz coś o jeden metr: siebie, pomysł, firmę, relacje. Nie chodzi o wielką rewolucję, tylko o ruch. A jutro? Jeszcze metr.
+Nie musisz zmieniać całego świata. Wystarczy, że zrobisz jeden krok, który coś zmieni. Jedna decyzja. Jedna rozmowa. Jeden pomysł, który wreszcie ruszy z miejsca. A jutro? Jeszcze metr.
 
 ## Notes
 
 ${notes.map((note) => `- ${note.href ? `[${note.title}](${note.href.split('?')[0]})` : note.title} (${note.readingTime} czytania)`).join('\n')}
-
-## Lustro marki osobistej
-
-Bezpłatna, interaktywna checklista marki osobistej (${absoluteUrl('/lustro', siteUrl)}): ${LUSTRO_TOTAL} punktów w ${lustroSections.length} obszarach (${lustroSections.map((section) => section.title).join(', ')}). Wynik to jeden z etapów: ${lustroStages.map((stage) => stage.name).join(', ')}, oraz obszary z największym potencjałem.
 
 ## Kontakt i profile
 

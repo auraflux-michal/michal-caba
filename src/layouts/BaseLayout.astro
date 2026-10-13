@@ -15,7 +15,7 @@ interface Props {
   /** Social card in /public (1200×630 PNG). Defaults to the site card (og.png). */
   ogImage?: string;
   ogImageAlt?: string;
-  /** Home = the profile; subpages (e.g. /lustro) are plain web pages of that profile's site */
+  /** Home = the profile; subpages (e.g. a future /notes page) are plain web pages of that profile's site */
   pageType?: 'ProfilePage' | 'WebPage';
   /** Internal previews: never indexed, whatever the environment */
   noindex?: boolean;
@@ -30,7 +30,7 @@ const {
   noindex = false,
 } = Astro.props;
 const isProfile = pageType === 'ProfilePage';
-// One URL per page, matching sitemap.xml: no trailing slash on subpages (/lustro, not /lustro/)
+// One URL per page, matching sitemap.xml: no trailing slash on subpages (/page, not /page/)
 const canonicalPath = Astro.url.pathname.replace(/(.)\/$/, '$1').replace(/\/index\.html$/, '/');
 const canonical = new URL(canonicalPath, Astro.site).href;
 const homepage = absoluteUrl('/', Astro.site);
