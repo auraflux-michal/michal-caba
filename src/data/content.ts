@@ -85,17 +85,17 @@ export const offer = {
     {
       number: '01',
       title: 'Diagnoza',
-      text: 'Przyglądamy się Twojej marce, jej sytuacji i wyzwaniom. Szukamy tego, co działa, co blokuje rozwój i gdzie kryje się potencjał.',
+      text: 'Dwie godziny warsztatu ze mną. Przyglądamy się Twojej marce, ofercie, komunikacji i narzędziom. Sprawdzamy, co działa, co blokuje rozwój i czego potrzebujesz, żeby ruszyć dalej.',
     },
     {
       number: '02',
-      title: 'Priorytety',
-      text: 'Oddzielamy rzeczy ważne od pilnych. Wybieramy obszary, na których warto się skupić, zamiast próbować zmieniać wszystko naraz.',
+      title: 'Mapa kierunku',
+      text: 'Po warsztacie opracowuję prezentację z wnioskami i rekomendacjami. Pokazuję, co warto zmienić, w jakiej kolejności i dlaczego. Oddzielam priorytety od rzeczy, które mogą poczekać.',
     },
     {
       number: '03',
-      title: 'Plan na 30 dni',
-      text: 'Zamieniamy wnioski w konkretne następne kroki. Wiesz, od czego zacząć, co zrobić najpierw i jak ruszyć z miejsca.',
+      title: 'Pierwszy krok',
+      text: 'Spotykamy się ponownie i omawiamy mapę oraz Twoje pytania. Wskazuję jeden najważniejszy krok na teraz i pokazuję, jak łączy się z dalszym kierunkiem.',
     },
   ],
   closing: ['Najpierw kierunek.', 'Potem kolejny metr.'],
@@ -109,9 +109,9 @@ export const offer = {
     points: [
       'Nie wiesz, na czym się skupić.',
       'Marka mówi jedno, oferta drugie.',
-      'Tracisz czas na działania, które nic nie zmieniają.',
+      'Planujesz nową stronę, ale nie masz pewności, czy od niej zacząć.',
     ],
-    resolution: 'Jedno spotkanie. Trzy decyzje, które porządkują następny krok.',
+    resolution: 'Ustalmy kierunek. Wybierzmy pierwszy krok.',
   },
   cta: 'Umów warsztat',
   /** Booking link; while null the CTA renders disabled with the note below */

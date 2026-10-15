@@ -56,14 +56,16 @@ export const copyV1: SiteCopy = {
     points: [
       'Nie wiesz, na czym się skupić.',
       'Marka mówi jedno, oferta drugie.',
-      'Tracisz czas na działania, które nic nie zmieniają.',
+      'Planujesz nową stronę, ale nie masz pewności, czy od niej zacząć.',
     ],
-    resolution: 'Jedno spotkanie. Trzy decyzje, które porządkują następny krok.',
+    resolution: 'Ustalmy kierunek. Wybierzmy pierwszy krok.',
     steps: [
-      'Przyglądamy się Twojej marce, jej sytuacji i wyzwaniom. Szukamy tego, co działa, co blokuje rozwój i gdzie kryje się potencjał.',
-      'Oddzielamy rzeczy ważne od pilnych. Wybieramy obszary, na których warto się skupić, zamiast próbować zmieniać wszystko naraz.',
-      'Zamieniamy wnioski w konkretne następne kroki. Wiesz, od czego zacząć, co zrobić najpierw i jak ruszyć z miejsca.',
+      'Dwie godziny warsztatu ze mną. Przyglądamy się Twojej marce, ofercie, komunikacji i narzędziom. Sprawdzamy, co działa, co blokuje rozwój i czego potrzebujesz, żeby ruszyć dalej.',
+      'Po warsztacie opracowuję prezentację z wnioskami i rekomendacjami. Pokazuję, co warto zmienić, w jakiej kolejności i dlaczego. Oddzielam priorytety od rzeczy, które mogą poczekać.',
+      'Spotykamy się ponownie i omawiamy mapę oraz Twoje pytania. Wskazuję jeden najważniejszy krok na teraz i pokazuję, jak łączy się z dalszym kierunkiem.',
     ],
+    afterSteps:
+      'W cenie: warsztat 2h 1:1, przygotowanie prezentacji z mapą kierunku oraz osobne spotkanie z omówieniem rekomendacji.',
   },
   philosophy: {
     lead: 'Nie musisz zmieniać całego świata. Wystarczy, że zrobisz jeden krok, który coś zmieni.',
