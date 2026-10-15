@@ -58,7 +58,7 @@ export const copyV1: SiteCopy = {
       'Marka mówi jedno, oferta drugie.',
       'Planujesz nową stronę, ale nie masz pewności, czy od niej zacząć.',
     ],
-    resolution: 'Ustalmy kierunek. Wybierzmy pierwszy krok.',
+    resolution: 'Ustalmy kierunek. Wybierzmy pierwszy krok.',
     steps: [
       'Dwie godziny warsztatu ze mną. Przyglądamy się Twojej marce, ofercie, komunikacji i narzędziom. Sprawdzamy, co działa, co blokuje rozwój i czego potrzebujesz, żeby ruszyć dalej.',
       'Po warsztacie opracowuję prezentację z wnioskami i rekomendacjami. Pokazuję, co warto zmienić, w jakiej kolejności i dlaczego. Oddzielam priorytety od rzeczy, które mogą poczekać.',

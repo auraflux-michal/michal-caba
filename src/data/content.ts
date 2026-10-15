@@ -111,7 +111,7 @@ export const offer = {
       'Marka mówi jedno, oferta drugie.',
       'Planujesz nową stronę, ale nie masz pewności, czy od niej zacząć.',
     ],
-    resolution: 'Ustalmy kierunek. Wybierzmy pierwszy krok.',
+    resolution: 'Ustalmy kierunek. Wybierzmy pierwszy krok.',
   },
   cta: 'Umów warsztat',
   /** Booking link; while null the CTA renders disabled with the note below */
