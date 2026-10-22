@@ -117,6 +117,17 @@ const jsonLd = buildJsonLd({
         }, 3000);
       })();
     </script>
+    {/* Google Analytics 4 (gtag.js); production builds only, so dev never pollutes the stats */}
+    {import.meta.env.PROD && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${site.gaId}`} />
+        {/* Global gtag (not wrapped in a closure), so later events can call window.gtag */}
+        <script
+          is:inline
+          set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${site.gaId}');`}
+        />
+      </>
+    )}
   </head>
   <body>
     <a

@@ -60,6 +60,8 @@ export const site = {
    * Privacy policy. TODO: the page does not exist yet; '#' until it does. External URLs open in a new tab.
    */
   privacyUrl: '#',
+  /** Google Analytics 4 measurement ID (gtag.js in layouts/BaseLayout.astro, production builds only) */
+  gaId: 'G-WK6W6TDFY2',
   /** Notes CTA "Archiwum myśli" (all posts) */
   notesArchiveUrl: substackUrl('/archive'),
   socials: [
