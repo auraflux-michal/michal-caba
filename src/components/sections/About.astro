@@ -1,17 +1,13 @@
 ---
 /**
  * "Człowiek": Figma 899:518 (portrait) + 899:517 (paper panel), 800-1600px.
- * Portrait crop reproduces the Figma fill transform (720×800 frame: height 97.11%, top 12.76%,
- * horizontally centred, which is exactly Figma's -45.87% offset). Width follows the photo's own
- * aspect ratio, so it never stretches when the frame is wider than 720:800 (large monitors);
- * min-w-full + object-cover only kick in on ultra-wide frames (crop, never distort).
- * sizes: the image is 86.3rem wide at lg = 96vw (rem scales with the viewport), 1841px past 1920.
+ * Portrait: full-bleed 1440×1600 photo (720:800, the frame's own ratio), object-cover.
  * Copy updated after Figma (longer headline + bio): top padding 160px (Figma 221) keeps the
  * tagline clear of the bio.
  */
 import { copyV1 } from '@/data/copy';
 import { Image } from 'astro:assets';
-import portrait from '@/assets/images/michal-portrait.png';
+import portrait from '@/assets/images/michal-portrait.webp';
 import Tag from '@/components/ui/Tag.astro';
 import SplitLines from '@/components/ui/SplitLines.astro';
 const copy = Astro.locals.copy ?? copyV1;
@@ -27,22 +23,19 @@ const copy = Astro.locals.copy ?? copyV1;
     class="relative aspect-[720/800] overflow-hidden bg-silver lg:aspect-auto lg:h-full"
   >
     {/*
-      Static wrapper does the Figma placement (centring via translate, never touched by GSAP);
-      the img inside is the parallax target. Ratio comes from the image itself.
+      Full-bleed photo, already graded (monochrome + the red block), so no photo-mono filter.
+      Same 720:800 ratio as the mobile frame; on wider desktop frames object-cover crops
+      vertically, anchored high to keep the face in view. The parallax zoom covers the drift.
     */}
-    <div
-      class="absolute top-[12.76%] left-1/2 h-[97.11%] min-w-full -translate-x-1/2"
-      style={`aspect-ratio: ${portrait.width} / ${portrait.height}`}
-    >
-      <Image
-        src={portrait}
-        alt="Michał Caba: portret"
-        widths={[720, 1080, 1440, 2048]}
-        sizes="(min-width: 1920px) 1841px, (min-width: 1024px) 96vw, 192vw"
-        data-parallax-media
-        class="photo-mono block size-full max-w-none object-cover"
-      />
-    </div>
+    <Image
+      src={portrait}
+      alt="Michał Caba przy wieży z klocków, w dłoni trzyma czerwony klocek"
+      widths={[720, 1080, 1440]}
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      data-parallax-media
+      data-parallax-cover
+      class="absolute inset-0 size-full object-cover object-[50%_25%]"
+    />
     <Tag data-reveal data-pop class="absolute top-0 right-0 border-t-0 border-r-0">
       Człowiek
     </Tag>
