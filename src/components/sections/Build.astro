@@ -5,7 +5,7 @@
  */
 import { copyV1 } from '@/data/copy';
 import { Image } from 'astro:assets';
-import photo from '@/assets/images/michal-auraflux.jpg';
+import photo from '@/assets/images/michal-auraflux.webp';
 import LogoAuraflux from '@/assets/icons/logo-auraflux.svg';
 import SectionLabel from '@/components/ui/SectionLabel.astro';
 import SplitLines from '@/components/ui/SplitLines.astro';
@@ -37,13 +37,13 @@ const copy = Astro.locals.copy ?? copyV1;
     >
       <Image
         src={photo}
-        alt="Michał Caba prezentuje Mapę Marki Auraflux na laptopie"
-        widths={[640, 960, 1280, 1920]}
+        alt="Michał Caba pracuje na laptopie nad stroną Auraflux"
+        widths={[640, 960]}
         sizes="(min-width: 1024px) 67vw, 100vw"
         quality={72}
         data-parallax-media
         data-parallax-cover
-        class="photo-mono absolute inset-0 size-full object-cover"
+        class="photo-mono absolute inset-0 size-full object-cover object-[50%_70%]"
       />
     </div>
   </figure>
